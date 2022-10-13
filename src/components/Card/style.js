@@ -1,9 +1,5 @@
 import styled from 'styled-components';
 
-// export const ImageDiv = styled.div`
-//     background-image: ${(props) => `url(${props.img})`};
-// `;
-
 export const Wrapper = styled.div`
     height: 20rem;
     width: 20rem;

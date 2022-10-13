@@ -79,10 +79,6 @@ export const IconFilter = styled.button`
 export const NavMenu = styled.div`
     display: ${(props) => (props.open ? 'block' : 'none')};
     width: 100%;
-    /* @media (min-width: 768px) { 
-        display: block; 
-        width: auto; 
-    } */
 `;
 
 export const NavMenuList = styled.ul`
@@ -102,54 +98,3 @@ export const NavMenuLink = styled(Link)`
     display: block;
     text-align: left;
 `;
-// export const NavMenuList = styled.ul`
-//     display: flex;
-//     padding: 1rem;
-//     margin-top: 1rem;
-//     background-color: #F9FAFB;
-//     flex-direction: column;
-//     border-radius: 0.5rem;
-//     border-width: 1px;
-//     border-color: #F3F4F6;
-
-//     @media (min-width: 768px) {
-//         flex-direction: row;
-//         margin-left: 2rem;
-//         margin-top: 0;
-//         font-size: 0.875rem;
-//         line-height: 1.25rem;
-//         font-weight: 500;
-//         border-width: 0;
-//         background-color: #ffffff;
-//     }
-// `;
-
-// export const NavMenuLink = styled(NavLink)`
-//     display: block;
-//     padding-top: 0.5rem;
-//     padding-bottom: 0.5rem;
-//     padding-left: 0.75rem;
-//     padding-right: 1rem;
-//     color: #6B7280;
-//     border-radius: 0.25rem;
-
-//     &:hover {
-//         background-color: #F3F4F6;
-//     }
-
-//     @media (min-width: 768px) {
-//         padding: 0;
-//         border-width: 0;
-//         padding: 0;
-
-//         &:hover {
-//             background-color: transparent;
-//             color: #1D4ED8;
-
-//         }
-//     }
-
-//     &.active {
-//         text-decoration: underline;
-//     }
-// `;
