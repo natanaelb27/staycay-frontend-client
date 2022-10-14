@@ -1,8 +1,10 @@
-import React from 'react';
-import { useRoutes } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useRoutes, useNavigate, useLocation } from 'react-router-dom';
 
 import { Layout } from '../components';
-import { Home, NotFound } from '../pages';
+import {
+  Home, Login, Register, NotFound,
+} from '../pages';
 
 const Routes = () => {
   const routes = useRoutes([
@@ -15,6 +17,18 @@ const Routes = () => {
           element: <Home />,
         },
         {
+          path: '/login',
+          element: <Login />,
+        },
+        {
+          path: '/register',
+          element: <Register />,
+        },
+        {
+          path: '/sementara',
+          element: <RequireAuth redirectTo="/login"><NotFound /></RequireAuth>,
+        },
+        {
           path: '*',
           element: <NotFound />,
         },
@@ -23,6 +37,19 @@ const Routes = () => {
   ]);
 
   return routes;
+};
+
+const RequireAuth = ({ redirectTo, children }) => {
+  const navigate = useNavigate();
+  const loc = useLocation();
+  useEffect(() => {
+    const user = localStorage.getItem('user');
+    if (!user) {
+      navigate(redirectTo, { replace: true, state: { from: loc.pathname } });
+    }
+  }, []);
+
+  return children;
 };
 
 export default Routes;

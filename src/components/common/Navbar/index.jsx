@@ -21,6 +21,11 @@ function Navbar() {
     setOpenMenu(!openMenu);
   };
 
+  const handleLogout = () => {
+    setOpenMenu(!openMenu);
+    localStorage.clear();
+  };
+
   return (
     <Nav>
       <Container>
@@ -38,21 +43,31 @@ function Navbar() {
           </IconButton>
           <NavMenu open={openMenu}>
             <NavMenuList>
-              <NavMenuLink to="/login">
-                Login
-              </NavMenuLink>
-              <NavMenuLink to="/register">
-                Register
-              </NavMenuLink>
-              <NavMenuLink to="/profile">
+              {
+                !localStorage.getItem('user') ? (
+                  <>
+                    <NavMenuLink to="/login" onClick={handleOpenMenu}>
+                      Login
+                    </NavMenuLink>
+                    <NavMenuLink to="/register" onClick={handleOpenMenu}>
+                      Register
+                    </NavMenuLink>
+                  </>
+                )
+                  : (
+                    <NavMenuLink to="/" onClick={handleLogout}>
+                      Logout
+                    </NavMenuLink>
+                  )
+              }
+
+              <NavMenuLink to="/profile" onClick={handleOpenMenu}>
                 Profile
               </NavMenuLink>
-              <NavMenuLink to="/hosting">
+              <NavMenuLink to="/hosting" onClick={handleOpenMenu}>
                 Become a host / Manage your houses
               </NavMenuLink>
-              <NavMenuLink to="/">
-                Logout
-              </NavMenuLink>
+
             </NavMenuList>
           </NavMenu>
         </DropDownMenu>

@@ -6,7 +6,8 @@ export const Nav = styled.nav`
     padding-right: 0.5rem; 
     padding-top: 0.625rem;
     padding-bottom: 0.625rem; 
-    border-color: #E5E7EB; 
+    border-bottom: 10px;
+    /* border-bottom: 0.2px solid gray; */
 
     @media (min-width: 640px) { 
         padding-left: 2.5rem;
