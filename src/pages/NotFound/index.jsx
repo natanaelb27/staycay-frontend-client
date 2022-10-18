@@ -1,12 +1,14 @@
 import React from 'react';
-import { ErrorPage } from '../../components';
+import { ErrorPage, MainContainer } from '../../components';
 
 function NotFound() {
   return (
-    <ErrorPage
-      code={404}
-      message="Page Not Found"
-    />
+    <MainContainer>
+      <ErrorPage
+        code={404}
+        message="Page Not Found"
+      />
+    </MainContainer>
   );
 }
 

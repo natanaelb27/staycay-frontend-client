@@ -3,7 +3,7 @@ import { useRoutes, useNavigate, useLocation } from 'react-router-dom';
 
 import { Layout } from '../components';
 import {
-  Home, Login, Register, NotFound,
+  Home, Login, Register, House, NotFound,
 } from '../pages';
 
 const Routes = () => {
@@ -18,11 +18,15 @@ const Routes = () => {
         },
         {
           path: '/login',
-          element: <Login />,
+          element: <AlreadyAuth redirectTo="/"><Login /></AlreadyAuth>,
         },
         {
           path: '/register',
-          element: <Register />,
+          element: <AlreadyAuth redirectTo="/"><Register /></AlreadyAuth>,
+        },
+        {
+          path: '/house/:houseID',
+          element: <House />,
         },
         {
           path: '/sementara',
@@ -37,6 +41,19 @@ const Routes = () => {
   ]);
 
   return routes;
+};
+
+const AlreadyAuth = ({ redirectTo, children }) => {
+  const navigate = useNavigate();
+  const loc = useLocation();
+  useEffect(() => {
+    const user = localStorage.getItem('user');
+    if (user) {
+      navigate(redirectTo, { replace: true, state: { from: loc.pathname } });
+    }
+  }, []);
+
+  return children;
 };
 
 const RequireAuth = ({ redirectTo, children }) => {

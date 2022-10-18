@@ -12,6 +12,7 @@ export const apiSlice = createApi({
     //   return headers;
     // },
   }),
+  tagTypes: ['Houses', 'Cities'],
   endpoints: (builder) => ({
     register: builder.mutation({
       query: ({
@@ -34,10 +35,34 @@ export const apiSlice = createApi({
         body: { email, password },
       }),
     }),
+    getHouse: builder.query({
+      query: (searchHouse) => ({
+        url: `/house?searchName=${searchHouse}`,
+        method: 'GET',
+      }),
+      providesTags: ['Houses'],
+    }),
+    getCity: builder.query({
+      query: () => ({
+        url: '/city',
+        method: 'GET',
+      }),
+      providesTags: ['Cities'],
+    }),
+    getHouseByID: builder.query({
+      query: (houseID) => ({
+        url: `/house/${houseID}`,
+        method: 'GET',
+      }),
+      providesTags: ['Houses'],
+    }),
   }),
 });
 
 export const {
   useRegisterMutation,
   useLoginMutation,
+  useGetHouseQuery,
+  useGetCityQuery,
+  useGetHouseByIDQuery,
 } = apiSlice;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Label from '../common/Label';
 import Input from '../common/Input';
@@ -21,12 +21,12 @@ function LoginForm() {
 
   const [errorLogin, setErrorLogin] = useState('');
 
-  useEffect(() => {
-    const user = localStorage.getItem('user');
-    if (user) {
-      navigate('/', { replace: true });
-    }
-  }, []);
+  // useEffect(() => {
+  //   const user = localStorage.getItem('user');
+  //   if (user) {
+  //     navigate('/', { replace: true });
+  //   }
+  // }, []);
 
   const handleInputChange = (event) => {
     setInput({ ...input, [event.target.name]: event.target.value });
