@@ -36,8 +36,10 @@ export const apiSlice = createApi({
       }),
     }),
     getHouse: builder.query({
-      query: (searchHouse) => ({
-        url: `/house?searchName=${searchHouse}`,
+      query: ({
+        filterHouseName, filterCity, filterCheckInDate, filterCheckOutDate,
+      }) => ({
+        url: `/house?searchName=${filterHouseName}&searchCity=${filterCity}&searchCheckInDate=${filterCheckInDate}&searchCheckOutDate=${filterCheckOutDate}`,
         method: 'GET',
       }),
       providesTags: ['Houses'],

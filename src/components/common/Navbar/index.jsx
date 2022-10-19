@@ -1,13 +1,16 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faUser, faSearch } from '@fortawesome/free-solid-svg-icons';
+import {
+  faBars, faUser, faSearch, faFilter,
+} from '@fortawesome/free-solid-svg-icons';
 // import { faBars, faUser, faFilter } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import moment from 'moment';
 import {
   Container,
   IconButton,
-  InputSearch,
+  InputSpan,
   // IconFilter,
   Nav,
   Logo,
@@ -17,17 +20,36 @@ import {
   NavMenuList,
   NavMenuLink,
   SearchContainer,
-  SearchIcon,
+  FilterContainer,
+  FilterIcon,
+  FilterSpan,
+  // SearchIcon,
+  SearchButton,
   DropdownContainer,
   MainSearchContainer,
+  ContentSearchContainer,
+  ButtonSearchContainer,
+  InputSearch,
+  Label,
+  Select,
 } from './style';
 import { useGetCityQuery } from '../../../store/slices/apiSlice';
-import { setSearchHouse } from '../../../store/slices/searchHouseSlice';
+import {
+  setFilterHouse,
+} from '../../../store/slices/filterHouseSlice';
 
 function Navbar() {
   const navigate = useNavigate();
   const [openMenu, setOpenMenu] = useState(false);
-  const [inputSearchHouse, setInputSearchHouse] = useState('');
+
+  const [inputFilter, setInputFilter] = useState({
+    house: '', city: '0', checkInDate: '', checkOutDate: '',
+  });
+
+  const formatDate = 'YYYY-MM-DD';
+
+  const today = moment().format(formatDate);
+
   const dispatch = useDispatch();
 
   const {
@@ -36,7 +58,7 @@ function Navbar() {
     isLoading: cityLoading,
   } = useGetCityQuery();
 
-  const [searchFocus, setSearchFocus] = useState(false);
+  const [searchMenu, setSearchMenu] = useState(false);
 
   const handleOpenMenu = () => {
     setOpenMenu(!openMenu);
@@ -48,21 +70,33 @@ function Navbar() {
   };
 
   const handleInputChange = (e) => {
-    setInputSearchHouse(e.target.value);
+    setInputFilter({ ...inputFilter, [e.target.name]: e.target.value });
   };
 
-  const handleSearchFocus = () => {
-    setSearchFocus(true);
-    console.log(cityData?.data.city);
+  const handleClearInput = () => {
+    setInputFilter({
+      house: '', city: '0', checkInDate: '', checkOutDate: '',
+    });
   };
 
-  const handleSearchFocusOut = () => {
-    setSearchFocus(false);
+  const handleSearchMenu = () => {
+    setSearchMenu(!searchMenu);
+  };
+
+  const handleSearchMenuOut = () => {
+    setSearchMenu(false);
   };
 
   const handleClickSearch = (e) => {
     e.preventDefault();
-    dispatch(setSearchHouse(inputSearchHouse));
+
+    dispatch(setFilterHouse({
+      houseName: inputFilter.house,
+      city: inputFilter.city,
+      checkInDate: inputFilter.checkInDate,
+      checkOutDate: inputFilter.checkOutDate,
+    }));
+
     navigate('/');
   };
 
@@ -87,7 +121,7 @@ function Navbar() {
     useEffect(() => {
       function handleClickOutside(event) {
         if (ref.current && !ref.current.contains(event.target)) {
-          handleSearchFocusOut();
+          setSearchMenu(false);
         }
       }
       document.addEventListener('mousedown', handleClickOutside);
@@ -100,22 +134,26 @@ function Navbar() {
   const wrapperSearchMenuRef = useRef(null);
   useOutsideAlerterSearchMenu(wrapperSearchMenuRef);
 
-  const renderCitiesDropdown = () => {
-    cityData?.data.city.map((item) => (
-      <option value={item.city_id}>{item.city_name}</option>
-    ));
-  };
+  const renderCitiesDropdown = () => cityData?.data.city.map((item) => (
+    <option key={item.city_id} value={item.city_id}>{item.city_name}</option>
+  ));
 
   return (
     <Nav ref={wrapperSearchMenuRef}>
       <Container>
-        <LogoLink onClick={handleSearchFocusOut} to="/" replace>
+        <LogoLink onClick={handleSearchMenuOut} to="/" replace>
           <Logo src={require('../../../assets/staycay-logo-name.png')} alt="staycay-logo" />
         </LogoLink>
-        <SearchContainer>
-          <InputSearch type="text" placeholder="Search" value={inputSearchHouse} onChange={handleInputChange} onFocus={handleSearchFocus} />
-          <SearchIcon icon={faSearch} onClick={handleClickSearch} />
-        </SearchContainer>
+
+        <FilterContainer type="button" onClick={handleSearchMenu}>
+          <FilterIcon icon={faFilter} />
+          <FilterSpan>Filter</FilterSpan>
+        </FilterContainer>
+
+        {/* <SearchContainer onClick={handleSearchMenu}>
+          <InputSpan>Search</InputSpan>
+          <FontAwesomeIcon icon={faFilter} />
+        </SearchContainer> */}
         {/* <IconFilter type="button">
             <FontAwesomeIcon icon={faFilter} />
             <span>Filter</span>
@@ -127,7 +165,7 @@ function Navbar() {
               <FontAwesomeIcon icon={faUser} />
             </IconButton>
           </DropdownContainer>
-          <NavMenu open={openMenu} onClick={handleSearchFocusOut}>
+          <NavMenu open={openMenu} onClick={handleSearchMenuOut}>
             <NavMenuList>
               <NavMenuLink to="/" onClick={handleOpenMenu}>
                 Home
@@ -149,7 +187,6 @@ function Navbar() {
                     </NavMenuLink>
                   )
               }
-
               <NavMenuLink to="/profile" onClick={handleOpenMenu}>
                 Profile
               </NavMenuLink>
@@ -162,23 +199,45 @@ function Navbar() {
       </Container>
 
       <MainSearchContainer>
-        <div>
+        {/* <div>
           <select name="cities" id="cities" defaultValue={0}>
             <option value={0} disabled>Choose one...</option>
             {!cityLoading && !cityError && (renderCitiesDropdown())}
           </select>
-        </div>
+        </div> */}
       </MainSearchContainer>
-      {searchFocus
+      {searchMenu
         ? (
-          <MainSearchContainer>
-            <div>
-              <select name="cities" id="cities" defaultValue={0}>
-                <option value={0} disabled>Choose one...</option>
-                {!cityLoading && !cityError && (renderCitiesDropdown())}
-              </select>
-            </div>
-          </MainSearchContainer>
+          <div>
+            <MainSearchContainer>
+              <ContentSearchContainer>
+                <Label htmlFor="city">Choose City</Label>
+                <Select name="city" id="city" onChange={handleInputChange} value={inputFilter.city}>
+                  <option value="0">All</option>
+                  {!cityLoading && !cityError && (renderCitiesDropdown())}
+                </Select>
+              </ContentSearchContainer>
+              <ContentSearchContainer>
+                <Label htmlFor="houseName">House Name</Label>
+                <InputSearch id="houseName" onChange={handleInputChange} name="house" value={inputFilter.house} placeholder="Search house name" />
+              </ContentSearchContainer>
+              <ContentSearchContainer>
+                <Label htmlFor="checkInDate">Check In Date</Label>
+                <InputSearch type="date" id="checkInDate" onChange={handleInputChange} name="checkInDate" value={inputFilter.checkInDate} min={today} max={inputFilter.checkOutDate ? moment(inputFilter.checkOutDate).subtract(1, 'days').format(formatDate) : null} />
+              </ContentSearchContainer>
+              <ContentSearchContainer>
+                <Label htmlFor="checkOutDate">Check Out Date</Label>
+                <InputSearch type="date" id="checkOutDate" onChange={handleInputChange} name="checkOutDate" value={inputFilter.checkOutDate} min={inputFilter.checkInDate ? moment(inputFilter.checkInDate).add(1, 'days').format(formatDate) : today} />
+              </ContentSearchContainer>
+              <ButtonSearchContainer>
+                <SearchContainer onClick={handleClickSearch}>
+                  <InputSpan>Search</InputSpan>
+                  <SearchButton icon={faSearch} />
+                </SearchContainer>
+              </ButtonSearchContainer>
+            </MainSearchContainer>
+            <button type="button" onClick={handleClearInput}>clear filter</button>
+          </div>
         )
 
         : null}

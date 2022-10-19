@@ -72,22 +72,22 @@ export const IconButton = styled.button`
     }
 `;
 
-export const IconFilter = styled.button`
-    display: inline-flex; 
-    gap: 0.5rem;
-    padding: 0.75rem; 
-    margin-left: 0.75rem; 
-    background-color: white;
-    font-size: 0.875rem;
-    line-height: 1.25rem; 
-    align-items: center; 
-    border-radius: 1.25rem; 
-    cursor: pointer;
+// export const IconFilter = styled.button`
+//     display: inline-flex;
+//     gap: 0.5rem;
+//     padding: 0.75rem;
+//     margin-left: 0.75rem;
+//     background-color: white;
+//     font-size: 0.875rem;
+//     line-height: 1.25rem;
+//     align-items: center;
+//     border-radius: 1.25rem;
+//     cursor: pointer;
 
-    &:hover {
-        background-color: #F3F4F6; 
-    }
-`;
+//     &:hover {
+//         background-color: #F3F4F6;
+//     }
+// `;
 
 export const NavMenu = styled.div`
     display: ${(props) => (props.open ? 'block' : 'none')};
@@ -113,16 +113,35 @@ export const NavMenuLink = styled(Link)`
     text-align: left;
 `;
 
+export const FilterContainer = styled.div`
+    width: 100%;
+    display: flex; 
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem; 
+    align-items: center; 
+    cursor: pointer;
+    border-radius: 9999px; 
+
+    @media (min-width: 768px) { 
+        width: 20%;
+        border-width: 2px; 
+        box-shadow: 1px 0px 5px 0 rgba(0,0,0,0.5);
+    }
+
+    
+`;
+
 export const SearchContainer = styled.div`
     display: flex; 
     padding-top: 0.5rem;
     padding-bottom: 0.5rem; 
     align-items: center; 
+    cursor: pointer;
     border-radius: 9999px; 
+    box-shadow: 1px 0px 5px 0 rgba(0,0,0,0.5);
 
     @media (min-width: 768px) { 
         border-width: 2px; 
-        box-shadow: 1px 0px 5px 0 rgba(0,0,0,0.5);
     }
 `;
 
@@ -142,16 +161,141 @@ export const SearchIcon = styled(FontAwesomeIcon)`
     }
 `;
 
-export const InputSearch = styled.input`
+export const FilterIcon = styled(FontAwesomeIcon)`
+    display: none;
+    padding: 0.5rem; 
+    background-color: #b40607;
+    color: #ffffff; 
+    height: 1rem; 
+    border-radius: 9999px; 
+    cursor: pointer; 
+
+    @media (min-width: 768px) { 
+        display: inline-flex; 
+        margin-left: 0.5rem;
+        margin-right: 0.5rem; 
+    }
+`;
+
+export const SearchButton = styled(FontAwesomeIcon)`
+    padding: 0.5rem; 
+    background-color: #b40607;
+    color: #ffffff; 
+    height: 1rem; 
+    border-radius: 9999px; 
+    cursor: pointer; 
+
+    @media (min-width: 768px) { 
+        display: inline-flex; 
+        margin-left: 0.5rem;
+        margin-right: 0.5rem; 
+    }
+`;
+export const FilterSpan = styled.span`
+    padding-right: 1.25rem; 
+    text-align: center;
+    background-color: transparent; 
+    flex-grow: 1; 
+    border: 0;
+    outline: none; 
+    color: gray;
+`;
+
+export const InputSpan = styled.span`
     padding-left: 1.25rem; 
     background-color: transparent; 
     flex-grow: 1; 
     border: 0;
     outline: none; 
+    color: gray;
+`;
+
+export const InputSearch = styled.input`
+    padding-left: 1.25rem;
+    background-color: transparent;
+    flex-grow: 1;
+    border: 0;
+    outline: none;
 `;
 
 export const MainSearchContainer = styled.div`
-    display: grid;
     grid-template-columns: repeat(1, minmax(0, 1fr));
+    /* padding-left: 30%;
+    padding-right: 30%; */
+
+    @media (min-width: 768px) { 
+        display: grid;
+        grid-template-columns: 22% 22% 22% 22% 12%;
+        justify-items: center;
+
+        /* grid-template-columns: repeat(5, minmax(0, 1fr)); */
+    
+    }
+`;
+
+export const ContentSearchContainer = styled.div`
+    padding: 1rem;
+    height: 2.5rem;
+    display: grid;
+    align-items: center;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    box-shadow: 1px 0px 5px 0 rgba(0,0,0,0.5);
+
+
+    @media (min-width: 768px) { 
+        height: 3.5rem;
+        display: grid;
+        align-items: center;
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+        justify-items: center;
+        padding: 10%; 
+        border-radius: 9999px; 
+    }
+`;
+
+export const ButtonSearchContainer = styled.div`
+    display: grid;
+    align-items: center;
     justify-items: center;
+    margin-top: 1rem;
+    
+    @media (min-width: 768px) { 
+        margin-top: 0;
+    }
+`;
+export const Label = styled.label`
+    display: block;
+    color: #374151; 
+    font-size: 0.75rem;
+    line-height: 1rem; 
+    font-weight: 700; 
+    letter-spacing: 0.025em; 
+    text-transform: uppercase; 
+
+
+    @media (min-width: 768px) { 
+        margin-bottom: 0.5rem; 
+    }
+`;
+
+export const Select = styled.select`
+    display: block; 
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem; 
+    padding-left: 1rem;
+    padding-right: 1rem; 
+    background-color: #E5E7EB; 
+    color: #374151; 
+    line-height: 1.25; 
+    width: 100%; 
+    border-radius: 0.25rem; 
+    border-width: 1px; 
+    border-color: #E5E7EB; 
+    appearance: none; 
+
+    &:focus{
+        background-color: #ffffff; 
+        border-color: #6B7280; 
+        outline: 0; 
+    }
 `;

@@ -5,13 +5,17 @@ import { useGetHouseQuery } from '../../store/slices/apiSlice';
 import { CardContainer } from './style';
 
 function Home() {
-  const { searchHouse } = useSelector((state) => state.SearchHouse);
+  const {
+    filterHouseName, filterCity, filterCheckInDate, filterCheckOutDate,
+  } = useSelector((state) => state.FilterHouse);
 
   const {
     data: houseData,
     error: houseError,
     isFetching: houseLoading,
-  } = useGetHouseQuery(searchHouse);
+  } = useGetHouseQuery({
+    filterHouseName, filterCity, filterCheckInDate, filterCheckOutDate,
+  });
 
   const skeletonLoading = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
