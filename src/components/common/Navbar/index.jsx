@@ -5,7 +5,9 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 // import { faBars, faUser, faFilter } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+// import 'react-date-range/dist/styles.css';
+// import 'react-date-range/dist/theme/default.css';
 import moment from 'moment';
 import {
   Container,
@@ -46,8 +48,15 @@ function Navbar() {
   const navigate = useNavigate();
   const [openMenu, setOpenMenu] = useState(false);
 
+  const {
+    filterHouseName, filterCity, filterCheckInDate, filterCheckOutDate,
+  } = useSelector((state) => state.FilterHouse);
+
   const [inputFilter, setInputFilter] = useState({
-    house: '', city: '0', checkInDate: '', checkOutDate: '',
+    house: filterHouseName,
+    city: filterCity,
+    checkInDate: filterCheckInDate,
+    checkOutDate: filterCheckOutDate,
   });
 
   const formatDate = 'YYYY-MM-DD';
@@ -79,7 +88,7 @@ function Navbar() {
 
   const handleClearInput = () => {
     setInputFilter({
-      house: '', city: '0', checkInDate: '', checkOutDate: '',
+      house: '', city: 0, checkInDate: '', checkOutDate: '',
     });
   };
 
@@ -94,11 +103,19 @@ function Navbar() {
   const handleClickSearch = (e) => {
     e.preventDefault();
 
-    console.log(inputFilter);
+    if (inputFilter.checkInDate && !inputFilter.checkOutDate) {
+      inputFilter.checkOutDate = moment(inputFilter.checkInDate)
+        .add(1, 'days').format(formatDate);
+    }
+
+    if (inputFilter.checkOutDate && !inputFilter.checkInDate) {
+      inputFilter.checkInDate = moment(inputFilter.checkOutDate)
+        .subtract(1, 'days').format(formatDate);
+    }
 
     dispatch(setFilterHouse({
       houseName: inputFilter.house,
-      city: inputFilter.city,
+      city: parseInt(inputFilter.city, 10),
       checkInDate: inputFilter.checkInDate,
       checkOutDate: inputFilter.checkOutDate,
     }));
@@ -164,10 +181,13 @@ function Navbar() {
         <LogoLink onClick={handleSearchMenuOut} to="/" replace>
           <Logo src={require('../../../assets/staycay-logo-name.png')} alt="staycay-logo" />
         </LogoLink>
-        <FilterContainer type="button" onClick={handleSearchMenu}>
-          <Icon icon={faFilter} />
-          <FilterSpan>Filter</FilterSpan>
-        </FilterContainer>
+        {window.location.pathname === '/' ? (
+          <FilterContainer type="button" onClick={handleSearchMenu}>
+            <Icon icon={faFilter} />
+            <FilterSpan>Filter</FilterSpan>
+          </FilterContainer>
+        ) : null}
+
         <DropDownMenu ref={wrapperDropdownMenuRef}>
           <DropdownContainer>
             <DropdownIcon onClick={handleOpenMenu}>
@@ -244,11 +264,20 @@ function Navbar() {
                 <Input inputType="text" inputID="houseName" handleChange={handleInputChange} inputName="house" inputValue={inputFilter.house} inputPlaceholder="Search house name" />
               </ContentSearchContainer>
               <ContentSearchContainer>
-                <Label labelFor="checkInDate">Check In Date</Label>
-                <Input inputType="date" inputID="checkInDate" handleChange={handleInputChange} inputName="checkInDate" inputValue={inputFilter.checkInDate} inputMin={today} inputMax={inputFilter.checkOutDate ? moment(inputFilter.checkOutDate).subtract(1, 'days').format(formatDate) : null} />
+                <Label labelFor="checkInDate">Check In</Label>
+                <Input
+                  inputType="date"
+                  inputID="checkInDate"
+                  handleChange={handleInputChange}
+                  inputName="checkInDate"
+                  inputValue={inputFilter.checkInDate}
+                  inputMin={today}
+                  inputMax={inputFilter.checkOutDate ? moment(inputFilter.checkOutDate)
+                    .subtract(1, 'days').format(formatDate) : null}
+                />
               </ContentSearchContainer>
               <ContentSearchContainer>
-                <Label labelFor="checkOutDate">Check Out Date</Label>
+                <Label labelFor="checkOutDate">Check Out</Label>
                 <Input inputType="date" inputID="checkOutDate" handleChange={handleInputChange} inputName="checkOutDate" inputValue={inputFilter.checkOutDate} inputMin={inputFilter.checkInDate ? moment(inputFilter.checkInDate).add(1, 'days').format(formatDate) : today} />
               </ContentSearchContainer>
             </MainContentSearchContainer>

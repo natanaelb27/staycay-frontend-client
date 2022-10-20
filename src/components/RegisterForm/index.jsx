@@ -5,6 +5,7 @@ import Input from '../common/Input';
 import TextArea from '../common/TextArea';
 import Button from '../common/Button';
 import Select from '../common/Select';
+import ErrorMessage from '../common/ErrorMessage';
 import { useRegisterMutation, useGetCityQuery } from '../../store/slices/apiSlice';
 import {
   TitleContainer,
@@ -13,7 +14,6 @@ import {
   Form,
   MainInputContainer,
   InputContainer,
-  ErrorMessage,
 } from './style';
 import Toast from '../common/Toast';
 

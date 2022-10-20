@@ -3,9 +3,8 @@ import { useRoutes, useNavigate, useLocation } from 'react-router-dom';
 
 import { Layout } from '../components';
 import {
-  Home, Login, Register, House, NotFound,
+  Home, Login, Register, House, NotFound, Hosting, Reservation,
 } from '../pages';
-import Hosting from '../pages/Hosting';
 
 const Routes = () => {
   const routes = useRoutes([
@@ -28,6 +27,10 @@ const Routes = () => {
         {
           path: '/house/:houseID',
           element: <House />,
+        },
+        {
+          path: '/reservation',
+          element: <RequireAuth redirectTo="/login"><Reservation /></RequireAuth>,
         },
         {
           path: '/hosting',

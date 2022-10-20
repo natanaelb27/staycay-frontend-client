@@ -10,5 +10,15 @@ export const Buttons = styled.button`
     padding-left: 1rem;
     padding-right: 1rem;
     border-radius: 0.25rem;
+    cursor: pointer;
     border-color: transparent;
+
+    &:hover {
+        background-color: var(--staycay-light-red);
+    }
+
+    :disabled {
+        cursor: default;
+        background-color: gray;
+    }
 `;

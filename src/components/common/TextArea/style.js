@@ -8,7 +8,7 @@ export const TextAreas = styled.textarea`
     color: #000000; 
     line-height: 1.25; 
     width: 100%; 
-    border-color: var(--staycay-red);
+    border: 1px solid #374151;
     border-radius: 0.25rem; 
     appearance: none; 
     resize: none;

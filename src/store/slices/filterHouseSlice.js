@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   filterHouseName: '',
-  filterCity: '0',
+  filterCity: 0,
   filterCheckInDate: '',
   filterCheckOutDate: '',
 };

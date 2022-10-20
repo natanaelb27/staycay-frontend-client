@@ -7,7 +7,7 @@ import styled from 'styled-components';
 export const Labels = styled.label`
     display: block;
     color: #374151; 
-    font-size: 0.75rem;
+    font-size: 0.95rem;
     line-height: 1rem; 
     font-weight: 700; 
     letter-spacing: 0.025em; 

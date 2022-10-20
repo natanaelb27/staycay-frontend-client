@@ -35,12 +35,12 @@ export const Selects = styled.select`
     width: 100%; 
     border-radius: 0.25rem; 
     border-width: 1px; 
-    border-color: var(--staycay-red); 
+    border: 1px solid #374151;
     appearance: none; 
 
     &:focus{
         background-color: #ffffff; 
-        border-color: var(--staycay-red); 
+        border: 1px solid #374151;
         outline: 0; 
     }
 `;

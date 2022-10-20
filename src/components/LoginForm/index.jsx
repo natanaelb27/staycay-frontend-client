@@ -4,6 +4,7 @@ import Label from '../common/Label';
 import Input from '../common/Input';
 import Button from '../common/Button';
 import Toast from '../common/Toast';
+import ErrorMessage from '../common/ErrorMessage';
 import { useLoginMutation } from '../../store/slices/apiSlice';
 import {
   TitleContainer,
@@ -12,7 +13,6 @@ import {
   Form,
   MainInputContainer,
   InputContainer,
-  ErrorMessage,
 } from './style';
 
 function LoginForm() {

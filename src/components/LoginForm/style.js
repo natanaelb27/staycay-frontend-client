@@ -23,10 +23,6 @@ export const Title = styled.h1`
     text-align: center;
 `;
 
-export const ErrorMessage = styled.span`
-    color: var(--staycay-red);
-`;
-
 export const Form = styled.form`
     display: grid; 
     align-content: center; 

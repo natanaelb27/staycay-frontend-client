@@ -12,7 +12,7 @@ export const apiSlice = createApi({
     //   return headers;
     // },
   }),
-  tagTypes: ['Houses', 'Cities', 'Users'],
+  tagTypes: ['Houses', 'Cities', 'Users', 'Reservations'],
   endpoints: (builder) => ({
     register: builder.mutation({
       query: ({
@@ -58,6 +58,13 @@ export const apiSlice = createApi({
       }),
       providesTags: ['Houses'],
     }),
+    getHouseReservationsByHouseID: builder.query({
+      query: (houseID) => ({
+        url: `/house/reservation/${houseID}`,
+        method: 'GET',
+      }),
+      providesTags: ['Reservations'],
+    }),
     getUserProfile: builder.query({
       query: () => ({
         url: '/user',
@@ -77,5 +84,6 @@ export const {
   useGetHouseQuery,
   useGetCityQuery,
   useGetHouseByIDQuery,
+  useGetHouseReservationsByHouseIDQuery,
   useGetUserProfileQuery,
 } = apiSlice;
