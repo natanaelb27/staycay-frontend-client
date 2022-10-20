@@ -5,7 +5,17 @@ import Input from '../common/Input';
 import TextArea from '../common/TextArea';
 import Button from '../common/Button';
 import Select from '../common/Select';
-import { useRegisterMutation } from '../../store/slices/apiSlice';
+import { useRegisterMutation, useGetCityQuery } from '../../store/slices/apiSlice';
+import {
+  TitleContainer,
+  Title,
+  MainContainer,
+  Form,
+  MainInputContainer,
+  InputContainer,
+  ErrorMessage,
+} from './style';
+import Toast from '../common/Toast';
 
 function RegisterForm() {
   const navigate = useNavigate();
@@ -14,7 +24,7 @@ function RegisterForm() {
     email: '',
     password: '',
     address: '',
-    city: '',
+    city: 0,
   });
 
   const [errorInput, setErrorInput] = useState({
@@ -24,6 +34,12 @@ function RegisterForm() {
     errorAddress: '',
     errorCity: '',
   });
+
+  const {
+    data: cityData,
+    error: cityError,
+    isLoading: cityLoading,
+  } = useGetCityQuery();
 
   const [register] = useRegisterMutation();
 
@@ -75,7 +91,7 @@ function RegisterForm() {
       newError.errorAddress = 'Address is required!';
     }
 
-    if (!input.city) {
+    if (input.city === 0) {
       newError.errorCity = 'City is required!';
     }
 
@@ -91,7 +107,7 @@ function RegisterForm() {
         email: input.email,
         password: input.password,
         address: input.address,
-        city: input.city,
+        cityID: input.city,
       })
         .unwrap()
         .then((payload) => {
@@ -108,65 +124,91 @@ function RegisterForm() {
     }
   };
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <Label htmlFor="name">Name</Label>
-      <Input
-        inputType="text"
-        inputID="name"
-        inputName="name"
-        inputValue={input.name}
-        handleChange={handleInputChange}
-      />
-      {errorInput.errorName ? <p>{errorInput.errorName}</p> : null}
-      <Label htmlFor="email">Email</Label>
-      <Input
-        inputType="text"
-        inputID="email"
-        inputName="email"
-        inputValue={input.email}
-        handleChange={handleInputChange}
-      />
-      {errorInput.errorEmail ? <p>{errorInput.errorEmail}</p> : null}
-      <Label htmlFor="password">Password</Label>
-      <Input
-        inputType="password"
-        inputID="password"
-        inputName="password"
-        inputValue={input.password}
-        handleChange={handleInputChange}
-      />
-      {errorInput.errorPassword ? <p>{errorInput.errorPassword}</p> : null}
-      <Label htmlFor="address">Address</Label>
-      <TextArea
-        inputType="text"
-        inputID="address"
-        inputName="address"
-        inputValue={input.address}
-        handleChange={handleInputChange}
-      />
-      {errorInput.errorAddress ? <p>{errorInput.errorAddress}</p> : null}
-      <Label htmlFor="city">City</Label>
-      <Select
-        selectID="city"
-        selectName="city"
-        handleChange={handleInputChange}
-      >
-        <option key="default" value="default" disabled>
-          Choose one...
-        </option>
-        <option key="Jakarta" value="Jakarta">
-          Jakarta
-        </option>
-        <option key="Bandung" value="Bandung">
-          Bandung
-        </option>
-      </Select>
-      {errorInput.errorCity ? <p>{errorInput.errorCity}</p> : null}
-      <Button btnType="submit">Register</Button>
-      {errorRegister ? <p>{errorRegister}</p> : null}
+  const handleToastClose = () => {
+    setErrorRegister('');
+  };
 
-    </form>
+  const renderCitiesDropdown = () => cityData?.data.city.map((item) => (
+    <option key={item.city_id} value={item.city_id}>{item.city_name}</option>
+  ));
+
+  return (
+    <MainContainer>
+      <Form onSubmit={handleSubmit}>
+        <TitleContainer>
+          <Title>Register</Title>
+        </TitleContainer>
+        <MainInputContainer>
+          <InputContainer>
+            <Label labelFor="name">Name</Label>
+            <Input
+              inputType="text"
+              inputID="name"
+              inputName="name"
+              inputValue={input.name}
+              handleChange={handleInputChange}
+            />
+            {errorInput.errorName ? <ErrorMessage>{errorInput.errorName}</ErrorMessage> : null}
+          </InputContainer>
+          <InputContainer>
+            <Label labelFor="email">Email</Label>
+            <Input
+              inputType="text"
+              inputID="email"
+              inputName="email"
+              inputValue={input.email}
+              handleChange={handleInputChange}
+            />
+            {errorInput.errorEmail ? <ErrorMessage>{errorInput.errorEmail}</ErrorMessage> : null}
+          </InputContainer>
+          <InputContainer>
+            <Label htmlFor="password">Password</Label>
+            <Input
+              inputType="password"
+              inputID="password"
+              inputName="password"
+              inputValue={input.password}
+              handleChange={handleInputChange}
+            />
+            {errorInput.errorPassword
+              ? <ErrorMessage>{errorInput.errorPassword}</ErrorMessage> : null}
+          </InputContainer>
+          <InputContainer>
+            <Label htmlFor="address">Address</Label>
+            <TextArea
+              inputType="text"
+              inputID="address"
+              inputName="address"
+              inputValue={input.address}
+              handleChange={handleInputChange}
+            />
+            {errorInput.errorAddress
+              ? <ErrorMessage>{errorInput.errorAddress}</ErrorMessage> : null}
+          </InputContainer>
+          <InputContainer>
+            <Label htmlFor="city">City</Label>
+            <Select
+              selectID="city"
+              selectName="city"
+              handleChange={handleInputChange}
+              selectValue={input.city}
+            >
+              <option value={0} disabled>
+                Choose one...
+              </option>
+              {!cityLoading && !cityError && (renderCitiesDropdown())}
+            </Select>
+            {errorInput.errorCity ? <ErrorMessage>{errorInput.errorCity}</ErrorMessage> : null}
+          </InputContainer>
+          <Button btnType="submit">Register</Button>
+        </MainInputContainer>
+      </Form>
+      {errorRegister && (
+        <Toast toastCloseClicked={handleToastClose}>
+          {errorRegister}
+        </Toast>
+      )}
+    </MainContainer>
   );
 }
 

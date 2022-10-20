@@ -1,15 +1,18 @@
 import React from 'react';
+import {
+  Selects,
+} from './style';
 
 function Select({ children, ...props }) {
   return (
-    <select
+    <Selects
       id={props.selectID}
       onChange={props.handleChange}
       name={props.selectName}
-      defaultValue="default"
+      value={props.selectValue}
     >
       {children}
-    </select>
+    </Selects>
   );
 }
 

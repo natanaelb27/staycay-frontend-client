@@ -1,17 +1,20 @@
 import React from 'react';
+import {
+  Buttons,
+} from './style';
 
 function Button({ btnType, children }) {
   if (btnType === 'submit') {
     return (
-      <button type="submit">
+      <Buttons type="submit">
         {children}
-      </button>
+      </Buttons>
     );
   }
   return (
-    <button type="button">
+    <Buttons type="button">
       {children}
-    </button>
+    </Buttons>
   );
 }
 

@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faBars, faUser, faSearch, faFilter,
+  faBars, faUser, faSearch, faFilter, faTrashAlt,
 } from '@fortawesome/free-solid-svg-icons';
 // import { faBars, faUser, faFilter } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
@@ -9,9 +9,8 @@ import { useDispatch } from 'react-redux';
 import moment from 'moment';
 import {
   Container,
-  IconButton,
+  DropdownIcon,
   InputSpan,
-  // IconFilter,
   Nav,
   Logo,
   LogoLink,
@@ -19,21 +18,26 @@ import {
   NavMenu,
   NavMenuList,
   NavMenuLink,
-  SearchContainer,
   FilterContainer,
-  FilterIcon,
+  // FilterIcon,
   FilterSpan,
-  // SearchIcon,
-  SearchButton,
+  Icon,
   DropdownContainer,
   MainSearchContainer,
+  MainContentSearchContainer,
+  SearchFooterContainer,
+  SearchContainer,
+  ClearFilterContainer,
+  ClearFilterContentContainer,
   ContentSearchContainer,
   ButtonSearchContainer,
-  InputSearch,
-  Label,
-  Select,
+  // Input,
+  // Label,
 } from './style';
-import { useGetCityQuery } from '../../../store/slices/apiSlice';
+import Select from '../Select';
+import Label from '../Label';
+import Input from '../Input';
+import { useGetCityQuery, useGetUserProfileQuery } from '../../../store/slices/apiSlice';
 import {
   setFilterHouse,
 } from '../../../store/slices/filterHouseSlice';
@@ -90,6 +94,8 @@ function Navbar() {
   const handleClickSearch = (e) => {
     e.preventDefault();
 
+    console.log(inputFilter);
+
     dispatch(setFilterHouse({
       houseName: inputFilter.house,
       city: inputFilter.city,
@@ -138,32 +144,36 @@ function Navbar() {
     <option key={item.city_id} value={item.city_id}>{item.city_name}</option>
   ));
 
+  const
+    { data: userData } = useGetUserProfileQuery(undefined, { skip: localStorage.getItem('user') === null });
+
+  const CheckUserRole = () => {
+    if (localStorage.getItem('user')) {
+      if (userData?.data.role === 'host') {
+        return 'host';
+      }
+
+      return 'user';
+    }
+    return '';
+  };
+
   return (
     <Nav ref={wrapperSearchMenuRef}>
       <Container>
         <LogoLink onClick={handleSearchMenuOut} to="/" replace>
           <Logo src={require('../../../assets/staycay-logo-name.png')} alt="staycay-logo" />
         </LogoLink>
-
         <FilterContainer type="button" onClick={handleSearchMenu}>
-          <FilterIcon icon={faFilter} />
+          <Icon icon={faFilter} />
           <FilterSpan>Filter</FilterSpan>
         </FilterContainer>
-
-        {/* <SearchContainer onClick={handleSearchMenu}>
-          <InputSpan>Search</InputSpan>
-          <FontAwesomeIcon icon={faFilter} />
-        </SearchContainer> */}
-        {/* <IconFilter type="button">
-            <FontAwesomeIcon icon={faFilter} />
-            <span>Filter</span>
-          </IconFilter> */}
         <DropDownMenu ref={wrapperDropdownMenuRef}>
           <DropdownContainer>
-            <IconButton type="button" onClick={handleOpenMenu}>
+            <DropdownIcon onClick={handleOpenMenu}>
               <FontAwesomeIcon icon={faBars} />
               <FontAwesomeIcon icon={faUser} />
-            </IconButton>
+            </DropdownIcon>
           </DropdownContainer>
           <NavMenu open={openMenu} onClick={handleSearchMenuOut}>
             <NavMenuList>
@@ -181,63 +191,82 @@ function Navbar() {
                     </NavMenuLink>
                   </>
                 )
+                  : null
+              }
+              {
+                !localStorage.getItem('user') ? null
+                  : (
+                    <NavMenuLink to="/profile" onClick={handleOpenMenu}>
+                      Profile
+                    </NavMenuLink>
+                  )
+              }
+              {
+                localStorage.getItem('user') === null ? null : (CheckUserRole() === 'host'
+                  ? (
+                    <NavMenuLink to="/hosting">
+                      Switch to hosting
+                    </NavMenuLink>
+                  ) : (
+                    <NavMenuLink to="/hosting">
+                      Become a host
+                    </NavMenuLink>
+
+                  )
+                )
+              }
+              {
+                !localStorage.getItem('user') ? null
                   : (
                     <NavMenuLink to="/" onClick={handleLogout}>
                       Logout
                     </NavMenuLink>
                   )
               }
-              <NavMenuLink to="/profile" onClick={handleOpenMenu}>
-                Profile
-              </NavMenuLink>
-              <NavMenuLink to="/hosting" onClick={handleOpenMenu}>
-                Become a host / Manage your houses
-              </NavMenuLink>
             </NavMenuList>
           </NavMenu>
         </DropDownMenu>
       </Container>
 
-      <MainSearchContainer>
-        {/* <div>
-          <select name="cities" id="cities" defaultValue={0}>
-            <option value={0} disabled>Choose one...</option>
-            {!cityLoading && !cityError && (renderCitiesDropdown())}
-          </select>
-        </div> */}
-      </MainSearchContainer>
       {searchMenu
         ? (
-          <div>
-            <MainSearchContainer>
+          <MainSearchContainer>
+            <MainContentSearchContainer>
               <ContentSearchContainer>
-                <Label htmlFor="city">Choose City</Label>
-                <Select name="city" id="city" onChange={handleInputChange} value={inputFilter.city}>
+                <Label labelFor="city">Choose City</Label>
+                <Select selectName="city" selectID="city" handleChange={handleInputChange} selectValue={inputFilter.city}>
                   <option value="0">All</option>
                   {!cityLoading && !cityError && (renderCitiesDropdown())}
                 </Select>
               </ContentSearchContainer>
               <ContentSearchContainer>
-                <Label htmlFor="houseName">House Name</Label>
-                <InputSearch id="houseName" onChange={handleInputChange} name="house" value={inputFilter.house} placeholder="Search house name" />
+                <Label labelFor="houseName">House Name</Label>
+                <Input inputType="text" inputID="houseName" handleChange={handleInputChange} inputName="house" inputValue={inputFilter.house} inputPlaceholder="Search house name" />
               </ContentSearchContainer>
               <ContentSearchContainer>
-                <Label htmlFor="checkInDate">Check In Date</Label>
-                <InputSearch type="date" id="checkInDate" onChange={handleInputChange} name="checkInDate" value={inputFilter.checkInDate} min={today} max={inputFilter.checkOutDate ? moment(inputFilter.checkOutDate).subtract(1, 'days').format(formatDate) : null} />
+                <Label labelFor="checkInDate">Check In Date</Label>
+                <Input inputType="date" inputID="checkInDate" handleChange={handleInputChange} inputName="checkInDate" inputValue={inputFilter.checkInDate} inputMin={today} inputMax={inputFilter.checkOutDate ? moment(inputFilter.checkOutDate).subtract(1, 'days').format(formatDate) : null} />
               </ContentSearchContainer>
               <ContentSearchContainer>
-                <Label htmlFor="checkOutDate">Check Out Date</Label>
-                <InputSearch type="date" id="checkOutDate" onChange={handleInputChange} name="checkOutDate" value={inputFilter.checkOutDate} min={inputFilter.checkInDate ? moment(inputFilter.checkInDate).add(1, 'days').format(formatDate) : today} />
+                <Label labelFor="checkOutDate">Check Out Date</Label>
+                <Input inputType="date" inputID="checkOutDate" handleChange={handleInputChange} inputName="checkOutDate" inputValue={inputFilter.checkOutDate} inputMin={inputFilter.checkInDate ? moment(inputFilter.checkInDate).add(1, 'days').format(formatDate) : today} />
               </ContentSearchContainer>
+            </MainContentSearchContainer>
+            <SearchFooterContainer>
+              <ClearFilterContainer>
+                <ClearFilterContentContainer onClick={handleClearInput}>
+                  <InputSpan>Clear Filter</InputSpan>
+                  <Icon icon={faTrashAlt} />
+                </ClearFilterContentContainer>
+              </ClearFilterContainer>
               <ButtonSearchContainer>
                 <SearchContainer onClick={handleClickSearch}>
                   <InputSpan>Search</InputSpan>
-                  <SearchButton icon={faSearch} />
+                  <Icon icon={faSearch} />
                 </SearchContainer>
               </ButtonSearchContainer>
-            </MainSearchContainer>
-            <button type="button" onClick={handleClearInput}>clear filter</button>
-          </div>
+            </SearchFooterContainer>
+          </MainSearchContainer>
         )
 
         : null}

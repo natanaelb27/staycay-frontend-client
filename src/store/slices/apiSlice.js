@@ -12,16 +12,16 @@ export const apiSlice = createApi({
     //   return headers;
     // },
   }),
-  tagTypes: ['Houses', 'Cities'],
+  tagTypes: ['Houses', 'Cities', 'Users'],
   endpoints: (builder) => ({
     register: builder.mutation({
       query: ({
-        name, email, password, address, city,
+        name, email, password, address, cityID,
       }) => ({
         url: '/register',
         method: 'POST',
         body: {
-          name, email, password, address, city,
+          name, email, password, address, city_id: parseInt(cityID, 10),
         },
         // headers: {
         //   authorization: `Bearer ${localStorage.getItem('user').token}`,
@@ -58,6 +58,16 @@ export const apiSlice = createApi({
       }),
       providesTags: ['Houses'],
     }),
+    getUserProfile: builder.query({
+      query: () => ({
+        url: '/user',
+        method: 'GET',
+        headers: {
+          authorization: `Bearer ${JSON.parse(localStorage.getItem('user'))?.token ? JSON.parse(localStorage.getItem('user'))?.token : ''}`,
+        },
+      }),
+      providesTags: ['Users'],
+    }),
   }),
 });
 
@@ -67,4 +77,5 @@ export const {
   useGetHouseQuery,
   useGetCityQuery,
   useGetHouseByIDQuery,
+  useGetUserProfileQuery,
 } = apiSlice;

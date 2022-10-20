@@ -1,10 +1,13 @@
 import React from 'react';
+import {
+  Labels,
+} from './style';
 
 function Label({ ...props }) {
   return (
-    <label htmlFor={props.labelFor}>
+    <Labels htmlFor={props.labelFor}>
       {props.children}
-    </label>
+    </Labels>
   );
 }
 

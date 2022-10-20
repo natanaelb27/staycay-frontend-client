@@ -1,8 +1,9 @@
 import React from 'react';
+import { TextAreas } from './style';
 
 function TextArea({ ...props }) {
   return (
-    <textarea
+    <TextAreas
       type={props.inputType}
       id={props.inputID}
       name={props.inputName}

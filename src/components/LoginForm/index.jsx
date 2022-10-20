@@ -3,7 +3,17 @@ import { useNavigate } from 'react-router-dom';
 import Label from '../common/Label';
 import Input from '../common/Input';
 import Button from '../common/Button';
+import Toast from '../common/Toast';
 import { useLoginMutation } from '../../store/slices/apiSlice';
+import {
+  TitleContainer,
+  Title,
+  MainContainer,
+  Form,
+  MainInputContainer,
+  InputContainer,
+  ErrorMessage,
+} from './style';
 
 function LoginForm() {
   const navigate = useNavigate();
@@ -20,6 +30,10 @@ function LoginForm() {
   const [login] = useLoginMutation();
 
   const [errorLogin, setErrorLogin] = useState('');
+
+  const handleToastClose = () => {
+    setErrorLogin('');
+  };
 
   // useEffect(() => {
   //   const user = localStorage.getItem('user');
@@ -76,29 +90,48 @@ function LoginForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <Label htmlFor="email">Email</Label>
-      <Input
-        inputType="text"
-        inputID="email"
-        inputName="email"
-        inputValue={input.email}
-        handleChange={handleInputChange}
-      />
-      {errorInput.errorEmail ? <p>{errorInput.errorEmail}</p> : null}
-      <Label htmlFor="password">Password</Label>
-      <Input
-        inputType="password"
-        inputID="password"
-        inputName="password"
-        inputValue={input.password}
-        handleChange={handleInputChange}
-      />
-      {errorInput.errorPassword ? <p>{errorInput.errorPassword}</p> : null}
-      <Button btnType="submit">Login</Button>
-      {errorLogin ? <p>{errorLogin}</p> : null}
+    <MainContainer>
+      <Form onSubmit={handleSubmit}>
+        <TitleContainer>
+          <Title>
+            Login
+          </Title>
+        </TitleContainer>
+        <MainInputContainer>
 
-    </form>
+          <InputContainer>
+            <Label labelFor="email">Email</Label>
+            <Input
+              inputType="text"
+              inputID="email"
+              inputName="email"
+              inputValue={input.email}
+              handleChange={handleInputChange}
+            />
+            {errorInput.errorEmail ? <ErrorMessage>{errorInput.errorEmail}</ErrorMessage> : null}
+          </InputContainer>
+          <InputContainer>
+            <Label labelFor="password">Password</Label>
+            <Input
+              inputType="password"
+              inputID="password"
+              inputName="password"
+              inputValue={input.password}
+              handleChange={handleInputChange}
+            />
+            {errorInput.errorPassword
+              ? <ErrorMessage>{errorInput.errorPassword}</ErrorMessage> : null}
+
+          </InputContainer>
+          <Button btnType="submit">Login</Button>
+        </MainInputContainer>
+      </Form>
+      {errorLogin && (
+        <Toast toastCloseClicked={handleToastClose}>
+          {errorLogin}
+        </Toast>
+      )}
+    </MainContainer>
   );
 }
 

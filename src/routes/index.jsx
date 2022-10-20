@@ -5,6 +5,7 @@ import { Layout } from '../components';
 import {
   Home, Login, Register, House, NotFound,
 } from '../pages';
+import Hosting from '../pages/Hosting';
 
 const Routes = () => {
   const routes = useRoutes([
@@ -29,8 +30,8 @@ const Routes = () => {
           element: <House />,
         },
         {
-          path: '/sementara',
-          element: <RequireAuth redirectTo="/login"><NotFound /></RequireAuth>,
+          path: '/hosting',
+          element: <RequireAuth redirectTo="/login"><Hosting /></RequireAuth>,
         },
         {
           path: '*',

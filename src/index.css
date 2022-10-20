@@ -1,4 +1,9 @@
+:root {
+    --staycay-red: #b40607;
+}
+
 body {
     font-family: "Roboto";
     margin: 0;
 }
+
