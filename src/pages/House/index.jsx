@@ -1,15 +1,16 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import moment from 'moment';
 import { DateRange } from 'react-date-range';
-import { isDisabled } from '@testing-library/user-event/dist/utils';
-import { useDispatch, useSelector } from 'react-redux';
 import {
-  Carousel, HouseContainer, SkeletonImage, SkeletonLine, SkeletonText,
+  Carousel, SkeletonImage, SkeletonLine, SkeletonText,
 } from '../../components';
+import Button from '../../components/common/Button';
+import ErrorMessage from '../../components/common/ErrorMessage';
 import { useGetHouseByIDQuery, useGetHouseReservationsByHouseIDQuery } from '../../store/slices/apiSlice';
 import {
+  MainContainer,
   HouseTitleContainer,
   HouseImageContainer,
   HouseContentContainer,
@@ -24,23 +25,16 @@ import {
   DateRangeContainer,
   PriceContainer,
 } from './style';
-import Button from '../../components/common/Button';
-import { numberWithCommas, getDayBetweenDates } from '../../helpers';
 import {
-  setHouseReservation,
-} from '../../store/slices/houseReservationSlice';
-
+  numberWithCommas, getDayBetweenDates, getDatesBetween, dateToDateStringArray,
+} from '../../helpers';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
-import ErrorMessage from '../../components/common/ErrorMessage';
 
 function House() {
-  const params = useParams();
-
-  const queryParams = new URLSearchParams(window.location.search);
-
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const params = useParams();
+  const queryParams = new URLSearchParams(window.location.search);
 
   const {
     data: houseData,
@@ -54,23 +48,12 @@ function House() {
     isLoading: houseReservationLoading,
   } = useGetHouseReservationsByHouseIDQuery(params.houseID);
 
-  const getDatesBetween = (startDate, lastDate) => {
-    const dateArray = [];
-    let currentDate = moment(startDate);
-    const stopDate = moment(lastDate);
-    while (currentDate <= stopDate) {
-      dateArray.push(new Date(moment(currentDate).format('YYYY-MM-DD')));
-      currentDate = moment(currentDate).add(1, 'days');
-    }
-    return dateArray;
-  };
-
   const existingReservationDateArray = [];
 
   houseReservationData?.data.reservation.map((item) => (
     existingReservationDateArray.push(getDatesBetween(
-      new Date(item.check_in_date),
-      new Date(item.check_out_date),
+      item.check_in_date,
+      item.check_out_date,
     ))));
 
   const disabledDates = existingReservationDateArray.flat(1);
@@ -102,7 +85,8 @@ function House() {
 
   const newReservationDates = newReservationDateArray.flat(1);
 
-  // const [isReservationValid, setIsReservationValid] = useState(true);
+  const newReservationDatesDS = dateToDateStringArray(newReservationDates);
+  const disabledDatesDS = dateToDateStringArray(disabledDates);
 
   const handleDateSelect = (ranges) => {
     setCheckInDate(ranges.selection.startDate);
@@ -120,36 +104,32 @@ function House() {
 
     setErrorReservationDate('');
 
+    if (new Date(checkInDate.toDateString()) < new Date(new Date().toDateString())) {
+      setErrorReservationDate('Cannot set a date before today');
+      return;
+    }
+
     if (checkInDate.getTime() === checkOutDate.getTime()) {
       setErrorReservationDate('Minimum stay is 1 night');
       return;
     }
 
-    // BELOM BISA
-    for (let i = 0; i < disabledDates.length; i += 1) {
-      if (newReservationDates.includes(moment(disabledDates[i]))) {
-        setErrorReservationDate('Those dates are not available');
-        return;
-      }
+    if (newReservationDatesDS.some((r) => disabledDatesDS.indexOf(r) >= 0)) {
+      setErrorReservationDate('Those dates are not available');
+      return;
     }
 
-    dispatch(setHouseReservation({
-      houseID: params.houseID,
-      checkInDate: moment(checkInDate).format('YYYY-MM-DD'),
-      checkOutDate: moment(checkOutDate).format('YYYY-MM-DD'),
-    }));
-
-    navigate('/reservation');
+    navigate(`/reservation/${params.houseID}?check_in=${moment(checkInDate).format('YYYY-MM-DD')}&check_out=${moment(checkOutDate).format('YYYY-MM-DD')}`);
   };
 
   if (!houseLoading && houseError && houseError.data.code === 400) {
-    navigate('/');
+    // navigate('/');
   } else if (!houseLoading && houseError && houseError.data.code === 500) {
     navigate('/InternalServerError');
   }
 
   return (
-    <HouseContainer>
+    <MainContainer>
       <HouseTitleContainer>
         {houseLoading && <SkeletonLine classes="w-30p" />}
         {!houseLoading && !houseError && (
@@ -244,7 +224,7 @@ function House() {
           </div>
         )}
       </HouseContentContainer>
-    </HouseContainer>
+    </MainContainer>
   );
 }
 

@@ -1,6 +1,5 @@
 export { default as Layout } from './Layout';
 export { default as MainContainer } from './common/MainContainer';
-export { default as HouseContainer } from './HouseContainer';
 // export { default as Input } from './common/Input';
 // export { default as Label } from './common/Label';
 // export { default as Button } from './common/Button';
@@ -13,3 +12,4 @@ export { default as SkeletonCard } from './Skeleton/SkeletonCard';
 export { default as SkeletonImage } from './Skeleton/SkeletonImage';
 export { default as SkeletonText } from './Skeleton/SkeletonText';
 export { default as SkeletonLine } from './Skeleton/SkeletonLine';
+export { default as ReservationOrderCard } from './ReservationOrderCard';

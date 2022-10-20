@@ -146,7 +146,6 @@ export const FilterContainer = styled.div`
 
 export const MainSearchContainer = styled.div`
     display: grid;
-    align-items: center;
 `;
 
 // export const Icon = styled(FontAwesomeIcon)`

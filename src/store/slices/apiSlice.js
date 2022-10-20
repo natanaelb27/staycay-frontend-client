@@ -23,9 +23,6 @@ export const apiSlice = createApi({
         body: {
           name, email, password, address, city_id: parseInt(cityID, 10),
         },
-        // headers: {
-        //   authorization: `Bearer ${localStorage.getItem('user').token}`,
-        // },
       }),
     }),
     login: builder.mutation({
@@ -53,7 +50,7 @@ export const apiSlice = createApi({
     }),
     getHouseByID: builder.query({
       query: (houseID) => ({
-        url: `/house/${houseID}`,
+        url: `/house/${parseInt(houseID, 10)}`,
         method: 'GET',
       }),
       providesTags: ['Houses'],
@@ -75,6 +72,17 @@ export const apiSlice = createApi({
       }),
       providesTags: ['Users'],
     }),
+    addReservation: builder.mutation({
+      query: ({
+        houseID, checkInDate, checkOutDate,
+      }) => ({
+        url: '/reservation',
+        method: 'POST',
+        body: {
+          house_id: parseInt(houseID, 10), check_in_date: checkInDate, check_out_date: checkOutDate,
+        },
+      }),
+    }),
   }),
 });
 
@@ -86,4 +94,5 @@ export const {
   useGetHouseByIDQuery,
   useGetHouseReservationsByHouseIDQuery,
   useGetUserProfileQuery,
+  useAddReservationMutation,
 } = apiSlice;

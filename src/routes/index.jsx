@@ -29,7 +29,7 @@ const Routes = () => {
           element: <House />,
         },
         {
-          path: '/reservation',
+          path: '/reservation/:houseID',
           element: <RequireAuth redirectTo="/login"><Reservation /></RequireAuth>,
         },
         {

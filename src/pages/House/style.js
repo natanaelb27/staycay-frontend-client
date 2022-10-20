@@ -1,5 +1,13 @@
 import styled from 'styled-components';
 
+export const MainContainer = styled.div`
+    max-width: 100%;
+    align-content: center; 
+    place-items: center; 
+    padding-left: 15%;
+    padding-right: 15%; 
+`;
+
 export const HouseTitleContainer = styled.div`
     width: 100%;
     margin-top: 3%;
