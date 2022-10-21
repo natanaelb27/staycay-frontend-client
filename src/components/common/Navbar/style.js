@@ -178,6 +178,7 @@ export const Icon = styled(FontAwesomeIcon)`
         margin-right: 0.5rem; 
     }
 `;
+
 export const FilterSpan = styled.span`
     padding-right: 1.25rem; 
     text-align: center;

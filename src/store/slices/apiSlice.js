@@ -81,7 +81,26 @@ export const apiSlice = createApi({
         body: {
           house_id: parseInt(houseID, 10), check_in_date: checkInDate, check_out_date: checkOutDate,
         },
+        headers: {
+          authorization: `Bearer ${JSON.parse(localStorage.getItem('user'))?.token ? JSON.parse(localStorage.getItem('user'))?.token : ''}`,
+        },
       }),
+      invalidatesTags: ['Users'],
+    }),
+    topUp: builder.mutation({
+      query: ({
+        amount,
+      }) => ({
+        url: '/topup',
+        method: 'POST',
+        body: {
+          amount: parseInt(amount, 10),
+        },
+        headers: {
+          authorization: `Bearer ${JSON.parse(localStorage.getItem('user'))?.token ? JSON.parse(localStorage.getItem('user'))?.token : ''}`,
+        },
+      }),
+      invalidatesTags: ['Users'],
     }),
   }),
 });
@@ -95,4 +114,5 @@ export const {
   useGetHouseReservationsByHouseIDQuery,
   useGetUserProfileQuery,
   useAddReservationMutation,
+  useTopUpMutation,
 } = apiSlice;

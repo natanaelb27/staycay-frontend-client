@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 
 export const MainContainer = styled.div`
+    position: fixed;
+    left: 0;
+    top: 1rem;
+    right: 0;
     display: grid; 
     justify-content: center; 
 `;
@@ -10,8 +14,8 @@ export const ToastContainer = styled.div`
     align-items: center;
     justify-content: center;
     padding: 1rem; 
-    background-color: #ffffff; 
-    color: #6B7280; 
+    background-color: ${(props) => (props.isSucc.toString() === 'true' ? 'var(--staycay-success)' : 'var(--staycay-red)')};
+    color: white; 
     width: 100%; 
     border-radius: 0.5rem; 
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06); 
@@ -32,8 +36,8 @@ export const CloseButton = styled.button`
     width: 2rem; 
     height: 2rem; 
     border: none;
-    background-color: #ffffff; 
-    color: #9CA3AF; 
+    background-color: transparent; 
+    color: white; 
 
     &:hover {
         color: #111827; 

@@ -16,12 +16,12 @@ function Input({ ...props }) {
         onChange={props.handleChange}
         min={props.inputMin}
         max={props.inputMax}
+        onKeyDown={props.handleKeyDown}
       />
     );
   }
 
   return (
-
     <Inputs
       type={props.inputType}
       id={props.inputID}
@@ -30,6 +30,7 @@ function Input({ ...props }) {
       placeholder={props.inputPlaceholder}
       disabled={props.isDisabled}
       onChange={props.handleChange}
+      onKeyDown={props.handleKeyDown}
     />
   );
 }

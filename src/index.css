@@ -1,6 +1,10 @@
 :root {
     --staycay-red: #b40607;
     --staycay-light-red: #CA5051;
+    --staycay-success: #42ba96;
+    --blue: #0E86D4;
+    --light-blue: #1e92df;
+    
 }
 
 body {

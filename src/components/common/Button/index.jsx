@@ -6,13 +6,13 @@ import {
 function Button({ btnType, children, ...props }) {
   if (btnType === 'submit') {
     return (
-      <Buttons type="submit" disabled={props.isDisabled}>
+      <Buttons type="submit" className={props.classes} disabled={props.isDisabled}>
         {children}
       </Buttons>
     );
   }
   return (
-    <Buttons type="button" onClick={props.handleClick} disabled={props.isDisabled}>
+    <Buttons type="button" onClick={props.handleClick} className={props.classes} disabled={props.isDisabled}>
       {children}
     </Buttons>
   );

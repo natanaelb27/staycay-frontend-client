@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import moment from 'moment';
 import { useGetHouseByIDQuery, useGetHouseReservationsByHouseIDQuery } from '../../store/slices/apiSlice';
@@ -16,15 +17,23 @@ import {
   numberWithCommas, getDayBetweenDates, getDatesBetween, dateToDateStringArray,
 } from '../../helpers';
 import ErrorMessage from '../../components/common/ErrorMessage';
+import Toast from '../../components/common/Toast';
+import {
+  setToast,
+} from '../../store/slices/toastSlice';
 
 function Reservation() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const params = useParams();
   const queryParams = new URLSearchParams(window.location.search);
 
-  // const queryParamsCheckInOutValidator = () => {
-
-  // };
+  const {
+    topUpIsSuccess,
+    topUpMessage,
+    addReservationIsSuccess,
+    addReservationMessage,
+  } = useSelector((state) => state.Toast);
 
   const {
     data: houseData,
@@ -62,7 +71,6 @@ function Reservation() {
   const checkOut = queryParams.get('check_out') ? new Date(queryParams.get('check_out')) : new Date();
 
   useEffect(() => {
-    console.log(moment(checkIn).format('YYYY-MM-DD'));
     if (new Date(checkIn.toDateString()) < new Date(new Date().toDateString())) {
       // setErrorReservationDate('Cannot set a date before today');
       navigate(`/house/${params.houseID}?check_in=${queryParams.get('check_in')}&check_out=${queryParams.get('check_out')}`, { replace: true });
@@ -83,8 +91,27 @@ function Reservation() {
     navigate(`/house/${params.houseID}?check_in=${queryParams.get('check_in')}&check_out=${queryParams.get('check_out')}`);
   };
 
+  const handleToastClose = () => {
+    dispatch(setToast({
+      topUpIsSuccess: false,
+      topUpMessage: '',
+      addReservationIsSuccess: false,
+      addReservationMessage: '',
+    }));
+  };
+
   return (
     <MainContainer>
+      {topUpMessage && (
+      <Toast isSuccess={topUpIsSuccess} toastCloseClicked={handleToastClose}>
+        {topUpMessage}
+      </Toast>
+      )}
+      {addReservationMessage && (
+      <Toast isSuccess={addReservationIsSuccess} toastCloseClicked={handleToastClose}>
+        {addReservationMessage}
+      </Toast>
+      )}
       <TitleContainer>
         <BackIcon onClick={handleClickBack} />
         <Title>Your Reservation</Title>
@@ -97,7 +124,12 @@ function Reservation() {
           days={getDayBetweenDates(checkOut, checkIn)}
           // housePrice={numberWithCommas(houseData?.data.house_price)}
         />
-        <ReservationPaymentSection totalPrice={parseInt(houseData?.data.house_price, 10) * getDayBetweenDates(checkOut, checkIn)} />
+        <ReservationPaymentSection
+          houseID={params.houseID}
+          checkInDate={queryParams.get('check_in')}
+          checkOutDate={queryParams.get('check_out')}
+          totalPrice={parseInt(houseData?.data.house_price, 10) * getDayBetweenDates(checkOut, checkIn)}
+        />
 
       </ReservationContentContainer>
 
