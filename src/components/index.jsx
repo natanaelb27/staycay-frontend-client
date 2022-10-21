@@ -14,3 +14,6 @@ export { default as SkeletonText } from './Skeleton/SkeletonText';
 export { default as SkeletonLine } from './Skeleton/SkeletonLine';
 export { default as ReservationOrderCard } from './ReservationOrderCard';
 export { default as ReservationPaymentSection } from './ReservationPaymentSection';
+export { default as PersonalInfoSection } from './PersonalInfoSection';
+export { default as UserWalletSection } from './UserWalletSection';
+export { default as UserReservationSection } from './UserReservationSection';

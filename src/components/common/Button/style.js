@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Buttons = styled.button`
     width: 100%;
-    background-color: var(--blue);
+    background-color: black;
     color: white;
     font-weight: bold;
     padding-top: 0.75rem;
@@ -14,7 +14,7 @@ export const Buttons = styled.button`
     border-color: transparent;
 
     &:hover {
-        background-color: var(--light-blue);
+        background-color: #3C4048;
 
     }
     

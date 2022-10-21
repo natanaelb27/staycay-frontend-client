@@ -28,8 +28,6 @@ import {
 import {
   numberWithCommas, getDayBetweenDates, getDatesBetween, dateToDateStringArray,
 } from '../../helpers';
-import 'react-date-range/dist/styles.css';
-import 'react-date-range/dist/theme/default.css';
 
 function House() {
   const navigate = useNavigate();
@@ -47,6 +45,8 @@ function House() {
     error: houseReservationError,
     isLoading: houseReservationLoading,
   } = useGetHouseReservationsByHouseIDQuery(params.houseID);
+
+  const dataLoading = houseLoading && houseReservationLoading;
 
   const existingReservationDateArray = [];
 
@@ -123,8 +123,16 @@ function House() {
   };
 
   if (!houseLoading && houseError && houseError.data.code === 400) {
-    // navigate('/');
+    navigate('/');
   } else if (!houseLoading && houseError && houseError.data.code === 500) {
+    navigate('/InternalServerError');
+  }
+
+  if (!houseReservationLoading && houseReservationError
+    && houseReservationError.data.code === 400) {
+    navigate('/');
+  } else if (!houseReservationLoading && houseReservationError
+    && houseReservationError.data.code === 500) {
     navigate('/InternalServerError');
   }
 
@@ -177,7 +185,7 @@ function House() {
                 <BoldSpan>
                   Rp
                   {' '}
-                  {numberWithCommas(houseData?.data.house_price)}
+                  {numberWithCommas(parseInt(houseData?.data.house_price, 10))}
                   {' / night'}
                 </BoldSpan>
                 <DateRangeContainer>
@@ -197,7 +205,7 @@ function House() {
                   <PriceSpan>
                     Rp
                     {' '}
-                    {numberWithCommas(houseData?.data.house_price)}
+                    {numberWithCommas(parseInt(houseData?.data.house_price, 10))}
                     {' x '}
                     {getDayBetweenDates(checkOutDate, checkInDate)}
                     {getDayBetweenDates(checkOutDate, checkInDate) <= 1 ? ' night' : ' nights'}
@@ -207,7 +215,7 @@ function House() {
                       Rp
                       {' '}
                       {numberWithCommas(
-                        (houseData?.data.house_price || 1)
+                        (parseInt(houseData?.data.house_price, 10) || 1)
                        * getDayBetweenDates(checkOutDate, checkInDate),
                       )}
                     </PriceSpan>

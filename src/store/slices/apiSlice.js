@@ -72,6 +72,25 @@ export const apiSlice = createApi({
       }),
       providesTags: ['Users'],
     }),
+    updateUserProfile: builder.mutation({
+      query: ({
+        name, oldPassword, newPassword, address, cityID,
+      }) => ({
+        url: '/user',
+        method: 'PATCH',
+        body: {
+          name,
+          old_password: oldPassword,
+          password: newPassword,
+          address,
+          city_id: cityID,
+        },
+        headers: {
+          authorization: `Bearer ${JSON.parse(localStorage.getItem('user'))?.token ? JSON.parse(localStorage.getItem('user'))?.token : ''}`,
+        },
+      }),
+      invalidatesTags: ['Users'],
+    }),
     addReservation: builder.mutation({
       query: ({
         houseID, checkInDate, checkOutDate,
@@ -85,7 +104,17 @@ export const apiSlice = createApi({
           authorization: `Bearer ${JSON.parse(localStorage.getItem('user'))?.token ? JSON.parse(localStorage.getItem('user'))?.token : ''}`,
         },
       }),
-      invalidatesTags: ['Users'],
+      invalidatesTags: ['Users', 'Reservations'],
+    }),
+    getReservationByUser: builder.query({
+      query: ({ filterBy }) => ({
+        url: `/user/reservation?filterBy=${filterBy}`,
+        method: 'GET',
+        headers: {
+          authorization: `Bearer ${JSON.parse(localStorage.getItem('user'))?.token ? JSON.parse(localStorage.getItem('user'))?.token : ''}`,
+        },
+      }),
+      providesTags: ['Reservations'],
     }),
     topUp: builder.mutation({
       query: ({
@@ -113,6 +142,8 @@ export const {
   useGetHouseByIDQuery,
   useGetHouseReservationsByHouseIDQuery,
   useGetUserProfileQuery,
+  useUpdateUserProfileMutation,
   useAddReservationMutation,
+  useLazyGetReservationByUserQuery,
   useTopUpMutation,
 } = apiSlice;

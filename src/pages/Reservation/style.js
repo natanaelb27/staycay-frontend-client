@@ -3,8 +3,8 @@ import { FaChevronLeft } from 'react-icons/fa';
 
 export const MainContainer = styled.div`
     max-width: 100%;
-    align-content: center; 
-    place-items: center; 
+    align-content: center;
+    place-items: center;
     padding-left: 15%;
     padding-right: 15%; 
 `;

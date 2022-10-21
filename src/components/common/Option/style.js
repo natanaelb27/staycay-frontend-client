@@ -6,18 +6,19 @@ export const Options = styled.option`
     padding-bottom: 0.75rem; 
     padding-left: 1rem;
     padding-right: 1rem; 
-    background-color: #E5E7EB; 
+    padding: 0.5rem;
+    background-color: #ffffff; 
     color: #374151; 
     line-height: 1.25; 
     width: 100%; 
     border-radius: 0.25rem; 
     border-width: 1px; 
-    border-color: #E5E7EB; 
+    border: 1px solid #374151;
     appearance: none; 
 
     &:focus{
         background-color: #ffffff; 
-        border-color: #6B7280; 
+        border: 1px solid #374151;
         outline: 0; 
     }
 `;

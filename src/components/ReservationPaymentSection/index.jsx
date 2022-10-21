@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import {
   Container,
   Title,
@@ -17,14 +18,12 @@ import {
   numberWithCommas,
 } from '../../helpers';
 import { useGetUserProfileQuery, useAddReservationMutation } from '../../store/slices/apiSlice';
-import {
-  setToast,
-} from '../../store/slices/toastSlice';
+import { showErrorToast } from '../../helpers/Toast';
 
 function ReservationPaymentSection({
   houseID, checkInDate, checkOutDate, totalPrice,
 }) {
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const {
     data: userData,
@@ -53,11 +52,6 @@ function ReservationPaymentSection({
   };
 
   const handleMakeReservation = () => {
-    console.log(
-      houseID,
-      checkInDate,
-      checkOutDate,
-    );
     addReservation({
       houseID: parseInt(houseID, 10),
       checkInDate,
@@ -65,28 +59,19 @@ function ReservationPaymentSection({
     })
       .unwrap()
       .then(() => {
-        dispatch(setToast({
-          addReservationIsSuccess: true,
-          addReservationMessage: 'Reservation created successfully!',
-        }));
-        // navigate('/', { replace: true });
+        navigate('/', { replace: true });
       })
       .catch((error) => {
         if (!error.data) {
-          dispatch(setToast({
-            addReservationIsSuccess: false,
-            addReservationMessage: 'Top Up Failed: Server is currently down, please try again later!',
-          }));
+          showErrorToast('Server is currently down, please try again later!');
         }
-        dispatch(setToast({
-          addReservationIsSuccess: false,
-          addReservationMessage: error.data.message,
-        }));
+        showErrorToast(error.data.message);
       });
   };
 
   return (
     <Container>
+      <ToastContainer />
       <Title>Confirm and pay</Title>
       <ContentContainer>
         <ContentTitle>Your Balance</ContentTitle>
@@ -112,7 +97,7 @@ function ReservationPaymentSection({
       </ContentContainer>
       {isBalanceNotEnough
         ? (<ErrorMessage>Your balance is not enough</ErrorMessage>) : null}
-      {!isBalanceNotEnough ? (
+      {isBalanceNotEnough ? (
         <ButtonContainer>
           <Button handleClick={handleModal}>Topup</Button>
         </ButtonContainer>

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import { showErrorToast } from '../../helpers/Toast';
 import Label from '../common/Label';
 import Input from '../common/Input';
 import TextArea from '../common/TextArea';
@@ -15,7 +17,6 @@ import {
   MainInputContainer,
   InputContainer,
 } from './style';
-import Toast from '../common/Toast';
 
 function RegisterForm() {
   const navigate = useNavigate();
@@ -43,22 +44,12 @@ function RegisterForm() {
 
   const [register] = useRegisterMutation();
 
-  const [errorRegister, setErrorRegister] = useState('');
-
-  // useEffect(() => {
-  //   const user = localStorage.getItem('user');
-  //   if (user) {
-  //     navigate('/', { replace: true });
-  //   }
-  // }, []);
-
   const handleInputChange = (event) => {
     setInput({ ...input, [event.target.name]: event.target.value });
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setErrorRegister('');
     setErrorInput({
       errorName: '',
       errorEmail: '',
@@ -117,15 +108,11 @@ function RegisterForm() {
         })
         .catch((error) => {
           if (!error.data) {
-            setErrorRegister('Server is currently down, please try again later!');
+            showErrorToast('Server is currently down, please try again later!');
           }
-          setErrorRegister(error.data.message);
+          showErrorToast(error.data.message);
         });
     }
-  };
-
-  const handleToastClose = () => {
-    setErrorRegister('');
   };
 
   const renderCitiesDropdown = () => cityData?.data.city.map((item) => (
@@ -134,6 +121,7 @@ function RegisterForm() {
 
   return (
     <MainContainer>
+      <ToastContainer />
       <Form onSubmit={handleSubmit}>
         <TitleContainer>
           <Title>Register</Title>
@@ -203,11 +191,6 @@ function RegisterForm() {
           <Button btnType="submit">Register</Button>
         </MainInputContainer>
       </Form>
-      {errorRegister && (
-        <Toast toastCloseClicked={handleToastClose}>
-          {errorRegister}
-        </Toast>
-      )}
     </MainContainer>
   );
 }

@@ -10,6 +10,7 @@ export const TextAreas = styled.textarea`
     width: 100%; 
     border: 1px solid #374151;
     border-radius: 0.25rem; 
+    background-color: transparent;
     appearance: none; 
     resize: none;
 `;

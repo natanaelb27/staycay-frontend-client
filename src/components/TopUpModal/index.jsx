@@ -1,9 +1,8 @@
-/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import {
   faCoins,
 } from '@fortawesome/free-solid-svg-icons';
-import { useDispatch } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
 import Button from '../common/Button';
 import Input from '../common/Input';
 import ErrorMessage from '../common/ErrorMessage';
@@ -22,24 +21,16 @@ import {
   AmountSpan,
   InputContainer,
 } from './style';
-
+import { showErrorToast, showSuccessToast } from '../../helpers/Toast';
 import { useTopUpMutation } from '../../store/slices/apiSlice';
-import {
-  setToast,
-} from '../../store/slices/toastSlice';
 
 function TopUpModal({
   isShow,
   onClose,
 }) {
-  const dispatch = useDispatch();
-
   const [topUpAmount, setTopUpAmount] = useState(0);
   const [errorTopUpAmount, setErrorTopUpAmount] = useState('');
   const [topUp] = useTopUpMutation();
-  //   const [topUpMessage, setTopUpMessage] = useState('');
-  //   const [isSuccessMessage, setIsSuccessMessage] = useState(false);
-
   const closeOnEscapeKeyDown = (e) => {
     if ((e.charCode || e.keyCode) === 27) {
       onClose();
@@ -79,22 +70,13 @@ function TopUpModal({
       })
         .unwrap()
         .then(() => {
-          dispatch(setToast({
-            topUpIsSuccess: true,
-            topUpMessage: 'Top Up Success!',
-          }));
+          showSuccessToast('Top Up Success!');
         })
         .catch((error) => {
           if (!error.data) {
-            dispatch(setToast({
-              topUpIsSuccess: false,
-              topUpMessage: 'Server is currently down, please try again later!',
-            }));
+            showErrorToast('Server is currently down, please try again later!');
           }
-          dispatch(setToast({
-            topUpIsSuccess: false,
-            topUpMessage: error.data.message,
-          }));
+          showErrorToast(error.data.message);
         })
         .finally(() => {
           onClose();
@@ -104,6 +86,7 @@ function TopUpModal({
 
   return (
     <ModalContainer onClick={onClose} className={`${isShow ? 'show' : ''}`}>
+      <ToastContainer />
       <ModalContent onClick={(e) => e.stopPropagation()} className={`${isShow ? 'show' : ''}`}>
         <ModalHeader>
           <ModalTitle>

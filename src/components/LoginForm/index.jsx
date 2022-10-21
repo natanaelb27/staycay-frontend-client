@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import { showErrorToast } from '../../helpers/Toast';
 import Label from '../common/Label';
 import Input from '../common/Input';
 import Button from '../common/Button';
-import Toast from '../common/Toast';
 import ErrorMessage from '../common/ErrorMessage';
 import { useLoginMutation } from '../../store/slices/apiSlice';
 import {
@@ -29,12 +30,6 @@ function LoginForm() {
 
   const [login] = useLoginMutation();
 
-  const [errorLogin, setErrorLogin] = useState('');
-
-  const handleToastClose = () => {
-    setErrorLogin('');
-  };
-
   // useEffect(() => {
   //   const user = localStorage.getItem('user');
   //   if (user) {
@@ -48,7 +43,6 @@ function LoginForm() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setErrorLogin('');
     setErrorInput({
       errorEmail: '',
       errorPassword: '',
@@ -78,19 +72,19 @@ function LoginForm() {
         .then((payload) => {
           localStorage.setItem('user', JSON.stringify(payload.data));
           navigate('/', { replace: true });
-          // console.log(JSON.parse(localStorage.getItem('user')).token);
         })
         .catch((error) => {
           if (!error.data) {
-            setErrorLogin('Server is currently down, please try again later!');
+            showErrorToast('Server is currently down, please try again later!');
           }
-          setErrorLogin(error.data.message);
+          showErrorToast(error.data.message);
         });
     }
   };
 
   return (
     <MainContainer>
+      <ToastContainer />
       <Form onSubmit={handleSubmit}>
         <TitleContainer>
           <Title>
@@ -126,11 +120,6 @@ function LoginForm() {
           <Button btnType="submit">Login</Button>
         </MainInputContainer>
       </Form>
-      {errorLogin && (
-        <Toast toastCloseClicked={handleToastClose}>
-          {errorLogin}
-        </Toast>
-      )}
     </MainContainer>
   );
 }

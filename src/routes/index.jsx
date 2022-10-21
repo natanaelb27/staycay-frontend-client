@@ -3,7 +3,14 @@ import { useRoutes, useNavigate, useLocation } from 'react-router-dom';
 
 import { Layout } from '../components';
 import {
-  Home, Login, Register, House, NotFound, Hosting, Reservation,
+  Home,
+  Login,
+  Register,
+  House,
+  NotFound,
+  Hosting,
+  Account,
+  Reservation,
 } from '../pages';
 
 const Routes = () => {
@@ -31,6 +38,10 @@ const Routes = () => {
         {
           path: '/reservation/:houseID',
           element: <RequireAuth redirectTo="/login"><Reservation /></RequireAuth>,
+        },
+        {
+          path: '/account',
+          element: <RequireAuth redirectTo="/login"><Account /></RequireAuth>,
         },
         {
           path: '/hosting',

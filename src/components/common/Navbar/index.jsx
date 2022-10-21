@@ -216,8 +216,8 @@ function Navbar() {
               {
                 !localStorage.getItem('user') ? null
                   : (
-                    <NavMenuLink to="/profile" onClick={handleOpenMenu}>
-                      Profile
+                    <NavMenuLink to="/account" onClick={handleOpenMenu}>
+                      Account
                     </NavMenuLink>
                   )
               }
