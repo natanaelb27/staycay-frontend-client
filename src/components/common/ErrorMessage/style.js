@@ -2,10 +2,13 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const ErrorContainer = styled.div`
-    display: grid;
-    grid-template-columns: 7% 90%;
-    align-items: center;
-    max-height: 3rem;
+    display: flex;
+    align-content: center;
+    gap: 0.5rem;
+    /* display: grid;
+    grid-template-columns: 7% 90%; */
+    /* align-items: center; */
+    max-height: 2rem;
     margin-top: 0.5rem;
 `;
 

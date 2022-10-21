@@ -27,7 +27,15 @@ export const Title = styled.h1`
 `;
 
 export const ReservationContentContainer = styled.div`
+    max-width: 100%;
     display: grid;
-    grid-template-columns: 50% 50%;
+    grid-template-columns: 40% 60%;
     justify-items: center;
+    margin-top: 1.5rem;
+    gap: 8rem;
+
+    @media (max-width: 1000px){
+        /* display: block; */
+        grid-template-columns: 100%;
+    }
 `;

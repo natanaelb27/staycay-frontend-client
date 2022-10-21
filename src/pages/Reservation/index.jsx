@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import moment from 'moment';
 import { useGetHouseByIDQuery, useGetHouseReservationsByHouseIDQuery } from '../../store/slices/apiSlice';
-import { ReservationOrderCard } from '../../components';
+import { ReservationOrderCard, ReservationPaymentSection } from '../../components';
 import {
   MainContainer,
   TitleContainer,
@@ -90,13 +90,6 @@ function Reservation() {
         <Title>Your Reservation</Title>
       </TitleContainer>
       <ReservationContentContainer>
-        <p>
-          {queryParams.get('house')}
-          {' '}
-          {queryParams.get('check_in')}
-          {' '}
-          {queryParams.get('check_out')}
-        </p>
         <ReservationOrderCard
           houseData={houseData?.data}
           checkInDate={checkIn?.toDateString()}
@@ -104,6 +97,7 @@ function Reservation() {
           days={getDayBetweenDates(checkOut, checkIn)}
           // housePrice={numberWithCommas(houseData?.data.house_price)}
         />
+        <ReservationPaymentSection totalPrice={parseInt(houseData?.data.house_price, 10) * getDayBetweenDates(checkOut, checkIn)} />
 
       </ReservationContentContainer>
 

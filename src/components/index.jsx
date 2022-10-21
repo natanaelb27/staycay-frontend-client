@@ -13,3 +13,4 @@ export { default as SkeletonImage } from './Skeleton/SkeletonImage';
 export { default as SkeletonText } from './Skeleton/SkeletonText';
 export { default as SkeletonLine } from './Skeleton/SkeletonLine';
 export { default as ReservationOrderCard } from './ReservationOrderCard';
+export { default as ReservationPaymentSection } from './ReservationPaymentSection';
