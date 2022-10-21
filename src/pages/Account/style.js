@@ -6,6 +6,10 @@ export const MainContainer = styled.div`
     place-items: center; 
     padding-left: 15%;
     padding-right: 15%; 
+
+    @media (max-width: 500px) {
+        padding: 0;
+    }
 `;
 
 export const Container = styled.div`

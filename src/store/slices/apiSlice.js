@@ -116,6 +116,24 @@ export const apiSlice = createApi({
       }),
       providesTags: ['Reservations'],
     }),
+    pickup: builder.mutation({
+      query: ({
+        reservationID,
+        pickupAddress,
+        cityID,
+      }) => ({
+        url: `/pickup/${reservationID}`,
+        method: 'POST',
+        body: {
+          pickup_address: pickupAddress,
+          city_id: parseInt(cityID, 10),
+        },
+        headers: {
+          authorization: `Bearer ${JSON.parse(localStorage.getItem('user'))?.token ? JSON.parse(localStorage.getItem('user'))?.token : ''}`,
+        },
+      }),
+      invalidatesTags: ['Users'],
+    }),
     topUp: builder.mutation({
       query: ({
         amount,
@@ -145,5 +163,6 @@ export const {
   useUpdateUserProfileMutation,
   useAddReservationMutation,
   useLazyGetReservationByUserQuery,
+  usePickupMutation,
   useTopUpMutation,
 } = apiSlice;

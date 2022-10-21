@@ -17,6 +17,14 @@ export const Buttons = styled.button`
         background-color: #3C4048;
 
     }
+
+    &.blue {
+        background-color: var(--blue);
+    }
+
+    &.blue:hover {
+        background-color: var(--light-blue);
+    }
     
     &.danger {
         background-color: var(--staycay-red);
@@ -24,7 +32,6 @@ export const Buttons = styled.button`
 
     &.danger:hover {
         background-color: var(--staycay-light-red);
-
     }
 
     :disabled {
