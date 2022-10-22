@@ -2,23 +2,29 @@ import styled from 'styled-components';
 
 export const MainContainer = styled.div`
     display: grid;
-    grid-template-rows: 1fr 3fr 1fr;
-    gap: 0.5rem;
+    grid-template-rows: 5fr 1fr;
+    /* gap: 0.1rem; */
     align-items: center;
     justify-items: center;
     background-color: #eee;
     border-radius: 1rem;
     padding: 1rem;
-    width: fit-content;
     cursor: pointer;
     box-shadow: 1px 1px 1px 0 rgba(0,0,0,0.5);
+`;
 
-
+export const DivContainer = styled.div`
+    display: grid;
+    grid-template-rows: 1fr 3fr;
+    gap: 0.5rem;
+    align-items: center;
+    justify-items: center;
+    padding: 1rem;
 `;
 
 export const Container = styled.div`
     display: grid;
-    grid-template-columns: 1fr 3fr;
+    grid-template-columns: 1fr 2fr;
 `;
 
 export const ContentContainer = styled.div`

@@ -75,6 +75,13 @@ export const apiSlice = createApi({
       }),
       providesTags: ['Users'],
     }),
+    getUserByID: builder.query({
+      query: (userID) => ({
+        url: `/user/${userID}`,
+        method: 'GET',
+      }),
+      providesTags: ['Users'],
+    }),
     updateUserProfile: builder.mutation({
       query: ({
         name, oldPassword, newPassword, address, cityID,
@@ -112,6 +119,16 @@ export const apiSlice = createApi({
     getReservationByUser: builder.query({
       query: ({ filterBy }) => ({
         url: `/user/reservation?filterBy=${filterBy}`,
+        method: 'GET',
+        headers: {
+          authorization: `Bearer ${JSON.parse(localStorage.getItem('user'))?.token ? JSON.parse(localStorage.getItem('user'))?.token : ''}`,
+        },
+      }),
+      providesTags: ['Reservations'],
+    }),
+    getReservationByID: builder.query({
+      query: (reservationID) => ({
+        url: `/reservation/${reservationID}`,
         method: 'GET',
         headers: {
           authorization: `Bearer ${JSON.parse(localStorage.getItem('user'))?.token ? JSON.parse(localStorage.getItem('user'))?.token : ''}`,
@@ -173,9 +190,11 @@ export const {
   useGetHouseByIDQuery,
   useGetHouseReservationsByHouseIDQuery,
   useGetUserProfileQuery,
+  useGetUserByIDQuery,
   useUpdateUserProfileMutation,
   useAddReservationMutation,
   useLazyGetReservationByUserQuery,
+  useGetReservationByIDQuery,
   usePickupMutation,
   useGetPickupByReservationQuery,
   useTopUpMutation,

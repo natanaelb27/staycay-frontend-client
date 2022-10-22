@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Container,
   Title,
@@ -11,6 +12,7 @@ import { useLazyGetReservationByUserQuery } from '../../store/slices/apiSlice';
 import ReservationDetailsCard from '../ReservationDetailsCard';
 
 function UserReservationSection() {
+  const navigate = useNavigate();
   const [getReservation, {
     data: reservationData,
   }] = useLazyGetReservationByUserQuery();
@@ -25,9 +27,17 @@ function UserReservationSection() {
     getReservation({ filterBy: 'all' });
   }, []);
 
+  const handleClickReservationCard = (reservationID) => {
+    navigate(`/reservation-detail/${reservationID}`);
+  };
+
   const renderReservations = () => (
     reservationData?.data.reservation.map((item) => (
-      <ReservationDetailsCard key={item.reservation_code} reservationData={item} />
+      <ReservationDetailsCard
+        handleClick={() => { handleClickReservationCard(item.reservation_id); }}
+        key={item.reservation_code}
+        reservationData={item}
+      />
     ))
 
   );

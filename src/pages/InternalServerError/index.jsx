@@ -1,7 +1,7 @@
 import React from 'react';
 import { ErrorPage, MainContainer } from '../../components';
 
-function NotFound() {
+function InternalServerError() {
   return (
     <MainContainer>
       <ErrorPage
@@ -12,4 +12,4 @@ function NotFound() {
   );
 }
 
-export default NotFound;
+export default InternalServerError;

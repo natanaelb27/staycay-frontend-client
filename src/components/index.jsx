@@ -7,6 +7,7 @@ export { default as Card } from './Card';
 export { default as Carousel } from './Carousel';
 export { default as LoginForm } from './LoginForm';
 export { default as RegisterForm } from './RegisterForm';
+export { default as HouseReservationCard } from './HouseReservationCard';
 export { default as ErrorPage } from './ErrorPage';
 export { default as SkeletonCard } from './Skeleton/SkeletonCard';
 export { default as SkeletonImage } from './Skeleton/SkeletonImage';

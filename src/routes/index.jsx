@@ -7,10 +7,13 @@ import {
   Login,
   Register,
   House,
-  NotFound,
   Hosting,
   Account,
   Reservation,
+  ReservationDetail,
+  Forbidden,
+  InternalServerError,
+  NotFound,
 } from '../pages';
 
 const Routes = () => {
@@ -44,8 +47,20 @@ const Routes = () => {
           element: <RequireAuth redirectTo="/login"><Account /></RequireAuth>,
         },
         {
+          path: '/reservation-detail/:reservationID',
+          element: <RequireAuth redirectTo="/login"><ReservationDetail /></RequireAuth>,
+        },
+        {
           path: '/hosting',
           element: <RequireAuth redirectTo="/login"><Hosting /></RequireAuth>,
+        },
+        {
+          path: '/forbidden',
+          element: <Forbidden />,
+        },
+        {
+          path: '/server-error',
+          element: <InternalServerError />,
         },
         {
           path: '*',

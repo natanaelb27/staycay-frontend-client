@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import {
   faCoins,
@@ -21,7 +22,7 @@ import {
   AmountSpan,
   InputContainer,
 } from './style';
-import { showErrorToast, showSuccessToast } from '../../helpers/Toast';
+// import { showErrorToast, showSuccessToast } from '../../helpers/Toast';
 import { useTopUpMutation } from '../../store/slices/apiSlice';
 
 function TopUpModal({
@@ -31,9 +32,15 @@ function TopUpModal({
   const [topUpAmount, setTopUpAmount] = useState(0);
   const [errorTopUpAmount, setErrorTopUpAmount] = useState('');
   const [topUp] = useTopUpMutation();
+
+  const handleClose = () => {
+    setTopUpAmount(0);
+    onClose();
+  };
+
   const closeOnEscapeKeyDown = (e) => {
     if ((e.charCode || e.keyCode) === 27) {
-      onClose();
+      handleClose();
     }
   };
 
@@ -70,22 +77,22 @@ function TopUpModal({
       })
         .unwrap()
         .then(() => {
-          showSuccessToast('Top Up Success!');
+          // showSuccessToast('Top Up Success!');
         })
         .catch((error) => {
           if (!error.data) {
-            showErrorToast('Server is currently down, please try again later!');
+            // showErrorToast('Server is currently down, please try again later!');
           }
-          showErrorToast(error.data.message);
+          // showErrorToast(error.data.message);
         })
         .finally(() => {
-          onClose();
+          handleClose();
         });
     }
   };
 
   return (
-    <ModalContainer onClick={onClose} className={`${isShow ? 'show' : ''}`}>
+    <ModalContainer onClick={handleClose} className={`${isShow ? 'show' : ''}`}>
       <ToastContainer />
       <ModalContent onClick={(e) => e.stopPropagation()} className={`${isShow ? 'show' : ''}`}>
         <ModalHeader>
@@ -138,7 +145,7 @@ function TopUpModal({
           </Container>
         </ModalBody>
         <ModalFooter>
-          <Button type="button" handleClick={onClose} classes="danger">Close</Button>
+          <Button type="button" handleClick={handleClose} classes="danger">Close</Button>
           <Button type="button" handleClick={handleClickSubmit}>Top Up</Button>
         </ModalFooter>
       </ModalContent>
