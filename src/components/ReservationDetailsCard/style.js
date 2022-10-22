@@ -11,7 +11,9 @@ export const MainContainer = styled.div`
     padding: 1rem;
     width: fit-content;
     cursor: pointer;
-    
+    box-shadow: 1px 1px 1px 0 rgba(0,0,0,0.5);
+
+
 `;
 
 export const Container = styled.div`
@@ -27,6 +29,7 @@ export const ContentContainer = styled.div`
 export const ContentDetailContainer = styled.div`
     display: grid;
     grid-template-columns: 1fr 2fr;
+    gap: 0.5rem;
     align-items: center;
 `;
 

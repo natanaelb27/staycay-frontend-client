@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+// import { useDispatch } from 'react-redux';
 import Button from '../common/Button';
 import Label from '../common/Label';
 import TextArea from '../common/TextArea';
@@ -6,14 +7,16 @@ import Select from '../common/Select';
 import ErrorMessage from '../common/ErrorMessage';
 import {
   ModalContainer,
+  Container,
   ModalContent,
   ModalHeader,
   ModalTitle,
   ModalBody,
   ModalFooter,
-
+  ContentContainer,
 } from './style';
 import { useGetCityQuery, useGetUserProfileQuery, usePickupMutation } from '../../store/slices/apiSlice';
+// import { setToast } from '../../store/slices/toastSlice';
 
 function PickupModal({
   reservationID, isShow, onClose,
@@ -21,17 +24,26 @@ function PickupModal({
   const { data: userData } = useGetUserProfileQuery();
   const { data: cityData } = useGetCityQuery();
   const [pickup] = usePickupMutation();
+  // const dispatch = useDispatch();
 
   const [input, setInput] = useState({
     pickupAddress: userData?.data.address,
     cityID: userData?.data.city_id,
   });
 
+  const handleClose = () => {
+    setInput({
+      pickupAddress: userData?.data.address,
+      cityID: userData?.data.city_id,
+    });
+    onClose();
+  };
+
   const [errorInputAddress, setErrorInputAddress] = useState('');
 
   const closeOnEscapeKeyDown = (e) => {
     if ((e.charCode || e.keyCode) === 27) {
-      onClose();
+      handleClose();
     }
   };
 
@@ -58,6 +70,8 @@ function PickupModal({
 
     if (!input.pickupAddress) {
       newError = 'Pickup address is required!';
+      setErrorInputAddress(newError);
+      return;
     }
 
     if (!newError) {
@@ -67,6 +81,16 @@ function PickupModal({
         cityID: input.cityID,
       })
         .unwrap()
+        // .then(() => {
+        //   dispatch(setToast({
+        //     toastSuccess: 'Pickup order created successfully!',
+        //   }));
+        // })
+        // .catch((error) => {
+        //   dispatch(setToast({
+        //     toastError: error.data.message,
+        //   }));
+        // })
         .finally(() => {
           onClose();
         });
@@ -74,7 +98,7 @@ function PickupModal({
   };
 
   return (
-    <ModalContainer onClick={onClose} className={`${isShow ? 'show' : ''}`}>
+    <ModalContainer onClick={handleClose} className={`${isShow ? 'show' : ''}`}>
       <ModalContent onClick={(e) => e.stopPropagation()} className={`${isShow ? 'show' : ''}`}>
         <ModalHeader>
           <ModalTitle>
@@ -82,28 +106,35 @@ function PickupModal({
           </ModalTitle>
         </ModalHeader>
         <ModalBody>
-          <Label labelFor="pickupAddress">Pickup Address</Label>
-          <TextArea
-            inputID="pickupAddress"
-            inputName="pickupAddress"
-            inputValue={input.pickupAddress}
-            inputPlaceholder="Pickup Address"
-            handleChange={handleInputChange}
-          />
-          {errorInputAddress
-            ? <ErrorMessage>{errorInputAddress}</ErrorMessage> : null}
+          <Container>
+            <ContentContainer>
+              <Label labelFor="pickupAddress">Pickup Address</Label>
+              <TextArea
+                inputID="pickupAddress"
+                inputName="pickupAddress"
+                inputValue={input.pickupAddress}
+                inputPlaceholder="Pickup Address"
+                handleChange={handleInputChange}
+              />
+              {errorInputAddress
+                ? <ErrorMessage>{errorInputAddress}</ErrorMessage> : null}
 
-          <Label labelFor="city">City</Label>
-          <Select
-            selectName="cityID"
-            selectValue={input.cityID}
-            handleChange={handleInputChange}
-          >
-            {renderCitiesDropdown()}
-          </Select>
+            </ContentContainer>
+            <ContentContainer>
+              <Label labelFor="city">City</Label>
+              <Select
+                selectName="cityID"
+                selectValue={input.cityID}
+                handleChange={handleInputChange}
+              >
+                <option value={0} disabled>Choose one...</option>
+                {renderCitiesDropdown()}
+              </Select>
+            </ContentContainer>
+          </Container>
         </ModalBody>
         <ModalFooter>
-          <Button type="button" handleClick={onClose} classes="danger">Close</Button>
+          <Button type="button" handleClick={handleClose} classes="danger">Close</Button>
           <Button type="button" handleClick={handleSubmit}>Request Pickup</Button>
         </ModalFooter>
       </ModalContent>

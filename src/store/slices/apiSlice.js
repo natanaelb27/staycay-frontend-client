@@ -3,6 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 export const apiSlice = createApi({
   reducerPath: 'databaseApi',
   baseQuery: fetchBaseQuery({
+    mode: 'cors',
     baseUrl: 'http://localhost:8080',
     // prepareHeaders: (headers, { getState }) => {
     //   const { token } = getState().auth;
@@ -12,7 +13,7 @@ export const apiSlice = createApi({
     //   return headers;
     // },
   }),
-  tagTypes: ['Houses', 'Cities', 'Users', 'Reservations'],
+  tagTypes: ['Houses', 'Cities', 'Users', 'Reservations', 'Pickups'],
   endpoints: (builder) => ({
     register: builder.mutation({
       query: ({
@@ -24,6 +25,7 @@ export const apiSlice = createApi({
           name, email, password, address, city_id: parseInt(cityID, 10),
         },
       }),
+      invalidatesTags: ['Users'],
     }),
     login: builder.mutation({
       query: ({ email, password }) => ({
@@ -31,6 +33,7 @@ export const apiSlice = createApi({
         method: 'POST',
         body: { email, password },
       }),
+      invalidatesTags: ['Users'],
     }),
     getHouse: builder.query({
       query: ({
@@ -132,7 +135,17 @@ export const apiSlice = createApi({
           authorization: `Bearer ${JSON.parse(localStorage.getItem('user'))?.token ? JSON.parse(localStorage.getItem('user'))?.token : ''}`,
         },
       }),
-      invalidatesTags: ['Users'],
+      invalidatesTags: ['Users', 'Reservations', 'Pickups'],
+    }),
+    getPickupByReservation: builder.query({
+      query: (reservationID) => ({
+        url: `/pickup/${reservationID}`,
+        method: 'GET',
+        headers: {
+          authorization: `Bearer ${JSON.parse(localStorage.getItem('user'))?.token ? JSON.parse(localStorage.getItem('user'))?.token : ''}`,
+        },
+      }),
+      providesTags: ['Pickups'],
     }),
     topUp: builder.mutation({
       query: ({
@@ -164,5 +177,6 @@ export const {
   useAddReservationMutation,
   useLazyGetReservationByUserQuery,
   usePickupMutation,
+  useGetPickupByReservationQuery,
   useTopUpMutation,
 } = apiSlice;

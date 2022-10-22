@@ -52,7 +52,6 @@ export const ModalTitle = styled.h1`
 `;
 
 export const ModalBody = styled.div`
-    width: 100%;
     padding: 1rem;
     border-top: 1px solid #eee;
     border-bottom: 1px solid #eee;
@@ -63,8 +62,24 @@ export const ModalBody = styled.div`
 export const ModalFooter = styled.div`
     padding: 1rem;
     display: grid;
-    justify-content: right;
-    grid-template-columns: 20% 20%;
+    justify-content: center;
+    grid-template-columns: 10rem 10rem;
     gap: 1rem;
 
+    @media (max-width: 700px){
+        grid-template-columns: 100%;
+        
+    }
+
+`;
+
+export const Container = styled.div`
+    display: grid;
+    grid-template-rows: 2fr 1fr;
+    gap: 1rem;
+`;
+
+export const ContentContainer = styled.div`
+    display: flex;
+    flex-direction: column;
 `;

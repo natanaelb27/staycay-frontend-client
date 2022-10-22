@@ -9,12 +9,16 @@ import {
   SpanTitle,
   SpanDetail,
 } from './style';
-import { useGetHouseByIDQuery } from '../../store/slices/apiSlice';
+import { useGetHouseByIDQuery, useGetPickupByReservationQuery } from '../../store/slices/apiSlice';
 import Button from '../common/Button';
 import PickupModal from '../PickupModal';
 
 function ReservationDetailsCard({ reservationData }) {
   const { data: houseData } = useGetHouseByIDQuery(parseInt(reservationData?.house_id, 10));
+  const { data: pickupData } = useGetPickupByReservationQuery(
+    parseInt(reservationData?.reservation_id, 10),
+  );
+
   const [showModal, setShowModal] = useState(false);
 
   const handleModal = () => {
@@ -24,9 +28,7 @@ function ReservationDetailsCard({ reservationData }) {
   const handlePickup = () => {
     setShowModal(false);
   };
-  //   const handlePickup = () => {
 
-  //   };
   return (
     <MainContainer>
       <SpanTitle>{reservationData?.reservation_code}</SpanTitle>
@@ -38,6 +40,12 @@ function ReservationDetailsCard({ reservationData }) {
             <SpanDetail>{houseData?.data.house_name}</SpanDetail>
           </ContentDetailContainer>
           <ContentDetailContainer>
+            <SpanTitle>House City:</SpanTitle>
+            <SpanDetail>
+              {houseData?.data.house_city_name}
+            </SpanDetail>
+          </ContentDetailContainer>
+          <ContentDetailContainer>
             <SpanTitle>Check In:</SpanTitle>
             <SpanDetail>{moment(reservationData?.check_in_date).format('YYYY-MM-DD')}</SpanDetail>
           </ContentDetailContainer>
@@ -45,9 +53,26 @@ function ReservationDetailsCard({ reservationData }) {
             <SpanTitle>Check Out:</SpanTitle>
             <SpanDetail>{moment(reservationData?.check_out_date).format('YYYY-MM-DD')}</SpanDetail>
           </ContentDetailContainer>
+          {pickupData?.data.pickup_id !== 0 ? (
+            <ContentDetailContainer>
+              <SpanTitle>Pickup Status:</SpanTitle>
+              <SpanDetail>{pickupData?.data.pickup_status_name}</SpanDetail>
+            </ContentDetailContainer>
+          ) : null}
+          {pickupData?.data.pickup_id !== 0 ? (
+            <ContentDetailContainer>
+              <SpanTitle>Pickup Address:</SpanTitle>
+              <SpanDetail>
+                {pickupData?.data.pickup_address}
+                ,
+                {' '}
+                {pickupData?.data.pickup_city_name}
+              </SpanDetail>
+            </ContentDetailContainer>
+          ) : null}
         </ContentContainer>
       </Container>
-      {(reservationData?.reservation_status === 'today' || reservationData?.reservation_status === 'upcoming')
+      {(reservationData?.reservation_status === 'today' || reservationData?.reservation_status === 'upcoming') && (!pickupData?.data.pickup_id > 0)
         ? (
           <Button
             handleClick={handleModal}
@@ -55,7 +80,9 @@ function ReservationDetailsCard({ reservationData }) {
           >
             Request Pickup
           </Button>
-        ) : null}
+        ) : (
+          null
+        )}
       <PickupModal
         reservationID={reservationData?.reservation_id}
         isShow={showModal}

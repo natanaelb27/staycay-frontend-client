@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useRef, useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -9,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 // import 'react-date-range/dist/styles.css';
 // import 'react-date-range/dist/theme/default.css';
 import moment from 'moment';
+
 import {
   Container,
   DropdownIcon,
@@ -45,12 +47,12 @@ import {
 } from '../../../store/slices/filterHouseSlice';
 
 function Navbar() {
-  const navigate = useNavigate();
-  const [openMenu, setOpenMenu] = useState(false);
-
   const {
     filterHouseName, filterCity, filterCheckInDate, filterCheckOutDate,
   } = useSelector((state) => state.FilterHouse);
+
+  const navigate = useNavigate();
+  const [openMenu, setOpenMenu] = useState(false);
 
   const [inputFilter, setInputFilter] = useState({
     house: filterHouseName,
@@ -58,6 +60,8 @@ function Navbar() {
     checkInDate: filterCheckInDate,
     checkOutDate: filterCheckOutDate,
   });
+
+  const [searchMenu, setSearchMenu] = useState(false);
 
   const formatDate = 'YYYY-MM-DD';
 
@@ -70,8 +74,6 @@ function Navbar() {
     error: cityError,
     isLoading: cityLoading,
   } = useGetCityQuery();
-
-  const [searchMenu, setSearchMenu] = useState(false);
 
   const handleOpenMenu = () => {
     setOpenMenu(!openMenu);
