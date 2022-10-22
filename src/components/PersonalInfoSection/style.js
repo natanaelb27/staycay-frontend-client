@@ -68,6 +68,12 @@ export const SaveButtonContainer = styled.div`
     width: 50%;
 `;
 
+export const WithErrorContainer = styled.div`
+    display: grid;
+    grid-template-rows: 1fr 0.5fr;
+    gap: 0.2rem;
+`;
+
 export const SecondContainer = styled.div`
     display: grid;
     grid-template-rows: 1fr 2fr;

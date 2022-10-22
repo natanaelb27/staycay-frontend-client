@@ -7,6 +7,7 @@ export const MainContainer = styled.div`
     place-items: center;
     padding-left: 15%;
     padding-right: 15%; 
+    margin-top: 1%;
 `;
 
 export const TitleContainer = styled.div`
@@ -24,6 +25,10 @@ export const Title = styled.h1`
     font-weight: 700; 
     letter-spacing: 0.025em; 
     width: 50rem;
+
+    @media (max-width: 420px) {
+        line-height: 2rem; 
+    }
 `;
 
 export const ReservationContentContainer = styled.div`

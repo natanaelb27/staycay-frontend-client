@@ -66,11 +66,13 @@ function RegisterForm() {
       errorCity: '',
     };
 
-    if (!input.name) {
+    console.log('input.name');
+
+    if (!input.name.trim()) {
       newError.errorName = 'Name is required!';
     }
 
-    if (!input.email) {
+    if (!input.email.trim()) {
       newError.errorEmail = 'Email is required!';
     }
 
@@ -78,7 +80,7 @@ function RegisterForm() {
       newError.errorPassword = 'Password is required!';
     }
 
-    if (!input.address) {
+    if (!input.address.trim()) {
       newError.errorAddress = 'Address is required!';
     }
 

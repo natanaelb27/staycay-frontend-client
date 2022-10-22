@@ -77,6 +77,12 @@ export const Container = styled.div`
     display: grid;
     grid-template-rows: 2fr 1fr;
     gap: 1rem;
+    width: 20rem;
+
+    @media (max-width: 800px){
+        width: 100%;
+    }
+
 `;
 
 export const ContentContainer = styled.div`

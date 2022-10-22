@@ -11,6 +11,7 @@ import {
   SpanDetail,
   EditContainer,
   EditTwoInputsContainer,
+  WithErrorContainer,
   SecondContainer,
   SaveButtonContainer,
 } from './style';
@@ -18,6 +19,7 @@ import Input from '../common/Input';
 import { useGetUserProfileQuery, useUpdateUserProfileMutation, useGetCityQuery } from '../../store/slices/apiSlice';
 import Button from '../common/Button';
 import Select from '../common/Select';
+import ErrorMessage from '../common/ErrorMessage';
 
 function PersonalInfoSection() {
   const {
@@ -45,6 +47,14 @@ function PersonalInfoSection() {
     cityID: userData?.data.city_id,
   });
 
+  const [errorInput, setErrorInput] = useState({
+    errorName: '',
+    errorOldPassword: '',
+    errorNewPassword: '',
+    errorAddress: '',
+    errorCity: '',
+  });
+
   const handleClickEditName = () => {
     setInputUpdateProfile({
       name: userData?.data.name,
@@ -54,6 +64,10 @@ function PersonalInfoSection() {
       cityID: userData?.data.city_id,
     });
     setIsEditName(!isEditName);
+    setErrorInput({
+      ...errorInput,
+      errorName: '',
+    });
   };
 
   const handleClickEditPassword = () => {
@@ -65,6 +79,11 @@ function PersonalInfoSection() {
       cityID: userData?.data.city_id,
     });
     setIsEditPassword(!isEditPassword);
+    setErrorInput({
+      ...errorInput,
+      errorOldPassword: '',
+      errorNewPassword: '',
+    });
   };
 
   const handleClickEditAddress = () => {
@@ -76,21 +95,124 @@ function PersonalInfoSection() {
       cityID: userData?.data.city_id,
     });
     setIsEditAddress(!isEditAddress);
+    setErrorInput({
+      ...errorInput,
+      errorAddress: '',
+      errorCity: '',
+    });
   };
 
   const handleInputChange = (e) => {
     setInputUpdateProfile({ ...inputUpdateProfile, [e.target.name]: e.target.value });
   };
 
-  const handleSaveChange = (e) => {
+  const handleSaveChangeName = (e) => {
     e.preventDefault();
-    updateUserProfile(
-      {
-        name: inputUpdateProfile.name,
-        address: inputUpdateProfile.address,
-        cityID: inputUpdateProfile.cityID,
-      },
-    );
+
+    setErrorInput({
+      ...errorInput,
+      errorName: '',
+    });
+
+    const newError = {
+      errorName: '',
+    };
+
+    if (!inputUpdateProfile.name.trim()) {
+      newError.errorName = 'Name is required!';
+    }
+
+    setErrorInput({
+      ...errorInput,
+      errorName: newError.errorName,
+    });
+
+    if (!newError.errorName) {
+      updateUserProfile(
+        {
+          name: inputUpdateProfile.name,
+        },
+      );
+      setIsEditName(!isEditName);
+    }
+  };
+
+  const handleSaveChangePassword = (e) => {
+    e.preventDefault();
+
+    setErrorInput({
+      ...errorInput,
+      errorOldPassword: '',
+      errorNewPassword: '',
+    });
+
+    const newError = {
+      errorOldPassword: '',
+      errorNewPassword: '',
+    };
+
+    if (!inputUpdateProfile.oldPassword) {
+      newError.errorOldPassword = 'Old password is missing!';
+    }
+
+    if (!inputUpdateProfile.newPassword) {
+      newError.errorNewPassword = 'New password is missing!';
+    }
+
+    setErrorInput({
+      ...errorInput,
+      errorOldPassword: newError.errorOldPassword,
+      errorNewPassword: newError.errorNewPassword,
+    });
+
+    if (!newError.errorOldPassword && !newError.errorNewPassword) {
+      updateUserProfile(
+        {
+          oldPassword: inputUpdateProfile.oldPassword,
+          newPassword: inputUpdateProfile.newPassword,
+        },
+      );
+      setIsEditPassword(!isEditPassword);
+    }
+  };
+
+  const handleSaveChangeAddress = (e) => {
+    e.preventDefault();
+
+    setErrorInput({
+      ...errorInput,
+      errorAddress: '',
+      errorCity: '',
+    });
+
+    const newError = {
+      errorAddress: '',
+      errorCity: '',
+    };
+
+    if (!inputUpdateProfile.address.trim()) {
+      newError.errorAddress = 'Address is required!';
+    }
+
+    if (inputUpdateProfile.cityID === 0) {
+      newError.errorCity = 'City is required!';
+    }
+
+    setErrorInput({
+      ...errorInput,
+      errorAddress: newError.errorAddress,
+      errorCity: newError.errorCity,
+    });
+
+    if (!newError.errorAddress && !newError.errorCity) {
+      updateUserProfile(
+        {
+          address: inputUpdateProfile.address,
+          cityID: inputUpdateProfile.cityID,
+        },
+      );
+      setIsEditAddress(!isEditAddress);
+    }
   };
 
   const renderCitiesDropdown = () => cityData?.data.city.map((item) => (
@@ -113,8 +235,10 @@ function PersonalInfoSection() {
                   inputPlaceholder="Full Name"
                   handleChange={handleInputChange}
                 />
+                {errorInput.errorName
+                  ? <ErrorMessage>{errorInput.errorName}</ErrorMessage> : null}
                 <SaveButtonContainer>
-                  <Button handleClick={handleSaveChange}>Save</Button>
+                  <Button handleClick={handleSaveChangeName}>Save</Button>
                 </SaveButtonContainer>
               </EditContainer>
             )}
@@ -131,13 +255,17 @@ function PersonalInfoSection() {
             : (
               <EditContainer>
                 <EditTwoInputsContainer>
-                  <Input
-                    inputType="password"
-                    inputValue={inputUpdateProfile.oldPassword}
-                    inputName="oldPassword"
-                    inputPlaceholder="Old Password"
-                    handleChange={handleInputChange}
-                  />
+                  <WithErrorContainer>
+                    <Input
+                      inputType="password"
+                      inputValue={inputUpdateProfile.oldPassword}
+                      inputName="oldPassword"
+                      inputPlaceholder="Old Password"
+                      handleChange={handleInputChange}
+                    />
+                    {errorInput.errorOldPassword
+                      ? <ErrorMessage>{errorInput.errorOldPassword}</ErrorMessage> : null}
+                  </WithErrorContainer>
                   <SecondContainer>
                     <SpanTitle>New Password</SpanTitle>
                     <Input
@@ -147,10 +275,12 @@ function PersonalInfoSection() {
                       inputPlaceholder="New Password"
                       handleChange={handleInputChange}
                     />
+                    {errorInput.errorNewPassword
+                      ? <ErrorMessage>{errorInput.errorNewPassword}</ErrorMessage> : null}
                   </SecondContainer>
                 </EditTwoInputsContainer>
                 <SaveButtonContainer>
-                  <Button handleClick={handleSaveChange}>Save</Button>
+                  <Button handleClick={handleSaveChangePassword}>Save</Button>
                 </SaveButtonContainer>
               </EditContainer>
             )}
@@ -182,21 +312,27 @@ function PersonalInfoSection() {
             : (
               <EditContainer>
                 <EditTwoInputsContainer>
-                  <Input
-                    inputValue={inputUpdateProfile.address}
-                    inputName="address"
-                    inputPlaceholder="Address"
-                    handleChange={handleInputChange}
-                  />
+                  <WithErrorContainer>
+                    <Input
+                      inputValue={inputUpdateProfile.address}
+                      inputName="address"
+                      inputPlaceholder="Address"
+                      handleChange={handleInputChange}
+                    />
+                    {errorInput.errorAddress
+                      ? <ErrorMessage>{errorInput.errorAddress}</ErrorMessage> : null}
+                  </WithErrorContainer>
                   <SecondContainer>
                     <SpanTitle>City</SpanTitle>
                     <Select selectName="cityID" selectID="cityID" handleChange={handleInputChange} selectValue={inputUpdateProfile.cityID}>
                       {!cityLoading && !cityError && (renderCitiesDropdown())}
                     </Select>
+                    {errorInput.errorCity
+                      ? <ErrorMessage>{errorInput.errorCity}</ErrorMessage> : null}
                   </SecondContainer>
                 </EditTwoInputsContainer>
                 <SaveButtonContainer>
-                  <Button handleClick={handleSaveChange}>Save</Button>
+                  <Button handleClick={handleSaveChangeAddress}>Save</Button>
                 </SaveButtonContainer>
               </EditContainer>
             )}

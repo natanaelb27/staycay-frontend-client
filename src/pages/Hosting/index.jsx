@@ -1,17 +1,35 @@
 import React, { } from 'react';
 import { MainContainer } from '../../components';
-import { useGetUserProfileQuery } from '../../store/slices/apiSlice';
+import { useGetUserProfileQuery, useUpdateUserRoleToHostMutation } from '../../store/slices/apiSlice';
+import {
+  BecomeHostContainer,
+  BecomeHostTitle,
+  BecomeHostButton,
+} from './style';
 
 function Hosting() {
   const {
     data: userData,
   } = useGetUserProfileQuery();
 
-  const isHost = userData?.data.role === 'host';
+  const [updateUserRoleToHost] = useUpdateUserRoleToHostMutation();
+
+  const handleBecomeHost = () => {
+    updateUserRoleToHost();
+  };
 
   return (
     <MainContainer>
-      {isHost ? (<p>true</p>) : (<p>false</p>)}
+      {userData?.data.role === 'host' ? (
+        <div>
+          Hosting
+        </div>
+      ) : (
+        <BecomeHostContainer>
+          <BecomeHostTitle>Become a Host Now</BecomeHostTitle>
+          <BecomeHostButton onClick={handleBecomeHost}>Become a Host</BecomeHostButton>
+        </BecomeHostContainer>
+      )}
     </MainContainer>
   );
 }

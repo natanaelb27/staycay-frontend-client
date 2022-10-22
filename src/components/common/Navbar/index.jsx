@@ -226,11 +226,11 @@ function Navbar() {
               {
                 localStorage.getItem('user') === null ? null : (CheckUserRole() === 'host'
                   ? (
-                    <NavMenuLink to="/hosting">
+                    <NavMenuLink to="/hosting" onClick={handleOpenMenu}>
                       Switch to hosting
                     </NavMenuLink>
                   ) : (
-                    <NavMenuLink to="/hosting">
+                    <NavMenuLink to="/hosting" onClick={handleOpenMenu}>
                       Become a host
                     </NavMenuLink>
 

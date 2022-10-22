@@ -25,11 +25,31 @@ export const DivContainer = styled.div`
 export const Container = styled.div`
     display: grid;
     grid-template-columns: 1fr 2fr;
+    align-items: center;
+
+    @media (max-width: 1400px) {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        justify-items: center;
+    }
+
+    @media (max-width: 1100px) {
+        grid-template-columns: 1fr 2fr;
+        align-items: center;
+    }
+    
+    @media (max-width: 800px) {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        justify-items: center;
+    }
 `;
 
 export const ContentContainer = styled.div`
     display: grid;
+    gap: 0.5rem;
     margin-left: 1rem;
+
 `;
 
 export const ContentDetailContainer = styled.div`
@@ -45,7 +65,7 @@ export const HouseImage = styled.div`
     width: 10rem;
     height: 9rem;
     border-radius: 1rem;
-    ;
+    
 `;
 
 export const SpanTitle = styled.span`

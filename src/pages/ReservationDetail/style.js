@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { FaChevronLeft } from 'react-icons/fa';
 
 export const MainContainer = styled.div`
     max-width: 100%;
@@ -6,10 +7,31 @@ export const MainContainer = styled.div`
     place-items: center; 
     padding-left: 15%;
     padding-right: 15%; 
-    margin-top: 3%;
+    margin-top: 1%;
 
     @media (max-width: 500px) {
         padding: 0;
+    }
+`;
+
+export const TitleContainer = styled.div`
+    display: flex; 
+    align-items: center;
+`;
+
+export const BackIcon = styled(FaChevronLeft)`
+    width: 5rem;
+    cursor: pointer; 
+`;
+
+export const Title = styled.h1`
+    line-height: 1rem; 
+    font-weight: 700; 
+    letter-spacing: 0.025em; 
+    width: 50rem;
+
+    @media (max-width: 420px) {
+        line-height: 2rem; 
     }
 `;
 
@@ -29,7 +51,13 @@ export const ContentContainer = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-items: center;
     gap: 1rem;
+
+    @media (max-width: 300px) {
+        display: grid;
+        justify-content: center;
+    }
 `;
 
 export const QRContainer = styled.div`

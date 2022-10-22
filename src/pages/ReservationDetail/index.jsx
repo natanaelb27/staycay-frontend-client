@@ -6,6 +6,9 @@ import moment from 'moment';
 import { useGetReservationByIDQuery, useGetHouseByIDQuery, useGetUserByIDQuery } from '../../store/slices/apiSlice';
 import {
   MainContainer,
+  TitleContainer,
+  BackIcon,
+  Title,
   Container,
   ContentContainer,
   QRContainer,
@@ -58,8 +61,16 @@ function ReservationDetail() {
     navigate('/server-error');
   }
 
+  const handleClickBack = () => {
+    navigate('/account');
+  };
+
   return (
     <MainContainer>
+      <TitleContainer>
+        <BackIcon onClick={handleClickBack} />
+        <Title>Your Reservation</Title>
+      </TitleContainer>
       {(houseLoading && reservationLoading) && (<p>LOADING</p>)}
       {(!houseLoading && !reservationError) && (
         <Container>

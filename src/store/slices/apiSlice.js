@@ -101,6 +101,16 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ['Users'],
     }),
+    updateUserRoleToHost: builder.mutation({
+      query: () => ({
+        url: '/user/role',
+        method: 'PATCH',
+        headers: {
+          authorization: `Bearer ${JSON.parse(localStorage.getItem('user'))?.token ? JSON.parse(localStorage.getItem('user'))?.token : ''}`,
+        },
+      }),
+      invalidatesTags: ['Users'],
+    }),
     addReservation: builder.mutation({
       query: ({
         houseID, checkInDate, checkOutDate,
@@ -192,6 +202,7 @@ export const {
   useGetUserProfileQuery,
   useGetUserByIDQuery,
   useUpdateUserProfileMutation,
+  useUpdateUserRoleToHostMutation,
   useAddReservationMutation,
   useLazyGetReservationByUserQuery,
   useGetReservationByIDQuery,
