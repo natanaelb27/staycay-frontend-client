@@ -152,11 +152,11 @@ function PersonalInfoSection() {
     };
 
     if (!inputUpdateProfile.oldPassword) {
-      newError.errorOldPassword = 'Old password is missing!';
+      newError.errorOldPassword = 'Old password is required!';
     }
 
     if (!inputUpdateProfile.newPassword) {
-      newError.errorNewPassword = 'New password is missing!';
+      newError.errorNewPassword = 'New password is required!';
     }
 
     setErrorInput({

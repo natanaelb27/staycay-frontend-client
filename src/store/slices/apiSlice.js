@@ -127,8 +127,8 @@ export const apiSlice = createApi({
       invalidatesTags: ['Users', 'Reservations'],
     }),
     getReservationByUser: builder.query({
-      query: ({ filterBy }) => ({
-        url: `/user/reservation?filterBy=${filterBy}`,
+      query: ({ filterBy, limit, page }) => ({
+        url: `/user/reservation?filterBy=${filterBy}&limit=${limit}&page=${page}`,
         method: 'GET',
         headers: {
           authorization: `Bearer ${JSON.parse(localStorage.getItem('user'))?.token ? JSON.parse(localStorage.getItem('user'))?.token : ''}`,

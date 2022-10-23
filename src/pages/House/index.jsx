@@ -75,7 +75,6 @@ function House() {
                 </p>
               </div>
               <HouseReservationCard houseData={houseData} />
-
             </HouseContentDetailsContainer>
           </div>
         )}

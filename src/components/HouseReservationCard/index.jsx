@@ -61,7 +61,7 @@ function HouseReservationCard({
 
   const [checkInDate, setCheckInDate] = useState(queryParamsCheckInOutValidator('check_in'));
   const [checkOutDate, setCheckOutDate] = useState(queryParamsCheckInOutValidator('check_out'));
-  const [errorReservationDate, setErrorReservationDate] = useState('');
+  const [errorReservation, setErrorReservation] = useState('');
 
   const newReservationDateArray = [];
 
@@ -86,20 +86,20 @@ function HouseReservationCard({
   const handleClickReserve = (e) => {
     e.preventDefault();
 
-    setErrorReservationDate('');
+    setErrorReservation('');
 
     if (new Date(checkInDate.toDateString()) < new Date(new Date().toDateString())) {
-      setErrorReservationDate('Cannot set a date before today');
+      setErrorReservation('Cannot set a date before today');
       return;
     }
 
     if (checkInDate.getTime() === checkOutDate.getTime()) {
-      setErrorReservationDate('Minimum stay is 1 night');
+      setErrorReservation('Minimum stay is 1 night');
       return;
     }
 
     if (newReservationDatesDS.some((r) => disabledDatesDS.indexOf(r) >= 0)) {
-      setErrorReservationDate('Those dates are not available');
+      setErrorReservation('Those dates are not available');
       return;
     }
 
@@ -155,9 +155,15 @@ function HouseReservationCard({
           </PriceSpan>
         </TotalPriceContainer>
       </PriceContainer>
-      {errorReservationDate === '' ? null : <ErrorMessage>{errorReservationDate}</ErrorMessage>}
+      {errorReservation === '' ? null : <ErrorMessage>{errorReservation}</ErrorMessage>}
+      {localStorage.getItem('user') ? (
+        houseData?.data.host_id === JSON.parse(localStorage.getItem('user')).user_id ? (
+          <ErrorMessage>You cannot book your own house</ErrorMessage>
+        ) : null) : null}
       <Button
         handleClick={handleClickReserve}
+        isDisabled={localStorage.getItem('user') ? (
+          houseData?.data.host_id === JSON.parse(localStorage.getItem('user')).user_id) : false}
       >
         Reserve
       </Button>

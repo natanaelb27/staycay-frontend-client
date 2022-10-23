@@ -24,7 +24,7 @@ function UserReservationSection() {
   };
 
   useEffect(() => {
-    getReservation({ filterBy: 'all' });
+    getReservation({ filterBy: 'all', limit: 10, page: 1 });
   }, []);
 
   const handleClickReservationCard = (reservationID) => {
@@ -55,6 +55,7 @@ function UserReservationSection() {
       <ReservationContainer>
         {renderReservations()}
       </ReservationContainer>
+      Page
     </Container>
   );
 }
