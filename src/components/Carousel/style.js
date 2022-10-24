@@ -44,12 +44,14 @@ export const LeftArrow = styled(FaChevronLeft)`
     opacity: ${(props) => (props.ishover === 'true' ? '100%' : '0%')};
     transition: opacity 0.2s ease-in-out;
     font-size: 0.75rem;
-    color: #000;
     z-index: 10;
     cursor: pointer;
     padding: 10%;
     border-radius: 20px;
-    background-color: white;
+    /* background-color: white;
+    color: #000; */
+    background-color: #000;
+    color: white;
     user-select: none;
 `;
 
@@ -57,11 +59,13 @@ export const RightArrow = styled(FaChevronRight)`
     opacity: ${(props) => (props.ishover === 'true' ? '100%' : '0%')};
     transition: opacity 0.2s ease-in-out;
     font-size: 0.75rem;
-    color: #000;
     z-index: 10;
     cursor: pointer;
     padding: 10%;
     border-radius: 20px;
-    background-color: white;
+    /* background-color: white;
+    color: #000; */
+    background-color: #000;
+    color: white;
     user-select: none;
 `;

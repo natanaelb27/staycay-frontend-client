@@ -37,12 +37,14 @@ export const LeftArrow = styled(FaChevronLeft)`
     position: absolute;
     left: 5%;
     font-size: 0.75rem;
-    color: #000;
     z-index: 10;
     cursor: pointer;
     padding: 3%;
     border-radius: 20px;
-    background-color: white;
+    /* background-color: white;
+    color: #000; */
+    background-color: #000;
+    color: white;
     user-select: none;
 `;
 
@@ -52,12 +54,14 @@ export const RightArrow = styled(FaChevronRight)`
     position: absolute;
     right: 5%;
     font-size: 0.75rem;
-    color: #000;
     z-index: 10;
     cursor: pointer;
     padding: 3%;
     border-radius: 20px;
-    background-color: white;
+    /* background-color: white;
+    color: #000; */
+    background-color: #000;
+    color: white;
     user-select: none;
 `;
 

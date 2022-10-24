@@ -9,6 +9,8 @@ import {
   ImagesContainer,
   HouseContentContainer,
   HouseContentDetailsContainer,
+  LabelImage,
+  InputImage,
 } from './style';
 import UpdateHousePhotoCard from '../../components/UpdateHousePhotoCard';
 import {
@@ -46,6 +48,19 @@ function HostingUpdateHouse() {
         {houseLoading && <SkeletonImage classes="full" />}
         {!houseLoading && !houseError && (
         <ImagesContainer>
+          <LabelImage>
+            Upload New Photo from your device
+            <InputImage
+              type="file"
+              name="images"
+              // onChange={onSelectFile}
+              onClick={(e) => {
+                e.target.value = null;
+              }}
+              multiple
+              accept="image/png, image/jpeg, image/webp"
+            />
+          </LabelImage>
           {renderHouseImage()}
         </ImagesContainer>
 

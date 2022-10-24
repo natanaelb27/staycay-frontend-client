@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import QRCode from 'qrcode.react';
 import moment from 'moment';
-import { useGetReservationByIDQuery, useGetHouseByIDQuery, useGetUserByIDQuery } from '../../store/slices/apiSlice';
+import { useGetReservationByIDQuery, useGetUnscopedHouseByIDQuery, useGetUserByIDQuery } from '../../store/slices/apiSlice';
 import {
   MainContainer,
   TitleContainer,
@@ -30,7 +30,7 @@ function ReservationDetail() {
     data: houseData,
     error: houseError,
     loading: houseLoading,
-  } = useGetHouseByIDQuery(
+  } = useGetUnscopedHouseByIDQuery(
     parseInt(reservationData?.data.reservation.house_id, 10),
     { skip: reservationData?.data.reservation.house_id === undefined },
   );

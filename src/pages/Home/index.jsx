@@ -24,17 +24,37 @@ function Home() {
   );
 
   const renderHouses = () => (
-    houseData?.data.house.map((item) => (
-      <Card
-        key={item.house_id}
-        houseID={item.house_id}
-        housePhoto={item.house_photo}
-        name={item.house_name}
-        location={item.house_city_name}
-        price={item.house_price}
-        linkTo={`/house/${item.house_id}?check_in=${filterCheckInDate}&check_out=${filterCheckOutDate}`}
-      />
-    ))
+    houseData?.data.house.map((item) => {
+      if (item.house_photo.length <= 0) {
+        const nullHousePhoto = [{
+          photo_id: 0,
+          photo: 'https://res.cloudinary.com/dbhvedme6/image/upload/v1666614484/no-photo_g1qmse.webp',
+        }];
+        return (
+          <Card
+            key={item.house_id}
+            houseID={item.house_id}
+            housePhoto={nullHousePhoto}
+            name={item.house_name}
+            location={item.house_city_name}
+            price={item.house_price}
+            linkTo={`/house/${item.house_id}`}
+          />
+        );
+      }
+
+      return (
+        <Card
+          key={item.house_id}
+          houseID={item.house_id}
+          housePhoto={item.house_photo}
+          name={item.house_name}
+          location={item.house_city_name}
+          price={item.house_price}
+          linkTo={`/house/${item.house_id}`}
+        />
+      );
+    })
   );
 
   return (

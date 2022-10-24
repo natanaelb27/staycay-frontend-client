@@ -30,6 +30,10 @@ function House() {
     navigate('/InternalServerError');
   }
 
+  if (!houseLoading && !houseError && houseData?.data.house_status.toLowerCase() !== 'active') {
+    navigate('/');
+  }
+
   return (
     <MainContainer>
       <HouseTitleContainer>

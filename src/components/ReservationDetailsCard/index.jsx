@@ -10,12 +10,12 @@ import {
   SpanTitle,
   SpanDetail,
 } from './style';
-import { useGetHouseByIDQuery, useGetPickupByReservationQuery } from '../../store/slices/apiSlice';
+import { useGetUnscopedHouseByIDQuery, useGetPickupByReservationQuery } from '../../store/slices/apiSlice';
 import Button from '../common/Button';
 import PickupModal from '../PickupModal';
 
 function ReservationDetailsCard({ handleClick, reservationData }) {
-  const { data: houseData } = useGetHouseByIDQuery(parseInt(reservationData?.house_id, 10));
+  const { data: houseData } = useGetUnscopedHouseByIDQuery(parseInt(reservationData?.house_id, 10));
   const { data: pickupData } = useGetPickupByReservationQuery(
     parseInt(reservationData?.reservation_id, 10),
   );

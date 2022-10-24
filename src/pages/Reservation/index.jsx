@@ -66,11 +66,21 @@ function Reservation() {
     if (newReservationDatesDS?.some((r) => disabledDatesDS?.indexOf(r) >= 0)) {
       navigate(`/house/${params.houseID}?check_in=${queryParams.get('check_in')}&check_out=${queryParams.get('check_out')}`, { replace: true });
     }
+
+    if (houseData?.data.host_id === JSON.parse(localStorage.getItem('user')).user_id) {
+      navigate('/');
+    }
+
+    if (!houseLoading && !houseError && houseData?.data.house_status.toLowerCase() !== 'active') {
+      navigate('/');
+    }
   });
 
   const handleClickBack = () => {
     navigate(`/house/${params.houseID}?check_in=${queryParams.get('check_in')}&check_out=${queryParams.get('check_out')}`);
   };
+
+  // http://localhost:3000/reservation/11?check_in=2022-11-19&check_out=2022-11-20
 
   return (
     <MainContainer>
