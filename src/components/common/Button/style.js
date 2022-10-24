@@ -36,5 +36,9 @@ export const Buttons = styled.button`
     :disabled {
         cursor: default;
         background-color: #cccccc;
+
+        :hover {
+            background-color: #cccccc;
+        }
     }
 `;

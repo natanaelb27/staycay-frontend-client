@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-export const numberWithCommas = (number) => `${number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')},00`;
+export const numberWithCommas = (number) => `${parseInt(number, 10).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')},00`;
 export const getDayBetweenDates = (checkInDate, checkOutDate) => moment(checkInDate).diff(moment(checkOutDate), 'days');
 export const getDatesBetween = (startDate, lastDate) => {
   const dateArray = [];

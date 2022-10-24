@@ -20,3 +20,4 @@ export { default as UserWalletSection } from './UserWalletSection';
 export { default as UserReservationSection } from './UserReservationSection';
 export { default as HostReservationSection } from './HostReservationSection';
 export { default as HostHouseSection } from './HostHouseSection';
+export { default as UpdateHousePhotoCard } from './UpdateHousePhotoCard';

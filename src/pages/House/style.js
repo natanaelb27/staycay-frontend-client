@@ -14,7 +14,7 @@ export const MainContainer = styled.div`
 
 export const HouseTitleContainer = styled.div`
     width: 100%;
-    /* margin-top: 3%; */
+    margin-top: 3%;
 `;
 
 export const HouseImageContainer = styled.div`

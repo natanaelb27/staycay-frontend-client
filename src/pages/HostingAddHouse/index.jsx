@@ -125,11 +125,11 @@ function HostingAddHouse() {
       const uploadPhoto = selectedImages.map((file) => {
         const formData = new FormData();
         formData.append('file', file);
-        formData.append('upload_preset', 'o5etnmup');
-        formData.append('api_key', '688756136532833');
+        formData.append('upload_preset', process.env.REACT_APP_CLOUDINARY_PRESET_NAME);
+        formData.append('api_key', process.env.REACT_APP_CLOUDINARY_API_KEY);
         formData.append('timestamp', (Date.now() / 1000) || 0);
 
-        return axios.post('https://api.cloudinary.com/v1_1/codeinfuse/image/upload', formData, {
+        return axios.post(process.env.REACT_APP_CLOUDINARY_API_URL, formData, {
           headers: { 'X-Requested-With': 'XMLHttpRequest' },
         }).then((response) => {
           const { data } = response;
@@ -139,7 +139,6 @@ function HostingAddHouse() {
       });
 
       axios.all(uploadPhoto).then(() => {
-        console.log(housePhoto);
         addHouse({
           name: input.name,
           price: input.price,
@@ -147,7 +146,11 @@ function HostingAddHouse() {
           cityID: input.city,
           maxGuest: input.maxGuest,
           photo: housePhoto,
-        });
+        })
+          .unwrap()
+          .then(() => {
+            navigate('/hosting');
+          });
       });
     }
   };

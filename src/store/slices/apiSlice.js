@@ -4,7 +4,7 @@ export const apiSlice = createApi({
   reducerPath: 'databaseApi',
   baseQuery: fetchBaseQuery({
     mode: 'cors',
-    baseUrl: 'http://localhost:8080',
+    baseUrl: process.env.REACT_APP_API_URL,
     // prepareHeaders: (headers, { getState }) => {
     //   const { token } = getState().auth;
     //   if (token) {
@@ -234,6 +234,42 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ['Houses'],
     }),
+    updateHouseByID: builder.mutation({
+      query: ({
+        houseID,
+        name,
+        price,
+        description,
+        cityID,
+        maxGuest,
+        houseStatusID,
+      }) => ({
+        url: `/host/house/${houseID}`,
+        method: 'PATCH',
+        body: {
+          name,
+          price: parseInt(price, 10),
+          description,
+          city_id: parseInt(cityID, 10),
+          max_guest: parseInt(maxGuest, 10),
+          house_status_id: parseInt(houseStatusID, 10),
+        },
+        headers: {
+          authorization: `Bearer ${JSON.parse(localStorage.getItem('user'))?.token ? JSON.parse(localStorage.getItem('user'))?.token : ''}`,
+        },
+      }),
+      invalidatesTags: ['Houses'],
+    }),
+    deleteHousePhotoByID: builder.mutation({
+      query: (housePhotoID) => ({
+        url: `/host/house/photo/${housePhotoID}`,
+        method: 'DELETE',
+        headers: {
+          authorization: `Bearer ${JSON.parse(localStorage.getItem('user'))?.token ? JSON.parse(localStorage.getItem('user'))?.token : ''}`,
+        },
+      }),
+      invalidatesTags: ['Houses'],
+    }),
   }),
 });
 
@@ -257,4 +293,6 @@ export const {
   useTopUpMutation,
   useGetHostHouseQuery,
   useAddHouseMutation,
+  useUpdateHouseByIDMutation,
+  useDeleteHousePhotoByIDMutation,
 } = apiSlice;
