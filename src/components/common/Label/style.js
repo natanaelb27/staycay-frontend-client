@@ -11,7 +11,7 @@ export const Labels = styled.label`
     line-height: 1rem; 
     font-weight: 700; 
     letter-spacing: 0.025em; 
-    text-transform: uppercase; 
+    /* text-transform: uppercase;  */
 
 
     @media (min-width: 768px) { 

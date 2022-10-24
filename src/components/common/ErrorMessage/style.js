@@ -10,6 +10,8 @@ export const ErrorContainer = styled.div`
     /* align-items: center; */
     max-height: 2rem;
     margin-top: 0.5rem;
+    font-weight: normal;
+    text-decoration: none;
 `;
 
 export const ErrorMessages = styled.p`

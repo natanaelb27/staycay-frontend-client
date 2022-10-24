@@ -49,5 +49,4 @@ export const Image = styled.svg`
     color: #E5E7EB; 
     width: 3rem; 
     height: 3rem; 
-    
 `;

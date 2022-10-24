@@ -209,6 +209,31 @@ export const apiSlice = createApi({
       }),
       providesTags: ['Houses'],
     }),
+    addHouse: builder.mutation({
+      query: ({
+        name,
+        price,
+        description,
+        cityID,
+        maxGuest,
+        photo,
+      }) => ({
+        url: '/host/house',
+        method: 'POST',
+        body: {
+          name,
+          price: parseInt(price, 10),
+          description,
+          city_id: parseInt(cityID, 10),
+          max_guest: parseInt(maxGuest, 10),
+          photo,
+        },
+        headers: {
+          authorization: `Bearer ${JSON.parse(localStorage.getItem('user'))?.token ? JSON.parse(localStorage.getItem('user'))?.token : ''}`,
+        },
+      }),
+      invalidatesTags: ['Houses'],
+    }),
   }),
 });
 
@@ -231,4 +256,5 @@ export const {
   useGetPickupByReservationQuery,
   useTopUpMutation,
   useGetHostHouseQuery,
+  useAddHouseMutation,
 } = apiSlice;
