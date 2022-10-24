@@ -1,7 +1,9 @@
 import React, { } from 'react';
-import { MainContainer } from '../../components';
+import { HostReservationSection, HostHouseSection } from '../../components';
 import { useGetUserProfileQuery, useUpdateUserRoleToHostMutation } from '../../store/slices/apiSlice';
 import {
+  MainContainer,
+  Container,
   BecomeHostContainer,
   BecomeHostTitle,
   BecomeHostButton,
@@ -21,9 +23,11 @@ function Hosting() {
   return (
     <MainContainer>
       {userData?.data.role === 'host' ? (
-        <div>
-          Hosting
-        </div>
+        <Container>
+          <HostHouseSection />
+          <HostReservationSection />
+        </Container>
+
       ) : (
         <BecomeHostContainer>
           <BecomeHostTitle>Become a Host Now</BecomeHostTitle>

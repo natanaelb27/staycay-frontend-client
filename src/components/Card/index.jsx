@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 // import { FaSlideshare } from 'react-icons/fa';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import {
   HouseContainer,
   HouseInfo,
@@ -16,13 +16,13 @@ import {
 import { numberWithCommas } from '../../helpers';
 
 function Card({
-  houseID, housePhoto, name, location, price,
+  housePhoto, name, location, price, linkTo,
 }) {
-  const {
-    filterCheckInDate, filterCheckOutDate,
-  } = useSelector((state) => state.FilterHouse);
+  // const {
+  //   filterCheckInDate, filterCheckOutDate,
+  // } = useSelector((state) => state.FilterHouse);
 
-  const queryParams = `check_in=${filterCheckInDate}&check_out=${filterCheckOutDate}`;
+  // const queryParams = `check_in=${filterCheckInDate}&check_out=${filterCheckOutDate}`;
 
   const [current, setCurrent] = useState(0);
   const length = housePhoto?.length;
@@ -56,14 +56,14 @@ function Card({
         {housePhoto?.map((item, index) => (
           <Slide key={item.photo_id} className={index === current ? 'active' : ''}>
             {index === current && (
-              <HouseLink to={`/house/${houseID}?${queryParams}`} target="_blank">
+              <HouseLink to={linkTo} target="_blank">
                 <Image imgSrc={`url(${item.photo})`} />
               </HouseLink>
             )}
           </Slide>
         ))}
       </Slider>
-      <HouseLink to={`/house/${houseID}?${queryParams}`} target="_blank">
+      <HouseLink to={linkTo} target="_blank">
         <HouseInfo>
           <BoldSpan>{name}</BoldSpan>
           <LocationSpan>{location}</LocationSpan>

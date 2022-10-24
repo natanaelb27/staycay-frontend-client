@@ -21,6 +21,19 @@ function Input({ ...props }) {
     );
   }
 
+  if (props.inputType === 'file') {
+    return (
+      <Inputs
+        type={props.inputType}
+        id={props.inputID}
+        name={props.inputName}
+        onChange={props.handleChange}
+        multiple={props.isMultiple}
+        accept={props.inputAccept}
+      />
+    );
+  }
+
   return (
     <Inputs
       type={props.inputType}

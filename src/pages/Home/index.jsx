@@ -32,6 +32,7 @@ function Home() {
         name={item.house_name}
         location={item.house_city_name}
         price={item.house_price}
+        linkTo={`/house/${item.house_id}?check_in=${filterCheckInDate}&check_out=${filterCheckOutDate}`}
       />
     ))
   );

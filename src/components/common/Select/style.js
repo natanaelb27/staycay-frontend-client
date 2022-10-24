@@ -24,10 +24,6 @@ import styled from 'styled-components';
 
 export const Selects = styled.select`
     display: block; 
-    padding-top: 0.75rem;
-    padding-bottom: 0.75rem; 
-    padding-left: 1rem;
-    padding-right: 1rem; 
     padding: 0.5rem;
     background-color: #ffffff; 
     color: #374151; 

@@ -62,7 +62,7 @@ function ReservationDetail() {
   }
 
   const handleClickBack = () => {
-    navigate('/account');
+    navigate(-1);
   };
 
   return (

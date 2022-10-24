@@ -6,6 +6,8 @@ export { default as Account } from './Account';
 export { default as Reservation } from './Reservation';
 export { default as ReservationDetail } from './ReservationDetail';
 export { default as Hosting } from './Hosting';
+export { default as HostingAddHouse } from './HostingAddHouse';
+export { default as HostingUpdateHouse } from './HostingUpdateHouse';
 export { default as NotFound } from './NotFound';
 export { default as InternalServerError } from './InternalServerError';
 export { default as Forbidden } from './Forbidden';

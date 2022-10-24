@@ -44,7 +44,7 @@ function UserReservationSection() {
 
   return (
     <Container>
-      <Title>Your Reservation</Title>
+      <Title>Your Reservations</Title>
       <ContentContainer>
         <SpanSelection id="all" className={active === 'all' ? 'active' : undefined} onClick={handleClick}>All</SpanSelection>
         <SpanSelection id="today" className={active === 'today' ? 'active' : undefined} onClick={handleClick}>Today</SpanSelection>
@@ -56,6 +56,7 @@ function UserReservationSection() {
         {renderReservations()}
       </ReservationContainer>
       Page
+      https://www.freecodecamp.org/news/build-a-custom-pagination-component-in-react/
     </Container>
   );
 }

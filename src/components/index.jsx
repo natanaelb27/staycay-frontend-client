@@ -18,3 +18,5 @@ export { default as ReservationPaymentSection } from './ReservationPaymentSectio
 export { default as PersonalInfoSection } from './PersonalInfoSection';
 export { default as UserWalletSection } from './UserWalletSection';
 export { default as UserReservationSection } from './UserReservationSection';
+export { default as HostReservationSection } from './HostReservationSection';
+export { default as HostHouseSection } from './HostHouseSection';

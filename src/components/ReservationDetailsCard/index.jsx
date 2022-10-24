@@ -67,9 +67,12 @@ function ReservationDetailsCard({ handleClick, reservationData }) {
               <SpanTitle>Pickup Address:</SpanTitle>
               <SpanDetail>
                 {pickupData?.data.pickup_id !== 0 ? (
-                  pickupData?.data.pickup_address
-                  ,
-                  pickupData?.data.pickup_city_name
+                  <span>
+                    {pickupData?.data.pickup_address}
+                    ,
+                    {' '}
+                    {pickupData?.data.pickup_city_name}
+                  </span>
                 ) : '-'}
               </SpanDetail>
             </ContentDetailContainer>

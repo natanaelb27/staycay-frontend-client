@@ -136,6 +136,16 @@ export const apiSlice = createApi({
       }),
       providesTags: ['Reservations'],
     }),
+    getReservationByHost: builder.query({
+      query: ({ filterBy, limit, page }) => ({
+        url: `/host/reservation?filterBy=${filterBy}&limit=${limit}&page=${page}`,
+        method: 'GET',
+        headers: {
+          authorization: `Bearer ${JSON.parse(localStorage.getItem('user'))?.token ? JSON.parse(localStorage.getItem('user'))?.token : ''}`,
+        },
+      }),
+      providesTags: ['Reservations'],
+    }),
     getReservationByID: builder.query({
       query: (reservationID) => ({
         url: `/reservation/${reservationID}`,
@@ -189,6 +199,16 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ['Users'],
     }),
+    getHostHouse: builder.query({
+      query: () => ({
+        url: '/host/house',
+        method: 'GET',
+        headers: {
+          authorization: `Bearer ${JSON.parse(localStorage.getItem('user'))?.token ? JSON.parse(localStorage.getItem('user'))?.token : ''}`,
+        },
+      }),
+      providesTags: ['Houses'],
+    }),
   }),
 });
 
@@ -205,8 +225,10 @@ export const {
   useUpdateUserRoleToHostMutation,
   useAddReservationMutation,
   useLazyGetReservationByUserQuery,
+  useLazyGetReservationByHostQuery,
   useGetReservationByIDQuery,
   usePickupMutation,
   useGetPickupByReservationQuery,
   useTopUpMutation,
+  useGetHostHouseQuery,
 } = apiSlice;
