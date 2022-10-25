@@ -21,8 +21,8 @@ export const HouseLink = styled(Link)`
 `;
 
 export const Slider = styled.div`
-    width: 18rem;
-    height: 18rem;
+    width: 20rem;
+    height: 20rem;
     border-radius: 20px;    
     margin: 0px;
     position: relative;

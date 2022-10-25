@@ -6,7 +6,7 @@ export const CardContainer = styled.div`
     /* grid-template-columns: repeat(4, minmax(200px, 1fr)); */
     grid-gap: 2rem;
     row-gap: 5rem;
-    margin-top: 3rem;
+    margin-top: 1rem;
 
 /* 
     @media (max-width: 1280px) {
@@ -22,4 +22,12 @@ export const CardContainer = styled.div`
     @media (max-width: 640px) {
         grid-template-columns: repeat(1, minmax(0, 1fr));
     } */
+`;
+
+export const SortContainer = styled.div`
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 1rem;
+    gap: 1rem;
+
 `;
