@@ -13,12 +13,15 @@ export const apiSlice = createApi({
     //   return headers;
     // },
   }),
-  tagTypes: ['Houses',
+  tagTypes: [
+    'Houses',
     'Cities',
     'Users',
     'Reservations',
     'Pickups',
-    'HouseStatuses'],
+    'HouseStatuses',
+    'Games',
+  ],
   endpoints: (builder) => ({
     register: builder.mutation({
       query: ({
@@ -209,7 +212,7 @@ export const apiSlice = createApi({
           authorization: `Bearer ${JSON.parse(localStorage.getItem('user'))?.token ? JSON.parse(localStorage.getItem('user'))?.token : ''}`,
         },
       }),
-      invalidatesTags: ['Users'],
+      invalidatesTags: ['Users', 'Games'],
     }),
     getHostHouse: builder.query({
       query: () => ({
@@ -312,6 +315,29 @@ export const apiSlice = createApi({
       }),
       providesTags: ['HouseStatuses'],
     }),
+    getGame: builder.query({
+      query: () => ({
+        url: '/game',
+        method: 'GET',
+        headers: {
+          authorization: `Bearer ${JSON.parse(localStorage.getItem('user'))?.token ? JSON.parse(localStorage.getItem('user'))?.token : ''}`,
+        },
+      }),
+      providesTags: ['Games'],
+    }),
+    playGame: builder.mutation({
+      query: (userGuess) => ({
+        url: '/game',
+        method: 'POST',
+        body: {
+          user_guess: userGuess,
+        },
+        headers: {
+          authorization: `Bearer ${JSON.parse(localStorage.getItem('user'))?.token ? JSON.parse(localStorage.getItem('user'))?.token : ''}`,
+        },
+      }),
+      invalidatesTags: ['Games', 'Users'],
+    }),
   }),
 });
 
@@ -328,7 +354,7 @@ export const {
   useUpdateUserProfileMutation,
   useUpdateUserRoleToHostMutation,
   useAddReservationMutation,
-  useLazyGetReservationByUserQuery,
+  useGetReservationByUserQuery,
   useLazyGetReservationByHostQuery,
   useGetReservationByIDQuery,
   usePickupMutation,
@@ -341,4 +367,6 @@ export const {
   useUpdateHouseByIDMutation,
   useDeleteHousePhotoByIDMutation,
   useGetHouseStatusesQuery,
+  useGetGameQuery,
+  usePlayGameMutation,
 } = apiSlice;

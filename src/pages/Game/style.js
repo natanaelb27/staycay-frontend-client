@@ -53,7 +53,7 @@ export const ButtonContainer = styled.div`
     width: 100%;
 `;
 
-export const ButtonSelection = styled.div`
+export const ButtonSelection = styled.button`
     background-color: #f3c70d;
     color: #56261a;
     padding-top: 5%;
@@ -64,9 +64,16 @@ export const ButtonSelection = styled.div`
     font-size: 0.9rem;
     text-align: center;
     cursor: pointer;
+    border: none;
 
     &:hover {
         background-color: #f5d23d;
+    }
+
+    &:disabled {
+        cursor: default;
+        background-color: #cccccc;
+        color: black;
     }
 `;
 
@@ -85,6 +92,7 @@ export const SpanTitle = styled.span`
     font-size: 0.95rem;
     font-weight: 700; 
     letter-spacing: 0.025em; 
+    text-align: center;
 `;
 
 export const SpanDetail = styled.span`
@@ -92,4 +100,5 @@ export const SpanDetail = styled.span`
     font-size: 0.95rem;
     letter-spacing: 0.025em; 
     color: #3C4048;
+    text-align: center;
 `;

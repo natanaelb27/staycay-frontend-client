@@ -7,28 +7,41 @@ import {
   ContentContainer,
   SpanSelection,
   ReservationContainer,
+  PaginationContainer,
 } from './style';
 import { useLazyGetReservationByHostQuery } from '../../store/slices/apiSlice';
 import HostReservationDetailsCard from '../HostReservationDetailsCard';
+import Pagination from '../Pagination';
 
 function HostReservationSection() {
   const navigate = useNavigate();
   const [getReservation, {
     data: reservationData,
+    isLoading: reservationLoading,
   }] = useLazyGetReservationByHostQuery();
 
   const [active, setActive] = useState('all');
+  const [filterBy, setFilterBy] = useState('all');
+  const [currentPage, setCurrentPage] = useState(1);
+
   const handleClick = (e) => {
+    setCurrentPage(1);
     setActive(e.target.id);
-    getReservation({ filterBy: e.target.id });
+    setFilterBy(e.target.id);
+    getReservation({ filterBy: e.target.id, limit: 1, page: 1 });
   };
 
   useEffect(() => {
-    getReservation({ filterBy: 'all', limit: 10, page: 1 });
+    getReservation({ filterBy, limit: 1, page: currentPage });
   }, []);
 
   const handleClickReservationCard = (reservationID) => {
     navigate(`/reservation-detail/${reservationID}`);
+  };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    getReservation({ filterBy, limit: 1, page });
   };
 
   const renderReservations = () => (
@@ -55,6 +68,15 @@ function HostReservationSection() {
       <ReservationContainer>
         {renderReservations()}
       </ReservationContainer>
+      {reservationData?.data.pagination && (
+      <PaginationContainer>
+        <Pagination
+          currentPage={currentPage}
+          totalPages={reservationData?.data.pagination.total_pages}
+          onPageChange={handlePageChange}
+        />
+      </PaginationContainer>
+      )}
       Page
       https://www.freecodecamp.org/news/build-a-custom-pagination-component-in-react/
     </Container>

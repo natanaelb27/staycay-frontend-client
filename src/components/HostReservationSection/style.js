@@ -45,12 +45,30 @@ export const SpanDetail = styled.span`
 `;
 
 export const ReservationContainer = styled.div`
-    display: grid;
+    display: flex;
+    flex-wrap: wrap;
     gap: 1rem;
     justify-content: center;
-    grid-template-columns: 1fr 1fr;
+    /* grid-template-columns: 1fr 1fr; */
 
     @media (max-width: 1100px) {
-        grid-template-columns: 1fr;
+        /* grid-template-columns: 1fr; */
     }
+`;
+
+// export const ReservationContainer = styled.div`
+//     display: grid;
+//     gap: 1rem;
+//     justify-content: center;
+//     grid-template-columns: 1fr 1fr;
+
+//     @media (max-width: 1100px) {
+//         grid-template-columns: 1fr;
+//     }
+// `;
+
+export const PaginationContainer = styled.div`
+    display: grid;
+    justify-content: center;
+    padding: 2%;
 `;
