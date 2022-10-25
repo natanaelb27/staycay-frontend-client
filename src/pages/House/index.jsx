@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
   HouseReservationCard, Carousel, SkeletonImage, SkeletonLine, SkeletonText,
@@ -24,15 +24,17 @@ function House() {
     isLoading: houseLoading,
   } = useGetHouseByIDQuery(params.houseID);
 
-  if (!houseLoading && houseError && houseError.data.code === 400) {
-    navigate('/');
-  } else if (!houseLoading && houseError && houseError.data.code === 500) {
-    navigate('/InternalServerError');
-  }
+  useEffect(() => {
+    if (!houseLoading && houseError && houseError.data.code === 400) {
+      navigate('/', { replace: true });
+    } else if (!houseLoading && houseError && houseError.data.code === 500) {
+      navigate('/InternalServerError');
+    }
 
-  if (!houseLoading && !houseError && houseData?.data.house_status.toLowerCase() !== 'active') {
-    navigate('/');
-  }
+    if (!houseLoading && !houseError && houseData?.data.house_status.toLowerCase() !== 'active') {
+      navigate('/');
+    }
+  }, [houseError]);
 
   return (
     <MainContainer>

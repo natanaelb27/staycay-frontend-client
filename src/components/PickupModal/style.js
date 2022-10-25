@@ -15,14 +15,10 @@ export const ModalContainer = styled.div`
     transition: all 0.3s ease-in-out;
     pointer-events: none;
 
-    /* transform: translateY(-100%);
-    transition: all 0.3s ease-in-out; */
-
     &.show {
         opacity: 1;
         pointer-events: visible;
 
-        /* transform: translateY(0); */
     }
 `;
 
@@ -34,9 +30,6 @@ export const ModalContent = styled.div`
     transition: all 0.3s ease-in-out;
 
     &.show {
-        /* opacity: 1;
-        pointer-events: visible; */
-
         transform: translateY(0);
     }
 `;

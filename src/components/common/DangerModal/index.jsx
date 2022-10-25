@@ -10,7 +10,7 @@ import {
 
 } from './style';
 
-function Modal({
+function DangerModal({
   isShow, onClose, title, children, handleSubmit, submitText,
 }) {
   // if (!isShow) {
@@ -42,12 +42,12 @@ function Modal({
           {children}
         </ModalBody>
         <ModalFooter>
-          <Button type="button" handleClick={onClose} classes="danger">Close</Button>
-          <Button type="button" handleClick={handleSubmit}>{submitText}</Button>
+          <Button type="button" handleClick={onClose}>Close</Button>
+          <Button type="button" handleClick={handleSubmit} classes="danger">{submitText}</Button>
         </ModalFooter>
       </ModalContent>
     </ModalContainer>
   );
 }
 
-export default Modal;
+export default DangerModal;

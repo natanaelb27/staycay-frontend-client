@@ -76,6 +76,18 @@ function Reservation() {
     }
   });
 
+  useEffect(() => {
+    if (!houseLoading && houseError && houseError.data.code === 400) {
+      navigate('/');
+    } else if (!houseLoading && houseError && houseError.data.code === 500) {
+      navigate('/InternalServerError');
+    }
+
+    if (!houseLoading && !houseError && houseData?.data.house_status.toLowerCase() !== 'active') {
+      navigate('/');
+    }
+  }, [houseError]);
+
   const handleClickBack = () => {
     navigate(`/house/${params.houseID}?check_in=${queryParams.get('check_in')}&check_out=${queryParams.get('check_out')}`);
   };

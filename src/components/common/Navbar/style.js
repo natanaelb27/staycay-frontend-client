@@ -103,7 +103,7 @@ export const NavMenuList = styled.ul`
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     padding-left: 0rem;
     background-color: white;
-    z-index: 1;
+    z-index: 15;
     border-radius: 1rem;
     right: 2.7rem;
     width: 10rem;

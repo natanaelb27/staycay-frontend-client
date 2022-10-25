@@ -7,6 +7,7 @@ export const MainContainer = styled.div`
     place-items: center; 
     padding-left: 15%;
     padding-right: 15%; 
+    margin-top: 2%;
 
     @media (max-width: 500px) {
         padding: 0;
@@ -35,34 +36,25 @@ export const Title = styled.h1`
     }
 `;
 
-export const HouseTitleContainer = styled.div`
+export const ContentContainer = styled.div`
     width: 100%;
-    margin-top: 3%;
 `;
 
 export const HouseImageContainer = styled.div`
-    height: 40rem;
     margin-top: 3%;
-`;
-
-export const ImagesContainer = styled.div`
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    padding: 3rem;
+    justify-items: center;
+    gap: 1rem;
 `;
 
 export const HouseContentContainer = styled.div`
-    margin-top: 3%;
+    margin-top: 2%;
 `;
 
 export const HouseContentDetailsContainer = styled.div`
     display: grid;
-    grid-template-columns: 70% 30%;
-    padding: 3%;
+    gap: 1rem;
 
-    @media (max-width: 1420px) {
-        display: block;
-    }
 `;
 
 export const LabelImage = styled.label`
@@ -73,15 +65,14 @@ export const LabelImage = styled.label`
     align-items: center;
     border: 1px dotted black;
     border-radius: 1rem;
-    width: 10rem;
-    height: 10rem;
     cursor: pointer;
-    font-size: large;
+    
     font-size: 0.9rem;
     font-weight: bold;
     text-decoration: underline;
     text-align: center;
-    padding: 3rem;
+    width: 100%;
+    height: 5rem;
 
     @media (max-width: 260px){
         width: 100%;
@@ -90,6 +81,75 @@ export const LabelImage = styled.label`
     }
 `;
 
+export const NewPhotoButtonContainer = styled.div`
+    width: 50%;
+`;
+
 export const InputImage = styled.input`
     display: none;
+`;
+
+export const ImagesContainer = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    /* grid-template-columns: 1fr 1fr 1fr; */
+    overflow: auto;
+    overflow-y: scroll;
+    gap: 1rem;
+    padding: 1rem;
+    width: 100%;
+    height: 21rem;
+`;
+
+export const OuterImageContainer = styled.div`
+    display: grid;
+    justify-items: center;
+    width: 100%;
+`;
+
+export const SpanTitle = styled.span`
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 700; 
+    letter-spacing: 0.025em; 
+`;
+
+export const SpanDetail = styled.span`
+    display: block;
+    font-size: 1rem;
+    letter-spacing: 0.025em; 
+    color: #3C4048;
+`;
+
+export const HouseStatusContainer = styled.div`
+    display: flex; 
+    width: 50%;
+    gap: 1rem;
+
+    @media (max-width: 500px) {
+        flex-direction: column;
+        gap: 0rem;
+
+    } 
+
+    /* display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 50%;
+    gap: 1rem;
+
+    @media (max-width: 300px) {
+        grid-template-columns: 1fr;
+        gap: 0rem;
+
+    } */
+`;
+
+export const ButtonContainer = styled.div`
+    display: flex; 
+    gap: 1rem;
+
+    @media (max-width: 500px) {
+        flex-direction: column;
+    } 
 `;

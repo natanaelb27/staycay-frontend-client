@@ -2,8 +2,8 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const MainContainer = styled.div`
-    width: 18rem;
-    height: 18rem;
+    /* width: 18rem;
+    height: 18rem; */
     margin: 0px;
     position: relative;
     display: flex;

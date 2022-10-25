@@ -240,6 +240,14 @@ function Navbar() {
               {
                 !localStorage.getItem('user') ? null
                   : (
+                    <NavMenuLink to="/game" onClick={handleOpenMenu}>
+                      Play Games
+                    </NavMenuLink>
+                  )
+              }
+              {
+                !localStorage.getItem('user') ? null
+                  : (
                     <NavMenuLink to="/" onClick={handleLogout}>
                       Logout
                     </NavMenuLink>

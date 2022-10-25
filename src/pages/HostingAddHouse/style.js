@@ -82,43 +82,55 @@ export const InputImage = styled.input`
 `;
 
 export const ImagesContainer = styled.div`
-    /* display: flex;
+    display: flex;
     flex-wrap: wrap;
-    align-items: center;
     justify-content: center;
-    margin-top: 1rem;
+    overflow: auto;
+    overflow-y: scroll;
     gap: 1rem;
-
-
-    @media (max-width: 340px) {
-        flex-wrap: nowrap;
-        display: grid;
-    } */
-
-    /* @media (max-width: 1400px) {
-        grid-template-columns: 1fr 1fr;
-    }
-    
-
-    @media (max-width: 950px) {
-        grid-template-columns: 1fr;
-    } */
-    
-    display: grid;
-    /* grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr)); */
-    grid-template-columns: 1fr 1fr 1fr;
-    margin-top: 1rem;
-    gap: 1rem;
-
-    @media (max-width: 1400px) {
-        grid-template-columns: 1fr 1fr;
-    }
-
-    @media (max-width: 950px) {
-        grid-template-columns: 1fr;
-    }
-
+    padding: 1rem;
+    width: 100%;
+    height: 21rem;
+    margin-top: 2%;
+    margin-bottom: 2%;
 `;
+
+// export const ImagesContainer = styled.div`
+//     /* display: flex;
+//     flex-wrap: wrap;
+//     align-items: center;
+//     justify-content: center;
+//     margin-top: 1rem;
+//     gap: 1rem;
+
+//     @media (max-width: 340px) {
+//         flex-wrap: nowrap;
+//         display: grid;
+//     } */
+
+//     /* @media (max-width: 1400px) {
+//         grid-template-columns: 1fr 1fr;
+//     }
+
+//     @media (max-width: 950px) {
+//         grid-template-columns: 1fr;
+//     } */
+
+//     display: grid;
+//     /* grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr)); */
+//     grid-template-columns: 1fr 1fr 1fr;
+//     margin-top: 1rem;
+//     gap: 1rem;
+
+//     @media (max-width: 1400px) {
+//         grid-template-columns: 1fr 1fr;
+//     }
+
+//     @media (max-width: 950px) {
+//         grid-template-columns: 1fr;
+//     }
+
+// `;
 
 export const HousePhotoContainer = styled.div`
     display: grid;

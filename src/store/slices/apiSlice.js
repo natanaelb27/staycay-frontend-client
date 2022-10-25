@@ -13,7 +13,12 @@ export const apiSlice = createApi({
     //   return headers;
     // },
   }),
-  tagTypes: ['Houses', 'Cities', 'Users', 'Reservations', 'Pickups'],
+  tagTypes: ['Houses',
+    'Cities',
+    'Users',
+    'Reservations',
+    'Pickups',
+    'HouseStatuses'],
   endpoints: (builder) => ({
     register: builder.mutation({
       query: ({
@@ -267,6 +272,29 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ['Houses'],
     }),
+    deleteHouse: builder.mutation({
+      query: (houseID) => ({
+        url: `/host/house/${houseID}`,
+        method: 'DELETE',
+        headers: {
+          authorization: `Bearer ${JSON.parse(localStorage.getItem('user'))?.token ? JSON.parse(localStorage.getItem('user'))?.token : ''}`,
+        },
+      }),
+      invalidatesTags: ['Houses'],
+    }),
+    addHousePhoto: builder.mutation({
+      query: ({ houseID, photo }) => ({
+        url: `/host/house/photo/${houseID}`,
+        method: 'POST',
+        body: {
+          photo,
+        },
+        headers: {
+          authorization: `Bearer ${JSON.parse(localStorage.getItem('user'))?.token ? JSON.parse(localStorage.getItem('user'))?.token : ''}`,
+        },
+      }),
+      invalidatesTags: ['Houses'],
+    }),
     deleteHousePhotoByID: builder.mutation({
       query: (housePhotoID) => ({
         url: `/host/house/photo/${housePhotoID}`,
@@ -276,6 +304,13 @@ export const apiSlice = createApi({
         },
       }),
       invalidatesTags: ['Houses'],
+    }),
+    getHouseStatuses: builder.query({
+      query: () => ({
+        url: '/house/status',
+        method: 'GET',
+      }),
+      providesTags: ['HouseStatuses'],
     }),
   }),
 });
@@ -300,7 +335,10 @@ export const {
   useGetPickupByReservationQuery,
   useTopUpMutation,
   useGetHostHouseQuery,
+  useDeleteHouseMutation,
   useAddHouseMutation,
+  useAddHousePhotoMutation,
   useUpdateHouseByIDMutation,
   useDeleteHousePhotoByIDMutation,
+  useGetHouseStatusesQuery,
 } = apiSlice;

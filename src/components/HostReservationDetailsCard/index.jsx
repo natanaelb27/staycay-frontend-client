@@ -10,10 +10,10 @@ import {
   SpanTitle,
   SpanDetail,
 } from './style';
-import { useGetHouseByIDQuery } from '../../store/slices/apiSlice';
+import { useGetUnscopedHouseByIDQuery } from '../../store/slices/apiSlice';
 
 function ReservationDetailsCard({ handleClick, reservationData }) {
-  const { data: houseData } = useGetHouseByIDQuery(parseInt(reservationData?.house_id, 10));
+  const { data: houseData } = useGetUnscopedHouseByIDQuery(parseInt(reservationData?.house_id, 10));
 
   return (
     <MainContainer>

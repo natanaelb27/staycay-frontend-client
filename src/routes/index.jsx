@@ -7,6 +7,7 @@ import {
   Login,
   Register,
   House,
+  Game,
   Hosting,
   HostingAddHouse,
   HostingUpdateHouse,
@@ -51,6 +52,10 @@ const Routes = () => {
         {
           path: '/reservation-detail/:reservationID',
           element: <RequireAuth redirectTo="/login"><ReservationDetail /></RequireAuth>,
+        },
+        {
+          path: '/game',
+          element: <RequireAuth redirectTo="/login"><Game /></RequireAuth>,
         },
         {
           path: '/hosting',

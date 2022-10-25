@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import {
   faTrashAlt,
 } from '@fortawesome/free-solid-svg-icons';
-import { ToastContainer } from 'react-toastify';
 import {
   MainContainer,
   Image,
@@ -11,12 +10,23 @@ import {
   InputSpan,
   Icon,
 } from './style';
+import DangerModal from '../common/DangerModal';
 import { useDeleteHousePhotoByIDMutation } from '../../store/slices/apiSlice';
 import { showErrorToast } from '../../helpers/Toast';
 
 function UpdateHousePhotoCard({ housePhotoData }) {
   const [deleteHousePhoto] = useDeleteHousePhotoByIDMutation();
-  const handleDeletePhoto = () => {
+  const [showDeletePhotoModal, setShowDeletePhotoModal] = useState(false);
+
+  const onClickDeletePhoto = () => {
+    setShowDeletePhotoModal(true);
+  };
+
+  const onCloseDeletePhotoModal = () => {
+    setShowDeletePhotoModal(false);
+  };
+
+  const onDeletePhotoModal = () => {
     deleteHousePhoto(housePhotoData?.photo_id)
       .unwrap()
       .catch((error) => {
@@ -39,15 +49,23 @@ function UpdateHousePhotoCard({ housePhotoData }) {
 
   return (
     <MainContainer onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
-      <ToastContainer />
       {/* <img src={housePhotoData?.photo} alt="" /> */}
       <DeleteImageContainer ishover={isHovering.toString()}>
-        <DeleteImageContentContainer onClick={handleDeletePhoto}>
+        <DeleteImageContentContainer onClick={onClickDeletePhoto}>
           <InputSpan>Delete</InputSpan>
           <Icon icon={faTrashAlt} />
         </DeleteImageContentContainer>
       </DeleteImageContainer>
       <Image imgSrc={`url(${housePhotoData?.photo})`} />
+      <DangerModal
+        isShow={showDeletePhotoModal}
+        onClose={onCloseDeletePhotoModal}
+        title="Delete Photo"
+        handleSubmit={onDeletePhotoModal}
+        submitText="Delete"
+      >
+        Are you sure you want to delete this photo?
+      </DangerModal>
     </MainContainer>
   );
 }
