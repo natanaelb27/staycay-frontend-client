@@ -54,21 +54,29 @@ function Reservation() {
   const checkIn = queryParams.get('check_in') ? new Date(queryParams.get('check_in')) : new Date();
   const checkOut = queryParams.get('check_out') ? new Date(queryParams.get('check_out')) : new Date();
 
+  const isValidDate = (d) => d instanceof Date && !Number.isNaN(Number(d));
+
   useEffect(() => {
+    if (!isValidDate(new Date(queryParams.get('check_in'))) || !isValidDate(new Date(queryParams.get('check_out')))) {
+      navigate(`/house/${params.houseID}`);
+    }
+
     if (new Date(checkIn.toDateString()) < new Date(new Date().toDateString())) {
-      navigate(`/house/${params.houseID}?check_in=${queryParams.get('check_in')}&check_out=${queryParams.get('check_out')}`, { replace: true });
+      navigate(`/house/${params.houseID}?check_in=${checkIn.toDateString()}&check_out=${checkOut.toDateString()}`, { replace: true });
     }
 
     if (checkOut <= checkIn) {
-      navigate(`/house/${params.houseID}?check_in=${queryParams.get('check_in')}&check_out=${queryParams.get('check_out')}`, { replace: true });
+      navigate(`/house/${params.houseID}?check_in=${checkIn.toDateString()}&check_out=${checkOut.toDateString()}`, { replace: true });
     }
 
     if (newReservationDatesDS?.some((r) => disabledDatesDS?.indexOf(r) >= 0)) {
-      navigate(`/house/${params.houseID}?check_in=${queryParams.get('check_in')}&check_out=${queryParams.get('check_out')}`, { replace: true });
+      navigate(`/house/${params.houseID}?check_in=${checkIn.toDateString()}&check_out=${checkOut.toDateString()}`, { replace: true });
     }
 
-    if (houseData?.data.host_id === JSON.parse(localStorage.getItem('user')).user_id) {
-      navigate('/');
+    if (localStorage.getItem('user')) {
+      if (houseData?.data.host_id === JSON.parse(localStorage.getItem('user')).user_id) {
+        navigate('/');
+      }
     }
 
     if (!houseLoading && !houseError && houseData?.data.house_status.toLowerCase() !== 'active') {
@@ -86,13 +94,11 @@ function Reservation() {
     if (!houseLoading && !houseError && houseData?.data.house_status.toLowerCase() !== 'active') {
       navigate('/');
     }
-  }, [houseError]);
+  }, [houseData, houseError, houseLoading]);
 
   const handleClickBack = () => {
     navigate(`/house/${params.houseID}?check_in=${queryParams.get('check_in')}&check_out=${queryParams.get('check_out')}`);
   };
-
-  // http://localhost:3000/reservation/11?check_in=2022-11-19&check_out=2022-11-20
 
   return (
     <MainContainer>

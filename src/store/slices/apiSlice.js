@@ -33,7 +33,7 @@ export const apiSlice = createApi({
           name, email, password, address, city_id: parseInt(cityID, 10),
         },
       }),
-      invalidatesTags: ['Users'],
+      invalidatesTags: ['Users', 'Houses', 'Reservations', 'Games'],
     }),
     login: builder.mutation({
       query: ({ email, password }) => ({
@@ -41,18 +41,19 @@ export const apiSlice = createApi({
         method: 'POST',
         body: { email, password },
       }),
-      invalidatesTags: ['Users'],
+      invalidatesTags: ['Users', 'Houses', 'Reservations', 'Games'],
     }),
     getHouse: builder.query({
       query: ({
         filterHouseName,
         filterCity,
+        filterStatus,
         filterCheckInDate,
         filterCheckOutDate,
         sortBy,
         sort,
       }) => ({
-        url: `/house?searchName=${filterHouseName}&searchCity=${filterCity}&searchCheckInDate=${filterCheckInDate}&searchCheckOutDate=${filterCheckOutDate}&sortBy=${sortBy}&sort=${sort}`,
+        url: `/house?searchName=${filterHouseName}&searchCity=${filterCity}&searchStatus=${filterStatus}&searchCheckInDate=${filterCheckInDate}&searchCheckOutDate=${filterCheckOutDate}&sortBy=${sortBy}&sort=${sort}`,
         method: 'GET',
       }),
       providesTags: ['Houses'],

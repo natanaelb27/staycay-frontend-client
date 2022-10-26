@@ -26,6 +26,7 @@ function Home() {
   } = useGetHouseQuery({
     filterHouseName,
     filterCity,
+    filterStatus: 'Active',
     filterCheckInDate,
     filterCheckOutDate,
     sortBy: sortInput.sortBy,
@@ -74,7 +75,6 @@ function Home() {
 
   const handleChangeSortInput = (e) => {
     setSortInput({ ...sortInput, [e.target.name]: e.target.value });
-    console.log(sortInput);
   };
 
   return (

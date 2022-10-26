@@ -28,11 +28,11 @@ function HostReservationSection() {
     setCurrentPage(1);
     setActive(e.target.id);
     setFilterBy(e.target.id);
-    getReservation({ filterBy: e.target.id, limit: 4, page: 1 });
+    getReservation({ filterBy: e.target.id, limit: 1, page: 1 });
   };
 
   useEffect(() => {
-    getReservation({ filterBy, limit: 4, page: currentPage });
+    getReservation({ filterBy, limit: 1, page: currentPage });
   }, []);
 
   const handleClickReservationCard = (reservationID) => {
@@ -41,7 +41,7 @@ function HostReservationSection() {
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
-    getReservation({ filterBy, limit: 4, page });
+    getReservation({ filterBy, limit: 1, page });
   };
 
   const renderReservations = () => (

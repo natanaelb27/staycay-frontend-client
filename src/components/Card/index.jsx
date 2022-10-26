@@ -51,8 +51,14 @@ function Card({
   return (
     <HouseContainer>
       <Slider onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
-        <LeftArrow ishover={isHovering.toString()} onClick={prevSlide} />
-        <RightArrow ishover={isHovering.toString()} onClick={nextSlide} />
+        {housePhoto.length > 1
+          ? (
+            <>
+              <LeftArrow ishover={isHovering.toString()} onClick={prevSlide} />
+              <RightArrow ishover={isHovering.toString()} onClick={nextSlide} />
+
+            </>
+          ) : null}
         {housePhoto?.map((item, index) => (
           <Slide key={item.photo_id} className={index === current ? 'active' : ''}>
             {index === current && (

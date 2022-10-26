@@ -34,13 +34,20 @@ function Carousel({ housePhoto }) {
   return (
     <CarouselContainer onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
       <CarouselInner key={housePhoto[current]?.photo_id} imgSrc={`url(${housePhoto[current]?.photo})`}>
-        <CarouselLeft onClick={prevSlide}>
-          <LeftArrow ishover={isHovering.toString()} />
-        </CarouselLeft>
+        {housePhoto.length > 1
+          ? (
+            <CarouselLeft onClick={prevSlide}>
+              <LeftArrow ishover={isHovering.toString()} />
+            </CarouselLeft>
+          ) : null}
+
         <CarouselCenter />
-        <CarouselRight onClick={nextSlide}>
-          <RightArrow ishover={isHovering.toString()} />
-        </CarouselRight>
+        {housePhoto.length > 1
+          ? (
+            <CarouselRight onClick={nextSlide}>
+              <RightArrow ishover={isHovering.toString()} />
+            </CarouselRight>
+          ) : null }
       </CarouselInner>
     </CarouselContainer>
   );

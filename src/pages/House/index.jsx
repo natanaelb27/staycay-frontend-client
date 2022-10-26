@@ -34,7 +34,7 @@ function House() {
     if (!houseLoading && !houseError && houseData?.data.house_status.toLowerCase() !== 'active') {
       navigate('/');
     }
-  }, [houseError]);
+  }, [houseData, houseError, houseLoading]);
 
   return (
     <MainContainer>
@@ -49,7 +49,9 @@ function House() {
       <HouseImageContainer>
         {houseLoading && <SkeletonImage classes="full" />}
         {!houseLoading && !houseError && (
-          <Carousel housePhoto={houseData?.data.house_photo} />
+          houseData?.data.house_photo.length >= 1 ? (
+            <Carousel housePhoto={houseData?.data.house_photo} />
+          ) : null
         )}
       </HouseImageContainer>
       <HouseContentContainer>

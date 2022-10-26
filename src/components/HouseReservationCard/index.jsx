@@ -26,6 +26,8 @@ function HouseReservationCard({
   const params = useParams();
   const queryParams = new URLSearchParams(window.location.search);
 
+  const isValidDate = (d) => d instanceof Date && !Number.isNaN(Number(d));
+
   const {
     data: houseReservationData,
     error: houseReservationError,
@@ -43,8 +45,8 @@ function HouseReservationCard({
   const disabledDates = existingReservationDateArray.flat(1);
 
   const queryParamsCheckInOutValidator = (typeCheck) => {
-    const checkIn = queryParams.get('check_in') ? new Date(queryParams.get('check_in')) : new Date();
-    const checkOut = queryParams.get('check_out') ? new Date(queryParams.get('check_out')) : new Date();
+    const checkIn = queryParams.get('check_in') && isValidDate(new Date(queryParams.get('check_in'))) ? new Date(queryParams.get('check_in')) : new Date();
+    const checkOut = queryParams.get('check_out') && isValidDate(new Date(queryParams.get('check_out'))) ? new Date(queryParams.get('check_out')) : new Date();
 
     if (checkOut <= checkIn) {
       checkOut.setFullYear(checkIn.getFullYear());
