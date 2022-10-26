@@ -125,24 +125,14 @@ export const SpanDetail = styled.span`
 export const HouseStatusContainer = styled.div`
     display: flex; 
     width: 50%;
-    gap: 1rem;
+    gap: 0.5rem;
 
-    @media (max-width: 500px) {
+    @media (max-width: 900px) {
         flex-direction: column;
+        width: 100%;
         gap: 0rem;
-
-    } 
-
-    /* display: grid;
-    grid-template-columns: 1fr 1fr;
-    width: 50%;
-    gap: 1rem;
-
-    @media (max-width: 300px) {
-        grid-template-columns: 1fr;
-        gap: 0rem;
-
-    } */
+    }
+   
 `;
 
 export const ButtonContainer = styled.div`

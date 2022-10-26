@@ -183,7 +183,7 @@ export const apiSlice = createApi({
         pickupAddress,
         cityID,
       }) => ({
-        url: `/pickup/${reservationID}`,
+        url: `/pickup/reservation/${reservationID}`,
         method: 'POST',
         body: {
           pickup_address: pickupAddress,
@@ -197,7 +197,7 @@ export const apiSlice = createApi({
     }),
     getPickupByReservation: builder.query({
       query: (reservationID) => ({
-        url: `/pickup/${reservationID}`,
+        url: `/pickup/reservation/${reservationID}`,
         method: 'GET',
         headers: {
           authorization: `Bearer ${JSON.parse(localStorage.getItem('user'))?.token ? JSON.parse(localStorage.getItem('user'))?.token : ''}`,
