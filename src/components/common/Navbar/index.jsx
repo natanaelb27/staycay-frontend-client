@@ -7,11 +7,8 @@ import {
   faUserEdit, faHome, faGamepad,
   faSignOutAlt, faSignInAlt, faHouseUser,
 } from '@fortawesome/free-solid-svg-icons';
-// import { faBars, faUser, faFilter } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-// import 'react-date-range/dist/styles.css';
-// import 'react-date-range/dist/theme/default.css';
 import moment from 'moment';
 import {
   Container,
@@ -25,7 +22,6 @@ import {
   NavMenuList,
   NavMenuLink,
   FilterContainer,
-  // FilterIcon,
   FilterSpan,
   Icon,
   DropdownContainer,
