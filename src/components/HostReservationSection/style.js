@@ -13,19 +13,30 @@ export const Title = styled.h1`
     letter-spacing: 0.025em; 
 `;
 
-export const ContentContainer = styled.div`
-    display: grid;
-    grid-template-columns: 2fr 2fr 2fr 2fr 2fr;
+export const MaxSelectionContainer = styled.div`
+    display: flex;
     padding: 1rem;
-    justify-items: center;
-    gap: 0.3rem;
+    justify-content: space-evenly;
+
+    @media (max-width: 768px) {
+        display: none;
+    }
+`;
+
+export const MinSelectionContainer = styled.div`
+    display: none;
+    padding: 1rem;
+
+    @media (max-width: 768px) {
+        display: grid;
+    }
 `;
 
 export const SpanSelection = styled.span`
     display: block;
     font-size: 1.25rem;
-    font-weight: 700; 
-    letter-spacing: 0.025em; 
+    font-weight: 700;
+    letter-spacing: 0.025em;
     cursor: pointer;
 
     &:hover {

@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import {
   Container,
   Title,
-  ContentContainer,
+  MaxSelectionContainer,
+  MinSelectionContainer,
   SpanSelection,
   ReservationContainer,
   PaginationContainer,
@@ -12,6 +13,8 @@ import {
 import { useLazyGetReservationByHostQuery } from '../../store/slices/apiSlice';
 import HostReservationDetailsCard from '../HostReservationDetailsCard';
 import Pagination from '../Pagination';
+import Select from '../common/Select';
+import Label from '../common/Label';
 
 function HostReservationSection() {
   const navigate = useNavigate();
@@ -20,19 +23,19 @@ function HostReservationSection() {
     isLoading: reservationLoading,
   }] = useLazyGetReservationByHostQuery();
 
-  const [active, setActive] = useState('all');
+  const limit = 4;
+
   const [filterBy, setFilterBy] = useState('all');
   const [currentPage, setCurrentPage] = useState(1);
 
   const handleClick = (e) => {
     setCurrentPage(1);
-    setActive(e.target.id);
     setFilterBy(e.target.id);
-    getReservation({ filterBy: e.target.id, limit: 1, page: 1 });
+    getReservation({ filterBy: e.target.id, limit, page: 1 });
   };
 
   useEffect(() => {
-    getReservation({ filterBy, limit: 1, page: currentPage });
+    getReservation({ filterBy, limit, page: currentPage });
   }, []);
 
   const handleClickReservationCard = (reservationID) => {
@@ -41,7 +44,7 @@ function HostReservationSection() {
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
-    getReservation({ filterBy, limit: 1, page });
+    getReservation({ filterBy, limit, page });
   };
 
   const renderReservations = () => (
@@ -52,19 +55,51 @@ function HostReservationSection() {
         reservationData={item}
       />
     ))
+  );
 
+  const handleSelectChange = (e) => {
+    setCurrentPage(1);
+    setFilterBy(e.target.value);
+    getReservation({ filterBy: e.target.value, limit, page: 1 });
+  };
+
+  const renderMaxSelections = () => (
+    <>
+      <SpanSelection id="all" className={filterBy === 'all' ? 'active' : undefined} onClick={handleClick}>All</SpanSelection>
+      <SpanSelection id="today" className={filterBy === 'today' ? 'active' : undefined} onClick={handleClick}>Today</SpanSelection>
+      <SpanSelection id="upcoming" className={filterBy === 'upcoming' ? 'active' : undefined} onClick={handleClick}>Upcoming</SpanSelection>
+      <SpanSelection id="ongoing" className={filterBy === 'ongoing' ? 'active' : undefined} onClick={handleClick}>Ongoing</SpanSelection>
+      <SpanSelection id="past" className={filterBy === 'past' ? 'active' : undefined} onClick={handleClick}>Past</SpanSelection>
+    </>
+  );
+
+  const renderMinSelections = () => (
+    <>
+      <option value="all">All</option>
+      <option value="today">Today</option>
+      <option value="upcoming">Upcoming</option>
+      <option value="ongoing">Ongoing</option>
+      <option value="past">Past</option>
+    </>
   );
 
   return (
     <Container>
       <Title>Your Reservations</Title>
-      <ContentContainer>
-        <SpanSelection id="all" className={active === 'all' ? 'active' : undefined} onClick={handleClick}>All</SpanSelection>
-        <SpanSelection id="today" className={active === 'today' ? 'active' : undefined} onClick={handleClick}>Today</SpanSelection>
-        <SpanSelection id="upcoming" className={active === 'upcoming' ? 'active' : undefined} onClick={handleClick}>Upcoming</SpanSelection>
-        <SpanSelection id="ongoing" className={active === 'ongoing' ? 'active' : undefined} onClick={handleClick}>Ongoing</SpanSelection>
-        <SpanSelection id="past" className={active === 'past' ? 'active' : undefined} onClick={handleClick}>Past</SpanSelection>
-      </ContentContainer>
+      <MaxSelectionContainer>
+        {renderMaxSelections()}
+      </MaxSelectionContainer>
+      <MinSelectionContainer>
+        <Label>
+          Filter By
+          <Select
+            value={filterBy}
+            handleChange={handleSelectChange}
+          >
+            {renderMinSelections()}
+          </Select>
+        </Label>
+      </MinSelectionContainer>
       <ReservationContainer>
         {renderReservations()}
       </ReservationContainer>

@@ -18,7 +18,7 @@ export const MaxSelectionContainer = styled.div`
     padding: 1rem;
     justify-content: space-evenly;
 
-    @media (max-width: 700px) {
+    @media (max-width: 768px) {
         display: none;
     }
 `;
@@ -27,31 +27,8 @@ export const MinSelectionContainer = styled.div`
     display: none;
     padding: 1rem;
 
-    @media (max-width: 700px) {
+    @media (max-width: 768px) {
         display: grid;
-    }
-`;
-
-export const SpanSelection = styled.span`
-    display: block;
-    font-size: 1.25rem;
-    font-weight: 700; 
-    letter-spacing: 0.025em; 
-    border: 1px solid gray;
-    padding: 1rem;
-    cursor: pointer;
-    background-color: var(--staycay-red);
-    color: white;
-    text-align: center;
-
-    &:hover {
-        background-color: var(--staycay-red);
-        text-decoration: underline;
-    }
-
-    &.active {
-        background-color: var(--staycay-red);
-        text-decoration: underline;
     }
 `;
 
@@ -60,16 +37,39 @@ export const SpanSelection = styled.span`
 //     font-size: 1.25rem;
 //     font-weight: 700;
 //     letter-spacing: 0.025em;
+//     border: 1px solid gray;
+//     padding: 1rem;
 //     cursor: pointer;
+//     background-color: var(--staycay-red);
+//     color: white;
+//     text-align: center;
 
 //     &:hover {
+//         background-color: var(--staycay-red);
 //         text-decoration: underline;
 //     }
 
 //     &.active {
+//         background-color: var(--staycay-red);
 //         text-decoration: underline;
 //     }
 // `;
+
+export const SpanSelection = styled.span`
+    display: block;
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 0.025em;
+    cursor: pointer;
+
+    &:hover {
+        text-decoration: underline;
+    }
+
+    &.active {
+        text-decoration: underline;
+    }
+`;
 
 export const SpanDetail = styled.span`
     display: block;

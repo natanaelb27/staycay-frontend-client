@@ -22,7 +22,7 @@ function UserReservationSection() {
   const [filterBy, setFilterBy] = useState('all');
   const [currentPage, setCurrentPage] = useState(1);
 
-  const [getReservations, {
+  const [getReservation, {
     data: reservationData,
     error: reservationError,
     isLoading: reservationLoading,
@@ -31,13 +31,13 @@ function UserReservationSection() {
   const limit = 4;
 
   useEffect(() => {
-    getReservations({ filterBy, limit, page: currentPage });
+    getReservation({ filterBy, limit, page: currentPage });
   }, []);
 
   const handleClick = (e) => {
     setCurrentPage(1);
     setFilterBy(e.target.id);
-    getReservations({ filterBy: e.target.id, limit, page: 1 });
+    getReservation({ filterBy: e.target.id, limit, page: 1 });
   };
 
   const handleClickReservationCard = (reservationID) => {
@@ -56,13 +56,13 @@ function UserReservationSection() {
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
-    getReservations({ filterBy, limit, page });
+    getReservation({ filterBy, limit, page });
   };
 
   const handleSelectChange = (e) => {
     setCurrentPage(1);
     setFilterBy(e.target.value);
-    getReservations({ filterBy: e.target.value, limit, page: 1 });
+    getReservation({ filterBy: e.target.value, limit, page: 1 });
   };
 
   const renderMaxSelections = () => (
