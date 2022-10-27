@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useGetHouseByIDQuery, useGetHouseReservationsByHouseIDQuery } from '../../store/slices/apiSlice';
-import { ReservationOrderCard, ReservationPaymentSection } from '../../components';
+import { ReservationOrderCard, ReservationPaymentSection, SkeletonCardBig } from '../../components';
 import {
   MainContainer,
   TitleContainer,
@@ -107,12 +107,16 @@ function Reservation() {
         <Title>Your Reservation</Title>
       </TitleContainer>
       <ReservationContentContainer>
-        <ReservationOrderCard
-          houseData={houseData?.data}
-          checkInDate={checkIn?.toDateString()}
-          checkOutDate={checkOut?.toDateString()}
-          days={getDayBetweenDates(checkOut, checkIn)}
-        />
+        {houseLoading && houseReservationLoading && <SkeletonCardBig />}
+        {!houseLoading && !houseReservationLoading && !houseError && !houseReservationError && (
+          <ReservationOrderCard
+            houseData={houseData?.data}
+            checkInDate={checkIn?.toDateString()}
+            checkOutDate={checkOut?.toDateString()}
+            days={getDayBetweenDates(checkOut, checkIn)}
+          />
+        )}
+
         <ReservationPaymentSection
           houseID={params.houseID}
           checkInDate={queryParams.get('check_in')}

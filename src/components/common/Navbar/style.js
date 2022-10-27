@@ -10,7 +10,6 @@ export const Nav = styled.nav`
     border-bottom: 10px;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); 
     
-    
     @media (min-width: 640px) { 
         padding-left: 2.5rem;
         padding-right: 2.5rem; 
@@ -137,7 +136,7 @@ export const FilterContainer = styled.div`
         background-color: #F3F4F6; 
     }
 
-    @media (min-width: 768px) { 
+    @media (min-width: 769px) { 
         width: 20%;
         border-width: 2px; 
         box-shadow: 1px 0px 3px 0 rgba(0,0,0,0.5);
@@ -171,12 +170,9 @@ export const Icon = styled(FontAwesomeIcon)`
     height: 1rem; 
     border-radius: 9999px; 
     cursor: pointer; 
-
-    @media (min-width: 768px) { 
-        display: inline-flex; 
-        margin-left: 0.5rem;
-        margin-right: 0.5rem; 
-    }
+    display: inline-flex; 
+    margin-left: 0.5rem;
+    margin-right: 0.5rem; 
 `;
 
 export const FilterSpan = styled.span`
@@ -314,39 +310,67 @@ export const SearchFooterContainer = styled.div`
     display: grid;
     grid-template-columns: 0.5fr 0.5fr;
 `;
+export const MobileNavbar = styled.div`
+    display: none;
 
-// export const Label = styled.label`
-//     display: block;
-//     color: #374151;
-//     font-size: 0.75rem;
-//     line-height: 1rem;
-//     font-weight: 700;
-//     letter-spacing: 0.025em;
-//     text-transform: uppercase;
+    @media (max-width: 768px) {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        /* display: grid;
+        grid-auto-flow: column;
+        justify-items: center;
+        align-content: center; */
+        padding: 0.2rem;
+        background-color: #ffffff; 
+        border-top: 1px solid black;
+        border-bottom: 1px solid black;
+        z-index: 20;
+        overflow: hidden;
+        position: fixed;
+        bottom: 0;
+        height: 4rem;
+        width: 100%;
+    }
+`;
 
-//     @media (min-width: 768px) {
-//         margin-bottom: 0.5rem;
-//     }
-// `;
+export const MobileMenuContainer = styled.div`
+    display: grid;
+    grid-template-rows: 1fr 0.5fr;
+    justify-items: center;
+    align-content: center;
+    height: 100%;
+    width: fit-content;
+`;
 
-// export const Select = styled.select`
-//     display: block;
-//     padding-top: 0.75rem;
-//     padding-bottom: 0.75rem;
-//     padding-left: 1rem;
-//     padding-right: 1rem;
-//     background-color: #ffffff;
-//     color: #374151;
-//     line-height: 1.25;
-//     width: 100%;
-//     border-radius: 0.25rem;
-//     border-width: 1px;
-//     border-color: var(--staycay-red);
-//     appearance: none;
+export const MobileIcon = styled(FontAwesomeIcon)`
+    padding: 0.5rem; 
+    background-color: gray;
+    color: #ffffff; 
+    height: 1rem; 
+    border-radius: 9999px; 
+    cursor: pointer; 
+    display: inline-flex; 
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
 
-//     &:focus{
-//         background-color: #ffffff;
-//         border-color: var(--staycay-red);
-//         outline: 0;
-//     }
-// `;
+    &.active {
+        background-color: var(--staycay-light-red);
+    }
+`;
+
+export const MobileMenuLink = styled(Link)`
+    float: none;
+    color: black;
+    text-decoration: none;
+    display: block;
+`;
+
+export const MobileSpan = styled.span`
+    display: block;
+    height: fit-content;
+    font-size: 0.95rem;
+    color: gray;
+    letter-spacing: 0.025em;
+    text-align: center;
+`;

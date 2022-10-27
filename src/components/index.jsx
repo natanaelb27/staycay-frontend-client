@@ -10,6 +10,7 @@ export { default as RegisterForm } from './RegisterForm';
 export { default as HouseReservationCard } from './HouseReservationCard';
 export { default as ErrorPage } from './ErrorPage';
 export { default as SkeletonCard } from './Skeleton/SkeletonCard';
+export { default as SkeletonCardBig } from './Skeleton/SkeletonCardBig';
 export { default as SkeletonImage } from './Skeleton/SkeletonImage';
 export { default as SkeletonText } from './Skeleton/SkeletonText';
 export { default as SkeletonLine } from './Skeleton/SkeletonLine';

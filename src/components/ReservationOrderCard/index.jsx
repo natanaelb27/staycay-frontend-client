@@ -4,9 +4,12 @@ import {
   HouseDetailContainer,
   HouseImageContainer,
   HouseImage,
+  HouseDetailContentContainer,
   HouseDetailContent,
-  Span,
-  ContentTitle,
+  ContentContainer,
+  SpanTitle,
+  SpanDetail,
+  TripMainContainer,
   TripDetailContainer,
   PriceContainer,
 } from './style';
@@ -21,60 +24,68 @@ function ReservationOrderCard({
         <HouseImageContainer>
           <HouseImage imgSrc={`url(${houseData?.house_photo[0].photo})`} />
         </HouseImageContainer>
-        <HouseDetailContent>
-          <div>
-            <ContentTitle>House Name</ContentTitle>
-            <Span>
-              {houseData?.house_name}
-            </Span>
-          </div>
-          <div>
-            <ContentTitle>City</ContentTitle>
-            <Span>
-              {houseData?.house_city_name}
-            </Span>
-          </div>
-        </HouseDetailContent>
+        <HouseDetailContentContainer>
+          <HouseDetailContent>
+            <ContentContainer>
+              <SpanTitle>House Name</SpanTitle>
+              <SpanDetail>
+                {houseData?.house_name}
+              </SpanDetail>
+            </ContentContainer>
+            <ContentContainer>
+              <SpanTitle>City</SpanTitle>
+              <SpanDetail>
+                {houseData?.house_city_name}
+              </SpanDetail>
+            </ContentContainer>
+          </HouseDetailContent>
+        </HouseDetailContentContainer>
       </HouseDetailContainer>
-      <TripDetailContainer>
-        <ContentTitle>
-          Your Trip
-        </ContentTitle>
-        <Span>
-          {checkInDate}
-          {' '}
-          -
-          {' '}
-          {checkOutDate}
-          {' '}
-          (
-          {days}
-          {' '}
-          {days <= 1 ? 'night' : 'nights'}
-          )
-        </Span>
-      </TripDetailContainer>
-      <TripDetailContainer>
-        <ContentTitle>
-          Price details
-        </ContentTitle>
-        <PriceContainer>
-          <Span>
-            Rp
-            {' '}
-            {numberWithCommas(parseInt(houseData?.house_price, 10))}
-            {' x '}
-            {days}
-            {' '}
-            {days <= 1 ? 'night' : 'nights'}
-          </Span>
-          <Span>
-            Rp
-            {' '}
-            {numberWithCommas(parseInt(houseData?.house_price, 10) * days)}
-          </Span>
-        </PriceContainer>
-      </TripDetailContainer>
+      <TripMainContainer>
+        <TripDetailContainer>
+          <ContentContainer>
+            <SpanTitle>
+              Your Trip
+            </SpanTitle>
+            <SpanDetail>
+              {checkInDate}
+              {' '}
+              -
+              {' '}
+              {checkOutDate}
+              {' '}
+              (
+              {days}
+              {' '}
+              {days <= 1 ? 'night' : 'nights'}
+              )
+            </SpanDetail>
+          </ContentContainer>
+        </TripDetailContainer>
+        <TripDetailContainer>
+          <ContentContainer>
+            <SpanTitle>
+              Price details
+            </SpanTitle>
+            <PriceContainer>
+              <SpanDetail>
+                Rp
+                {' '}
+                {numberWithCommas(parseInt(houseData?.house_price, 10))}
+                {' x '}
+                {days}
+                {' '}
+                {days <= 1 ? 'night' : 'nights'}
+              </SpanDetail>
+              <SpanDetail>
+                Rp
+                {' '}
+                {numberWithCommas(parseInt(houseData?.house_price, 10) * days)}
+              </SpanDetail>
+            </PriceContainer>
+          </ContentContainer>
+        </TripDetailContainer>
+      </TripMainContainer>
     </Container>
   );
 }

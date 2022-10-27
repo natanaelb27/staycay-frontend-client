@@ -360,7 +360,7 @@ export const {
   useUpdateUserProfileMutation,
   useUpdateUserRoleToHostMutation,
   useAddReservationMutation,
-  useGetReservationByUserQuery,
+  useLazyGetReservationByUserQuery,
   useLazyGetReservationByHostQuery,
   useGetReservationByIDQuery,
   usePickupMutation,

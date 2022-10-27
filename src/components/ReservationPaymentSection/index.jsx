@@ -19,6 +19,7 @@ import {
 } from '../../helpers';
 import { useGetUserProfileQuery, useAddReservationMutation } from '../../store/slices/apiSlice';
 import { showErrorToast } from '../../helpers/Toast';
+import SkeletonTextBig from '../Skeleton/SkeletonTextBig';
 
 function ReservationPaymentSection({
   houseID, checkInDate, checkOutDate, totalPrice,
@@ -70,54 +71,63 @@ function ReservationPaymentSection({
   };
 
   return (
-    <Container>
-      <ToastContainer />
-      <Title>Confirm and pay</Title>
-      <ContentContainer>
-        <ContentTitle>Your Balance</ContentTitle>
-        <ContentSpan>
-          Rp
-          {' '}
-          {numberWithCommas(parseInt(userData?.data.balance, 10))}
-        </ContentSpan>
-      </ContentContainer>
-      <ContentContainer>
-        <ContentTitle>Total Price</ContentTitle>
-        <ContentSpan>
-          Rp
-          {' '}
-          {numberWithCommas(totalPrice)}
-        </ContentSpan>
-      </ContentContainer>
-      <ContentContainer>
-        <ContentTitle>Remaning Balance</ContentTitle>
-        <RemainingBalanceSpan isNotEnough={isBalanceNotEnough.toString()}>
-          {getRemainingBalance()}
-        </RemainingBalanceSpan>
-      </ContentContainer>
-      {isBalanceNotEnough
-        ? (<ErrorMessage>Your balance is not enough</ErrorMessage>) : null}
-      {isBalanceNotEnough ? (
-        <ButtonContainer>
-          <Button handleClick={handleModal}>Topup</Button>
-        </ButtonContainer>
-      ) : (
-        <ButtonContainer>
-          <Button
-            // isDisabled={isBalanceNotEnough}
-            handleClick={handleMakeReservation}
-          >
-            Confirm and pay
+    <>
+      {
+        userLoading && (
+          <SkeletonTextBig />
+        )
+      }
+      {!userLoading && !userError && (
+      <Container>
+        <ToastContainer />
+        <Title>Confirm and pay</Title>
+        <ContentContainer>
+          <ContentTitle>Your Balance</ContentTitle>
+          <ContentSpan>
+            Rp
+            {' '}
+            {numberWithCommas(parseInt(userData?.data.balance, 10))}
+          </ContentSpan>
+        </ContentContainer>
+        <ContentContainer>
+          <ContentTitle>Total Price</ContentTitle>
+          <ContentSpan>
+            Rp
+            {' '}
+            {numberWithCommas(totalPrice)}
+          </ContentSpan>
+        </ContentContainer>
+        <ContentContainer>
+          <ContentTitle>Remaning Balance</ContentTitle>
+          <RemainingBalanceSpan isNotEnough={isBalanceNotEnough.toString()}>
+            {getRemainingBalance()}
+          </RemainingBalanceSpan>
+        </ContentContainer>
+        {isBalanceNotEnough
+          ? (<ErrorMessage>Your balance is not enough</ErrorMessage>) : null}
+        {isBalanceNotEnough ? (
+          <ButtonContainer>
+            <Button handleClick={handleModal}>Topup</Button>
+          </ButtonContainer>
+        ) : (
+          <ButtonContainer>
+            <Button
+                // isDisabled={isBalanceNotEnough}
+              handleClick={handleMakeReservation}
+            >
+              Confirm and pay
 
-          </Button>
-        </ButtonContainer>
+            </Button>
+          </ButtonContainer>
+        )}
+        <TopUpModal
+          isShow={showModal}
+          onClose={() => setShowModal(false)}
+          handleSubmit={handleTopup}
+        />
+      </Container>
       )}
-      <TopUpModal
-        isShow={showModal}
-        onClose={() => setShowModal(false)}
-        handleSubmit={handleTopup}
-      />
-    </Container>
+    </>
   );
 }
 

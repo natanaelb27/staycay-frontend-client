@@ -2,15 +2,17 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faBars, faUser, faSearch, faFilter, faTrashAlt,
+  faBars, faUser, faSearch,
+  faFilter, faTrashAlt, faUserAlt,
+  faUserEdit, faHome, faGamepad,
+  faSignOutAlt, faSignInAlt, faHouseUser,
 } from '@fortawesome/free-solid-svg-icons';
 // import { faBars, faUser, faFilter } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 // import 'react-date-range/dist/styles.css';
 // import 'react-date-range/dist/theme/default.css';
 import moment from 'moment';
-
 import {
   Container,
   DropdownIcon,
@@ -35,6 +37,11 @@ import {
   ClearFilterContentContainer,
   ContentSearchContainer,
   ButtonSearchContainer,
+  MobileNavbar,
+  MobileMenuContainer,
+  MobileMenuLink,
+  MobileIcon,
+  MobileSpan,
   // Input,
   // Label,
 } from './style';
@@ -81,6 +88,10 @@ function Navbar() {
 
   const handleLogout = () => {
     setOpenMenu(!openMenu);
+    localStorage.clear();
+  };
+
+  const handleMobileLogout = () => {
     localStorage.clear();
   };
 
@@ -177,32 +188,70 @@ function Navbar() {
     return '';
   };
 
-  return (
-    <Nav ref={wrapperSearchMenuRef}>
-      <Container>
-        <LogoLink onClick={handleSearchMenuOut} to="/" replace>
-          <Logo src={require('../../../assets/staycay-logo-name.png')} alt="staycay-logo" />
-        </LogoLink>
-        {window.location.pathname === '/' ? (
-          <FilterContainer type="button" onClick={handleSearchMenu}>
-            <Icon icon={faFilter} />
-            <FilterSpan>Filter</FilterSpan>
-          </FilterContainer>
-        ) : null}
+  const location = useLocation();
 
-        <DropDownMenu ref={wrapperDropdownMenuRef}>
-          <DropdownContainer>
-            <DropdownIcon onClick={handleOpenMenu}>
-              <FontAwesomeIcon icon={faBars} />
-              <FontAwesomeIcon icon={faUser} />
-            </DropdownIcon>
-          </DropdownContainer>
-          <NavMenu open={openMenu} onClick={handleSearchMenuOut}>
-            <NavMenuList>
-              <NavMenuLink to="/" onClick={handleOpenMenu}>
-                Home
-              </NavMenuLink>
-              {
+  const NavbarCurrentLocation = () => {
+    if (location.pathname.split('/')[1] === '' || location.pathname.split('/')[1] === 'house' || location.pathname.split('/')[1] === 'reservation') {
+      return 'home';
+    }
+
+    if (location.pathname.split('/')[1] === 'account' || location.pathname.split('/')[1] === 'reservation-detail') {
+      return 'account';
+    }
+
+    if (location.pathname.split('/')[1] === 'hosting') {
+      return 'hosting';
+    }
+
+    if (location.pathname.split('/')[1] === 'game') {
+      return 'game';
+    }
+
+    if (location.pathname.split('/')[1] === 'login') {
+      return 'login';
+    }
+
+    if (location.pathname.split('/')[1] === 'register') {
+      return 'register';
+    }
+
+    return '';
+  };
+
+  const [active, setActive] = useState(NavbarCurrentLocation());
+
+  useEffect(() => {
+    setActive(NavbarCurrentLocation());
+  }, [location.pathname]);
+
+  return (
+    <>
+
+      <Nav ref={wrapperSearchMenuRef}>
+        <Container>
+          <LogoLink onClick={handleSearchMenuOut} to="/" replace>
+            <Logo src={require('../../../assets/staycay-logo-name.png')} alt="staycay-logo" />
+          </LogoLink>
+          {window.location.pathname === '/' ? (
+            <FilterContainer type="button" onClick={handleSearchMenu}>
+              <Icon icon={faFilter} />
+              <FilterSpan>Filter</FilterSpan>
+            </FilterContainer>
+          ) : null}
+
+          <DropDownMenu ref={wrapperDropdownMenuRef}>
+            <DropdownContainer>
+              <DropdownIcon onClick={handleOpenMenu}>
+                <FontAwesomeIcon icon={faBars} />
+                <FontAwesomeIcon icon={faUser} />
+              </DropdownIcon>
+            </DropdownContainer>
+            <NavMenu open={openMenu} onClick={handleSearchMenuOut}>
+              <NavMenuList>
+                <NavMenuLink to="/" onClick={handleOpenMenu}>
+                  Home
+                </NavMenuLink>
+                {
                 !localStorage.getItem('user') ? (
                   <>
                     <NavMenuLink to="/login" onClick={handleOpenMenu}>
@@ -215,7 +264,7 @@ function Navbar() {
                 )
                   : null
               }
-              {
+                {
                 !localStorage.getItem('user') ? null
                   : (
                     <NavMenuLink to="/account" onClick={handleOpenMenu}>
@@ -223,7 +272,7 @@ function Navbar() {
                     </NavMenuLink>
                   )
               }
-              {
+                {
                 localStorage.getItem('user') === null ? null : (CheckUserRole() === 'host'
                   ? (
                     <NavMenuLink to="/hosting" onClick={handleOpenMenu}>
@@ -237,7 +286,7 @@ function Navbar() {
                   )
                 )
               }
-              {
+                {
                 !localStorage.getItem('user') ? null
                   : (
                     <NavMenuLink to="/game" onClick={handleOpenMenu}>
@@ -245,7 +294,7 @@ function Navbar() {
                     </NavMenuLink>
                   )
               }
-              {
+                {
                 !localStorage.getItem('user') ? null
                   : (
                     <NavMenuLink to="/" onClick={handleLogout}>
@@ -253,63 +302,134 @@ function Navbar() {
                     </NavMenuLink>
                   )
               }
-            </NavMenuList>
-          </NavMenu>
-        </DropDownMenu>
-      </Container>
+              </NavMenuList>
+            </NavMenu>
+          </DropDownMenu>
+        </Container>
 
-      {searchMenu
-        ? (
-          <MainSearchContainer>
-            <MainContentSearchContainer>
-              <ContentSearchContainer>
-                <Label labelFor="city">Choose City</Label>
-                <Select selectName="city" selectID="city" handleChange={handleInputChange} selectValue={inputFilter.city}>
-                  <option value="0">All</option>
-                  {!cityLoading && !cityError && (renderCitiesDropdown())}
-                </Select>
-              </ContentSearchContainer>
-              <ContentSearchContainer>
-                <Label labelFor="houseName">House Name</Label>
-                <Input inputType="text" inputID="houseName" handleChange={handleInputChange} inputName="house" inputValue={inputFilter.house} inputPlaceholder="Search house name" />
-              </ContentSearchContainer>
-              <ContentSearchContainer>
-                <Label labelFor="checkInDate">Check In</Label>
-                <Input
-                  inputType="date"
-                  inputID="checkInDate"
-                  handleChange={handleInputChange}
-                  inputName="checkInDate"
-                  inputValue={inputFilter.checkInDate}
-                  inputMin={today}
-                  inputMax={inputFilter.checkOutDate ? moment(inputFilter.checkOutDate)
-                    .subtract(1, 'days').format(formatDate) : null}
-                />
-              </ContentSearchContainer>
-              <ContentSearchContainer>
-                <Label labelFor="checkOutDate">Check Out</Label>
-                <Input inputType="date" inputID="checkOutDate" handleChange={handleInputChange} inputName="checkOutDate" inputValue={inputFilter.checkOutDate} inputMin={inputFilter.checkInDate ? moment(inputFilter.checkInDate).add(1, 'days').format(formatDate) : today} />
-              </ContentSearchContainer>
-            </MainContentSearchContainer>
-            <SearchFooterContainer>
-              <ClearFilterContainer>
-                <ClearFilterContentContainer onClick={handleClearInput}>
-                  <InputSpan>Clear Filter</InputSpan>
-                  <Icon icon={faTrashAlt} />
-                </ClearFilterContentContainer>
-              </ClearFilterContainer>
-              <ButtonSearchContainer>
-                <SearchContainer onClick={handleClickSearch}>
-                  <InputSpan>Search</InputSpan>
-                  <Icon icon={faSearch} />
-                </SearchContainer>
-              </ButtonSearchContainer>
-            </SearchFooterContainer>
-          </MainSearchContainer>
-        )
+        {searchMenu
+          ? (
+            <MainSearchContainer>
+              <MainContentSearchContainer>
+                <ContentSearchContainer>
+                  <Label labelFor="city">Choose City</Label>
+                  <Select selectName="city" selectID="city" handleChange={handleInputChange} selectValue={inputFilter.city}>
+                    <option value="0">All</option>
+                    {!cityLoading && !cityError && (renderCitiesDropdown())}
+                  </Select>
+                </ContentSearchContainer>
+                <ContentSearchContainer>
+                  <Label labelFor="houseName">House Name</Label>
+                  <Input inputType="text" inputID="houseName" handleChange={handleInputChange} inputName="house" inputValue={inputFilter.house} inputPlaceholder="Search house name" />
+                </ContentSearchContainer>
+                <ContentSearchContainer>
+                  <Label labelFor="checkInDate">Check In</Label>
+                  <Input
+                    inputType="date"
+                    inputID="checkInDate"
+                    handleChange={handleInputChange}
+                    inputName="checkInDate"
+                    inputValue={inputFilter.checkInDate}
+                    inputMin={today}
+                    inputMax={inputFilter.checkOutDate ? moment(inputFilter.checkOutDate)
+                      .subtract(1, 'days').format(formatDate) : null}
+                  />
+                </ContentSearchContainer>
+                <ContentSearchContainer>
+                  <Label labelFor="checkOutDate">Check Out</Label>
+                  <Input inputType="date" inputID="checkOutDate" handleChange={handleInputChange} inputName="checkOutDate" inputValue={inputFilter.checkOutDate} inputMin={inputFilter.checkInDate ? moment(inputFilter.checkInDate).add(1, 'days').format(formatDate) : today} />
+                </ContentSearchContainer>
+              </MainContentSearchContainer>
+              <SearchFooterContainer>
+                <ClearFilterContainer>
+                  <ClearFilterContentContainer onClick={handleClearInput}>
+                    <InputSpan>Clear Filter</InputSpan>
+                    <Icon icon={faTrashAlt} />
+                  </ClearFilterContentContainer>
+                </ClearFilterContainer>
+                <ButtonSearchContainer>
+                  <SearchContainer onClick={handleClickSearch}>
+                    <InputSpan>Search</InputSpan>
+                    <Icon icon={faSearch} />
+                  </SearchContainer>
+                </ButtonSearchContainer>
+              </SearchFooterContainer>
+            </MainSearchContainer>
+          )
 
-        : null}
-    </Nav>
+          : null}
+      </Nav>
+      <MobileNavbar>
+        <MobileMenuLink to="/">
+          <MobileMenuContainer>
+            <MobileIcon icon={faHome} className={active === 'home' ? 'active' : undefined} />
+            <MobileSpan>Home</MobileSpan>
+          </MobileMenuContainer>
+        </MobileMenuLink>
+        {
+          !localStorage.getItem('user') ? (
+            <>
+              <MobileMenuLink to="/login">
+                <MobileMenuContainer>
+                  <MobileIcon icon={faUser} className={active === 'login' ? 'active' : undefined} />
+                  <MobileSpan>Login</MobileSpan>
+                </MobileMenuContainer>
+              </MobileMenuLink>
+              <MobileMenuLink to="/register">
+                <MobileMenuContainer>
+                  <MobileIcon icon={faUserEdit} className={active === 'register' ? 'active' : undefined} />
+                  <MobileSpan>Register</MobileSpan>
+                </MobileMenuContainer>
+              </MobileMenuLink>
+            </>
+          ) : null
+        }
+        {
+          !localStorage.getItem('user') ? null
+            : (
+              <MobileMenuLink to="/account">
+                <MobileMenuContainer>
+                  <MobileIcon icon={faUserAlt} className={active === 'account' ? 'active' : undefined} />
+                  <MobileSpan>Account</MobileSpan>
+                </MobileMenuContainer>
+              </MobileMenuLink>
+            )
+        }
+        {
+          !localStorage.getItem('user') ? null
+            : (
+              <MobileMenuLink to="/hosting">
+                <MobileMenuContainer>
+                  <MobileIcon icon={faHouseUser} className={active === 'hosting' ? 'active' : undefined} />
+                  <MobileSpan>Hosting</MobileSpan>
+                </MobileMenuContainer>
+              </MobileMenuLink>
+            )
+        }
+        {
+          !localStorage.getItem('user') ? null
+            : (
+              <MobileMenuLink to="/game">
+                <MobileMenuContainer>
+                  <MobileIcon icon={faGamepad} className={active === 'game' ? 'active' : undefined} />
+                  <MobileSpan>Game</MobileSpan>
+                </MobileMenuContainer>
+              </MobileMenuLink>
+            )
+        }
+        {
+            !localStorage.getItem('user') ? null
+              : (
+                <MobileMenuLink to="/" onClick={handleMobileLogout}>
+                  <MobileMenuContainer>
+                    <MobileIcon icon={faSignOutAlt} />
+                    <MobileSpan>Logout</MobileSpan>
+                  </MobileMenuContainer>
+                </MobileMenuLink>
+              )
+          }
+      </MobileNavbar>
+    </>
   );
 }
 

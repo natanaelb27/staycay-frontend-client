@@ -13,3 +13,10 @@ body {
     padding: 0;
 }
 
+
+@media (max-width: 768px) {
+    body {
+        margin-bottom: 4.2rem;
+    }
+}
+
