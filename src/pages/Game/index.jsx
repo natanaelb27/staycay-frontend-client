@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
+import React from 'react';
+import { ToastContainer } from 'react-toastify';
 import {
   MainContainer,
   GameContainer,
@@ -7,16 +8,15 @@ import {
   TitleContent,
   ButtonContainer,
   ButtonSelection,
-  // TextContainer,
-  TextContentContainer,
   SpanTitle,
-  SpanDetail,
 } from './style';
 import {
   useGetGameQuery,
   usePlayGameMutation,
 } from '../../store/slices/apiSlice';
-import GameModal from '../../components/GameModal';
+import { showToast } from '../../helpers/Toast';
+import { numberWithCommas } from '../../helpers';
+import coin from '../../assets/coin.gif';
 
 function Game() {
   const {
@@ -26,34 +26,28 @@ function Game() {
   } = useGetGameQuery();
 
   const [playGame] = usePlayGameMutation();
-  const [showModal, setShowModal] = useState(false);
-  // const [isPlayed, setIsPlayed] = useState(false);
-  const [isUserCorrect, setIsUserCorrect] = useState(false);
-  const [amountWon, setAmountWon] = useState(0);
 
   const handleGuessCoin = (guess) => {
     playGame(guess)
       .unwrap()
       .then((data) => {
         if (data.data.user_guess === data.data.correct_guess) {
-          setIsUserCorrect(true);
+          const message = `You guessed correctly! You got Rp ${numberWithCommas(data.data.amount_won)} as a reward`;
+          showToast(message);
         } else {
-          setIsUserCorrect(false);
+          const message = `You guessed incorrectly! Dont worry you still got Rp ${numberWithCommas(data.data.amount_won)}`;
+          showToast(message);
         }
-        setAmountWon(parseInt(data.data.amount_won, 10));
-        setShowModal(true);
       });
   };
 
-  const handleCloseModal = () => {
-    setShowModal(false);
-  };
   return (
     <MainContainer>
+      <ToastContainer />
       <GameContainer>
         <Title>Coin Toss Game</Title>
         <TitleContent>Heads or Tails</TitleContent>
-        <p>coin</p>
+        <img src={coin} alt="" />
         <ButtonContainer>
           <ButtonSelection
             onClick={() => handleGuessCoin('heads')}
@@ -92,32 +86,7 @@ function Game() {
           {' '}
           more times to get 1 free chance!
         </SpanTitle>
-        {/* { isPlayed ? (
-          isUserCorrect ? (
-            <SpanTitle>
-              You Won! You got Rp
-              {' '}
-              {numberWithCommas(amountWon)}
-              {' '}
-              as a reward
-            </SpanTitle>
-          ) : (
-            <SpanTitle>
-              You Lost! But dont worry you still got Rp
-              {' '}
-              {numberWithCommas(amountWon)}
-              {' '}
-            </SpanTitle>
-          )
-
-        ) : null} */}
       </GameContainer>
-      <GameModal
-        isShow={showModal}
-        onClose={handleCloseModal}
-        isUserCorrect={isUserCorrect}
-        amountWon={amountWon}
-      />
     </MainContainer>
   );
 }

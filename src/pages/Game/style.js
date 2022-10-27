@@ -2,8 +2,9 @@ import styled from 'styled-components';
 
 export const MainContainer = styled.div`
     max-width: 100%;
-    align-content: center; 
-    place-items: center; 
+    display: grid;
+    justify-items: center;
+    align-items: center;
     padding-top: 3%;
     padding-bottom: 3%;
     padding-left: 30%;
@@ -39,8 +40,9 @@ export const Title = styled.h1`
 
 `;
 
-export const TitleContent = styled.h2`
+export const TitleContent = styled.span`
     font-weight: 700; 
+    font-size: 1.5rem;
     letter-spacing: 0.025em; 
     text-align: center;
 

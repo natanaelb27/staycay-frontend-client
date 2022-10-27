@@ -75,7 +75,6 @@ export const Image = styled.div`
     height: 20rem;
     border-radius: 20px;
     border: 0.1px solid gray;
-
 `;
 
 // export const Image = styled.img`

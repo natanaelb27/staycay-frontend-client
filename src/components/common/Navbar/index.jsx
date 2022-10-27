@@ -48,6 +48,7 @@ import { useGetCityQuery, useGetUserProfileQuery } from '../../../store/slices/a
 import {
   setFilterHouse,
 } from '../../../store/slices/filterHouseSlice';
+import staycaylogo from '../../../assets/staycay-logo-name.png';
 
 function Navbar() {
   const {
@@ -111,6 +112,7 @@ function Navbar() {
 
   const handleClickSearch = (e) => {
     e.preventDefault();
+    setSearchMenu(!searchMenu);
 
     if (inputFilter.checkInDate && !inputFilter.checkOutDate) {
       inputFilter.checkOutDate = moment(inputFilter.checkInDate)
@@ -226,7 +228,7 @@ function Navbar() {
       <Nav ref={wrapperSearchMenuRef}>
         <Container>
           <LogoLink onClick={handleSearchMenuOut} to="/" replace>
-            <Logo src={require('../../../assets/staycay-logo-name.png')} alt="staycay-logo" />
+            <Logo src={staycaylogo} alt="staycay-logo" />
           </LogoLink>
           {window.location.pathname === '/' ? (
             <FilterContainer type="button" onClick={handleSearchMenu}>

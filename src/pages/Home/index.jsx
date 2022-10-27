@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { MainContainer, Card, SkeletonCard } from '../../components';
-import { useGetHouseQuery } from '../../store/slices/apiSlice';
+import { useLazyGetHouseQuery } from '../../store/slices/apiSlice';
 import {
   CardContainer,
   SortContainer,
+  PaginationContainer,
 } from './style';
 import Select from '../../components/common/Select';
 import Label from '../../components/common/Label';
+import Pagination from '../../components/Pagination';
 
 function Home() {
   const {
@@ -19,19 +21,34 @@ function Home() {
     sort: 'asc',
   });
 
-  const {
+  const [getHouse, {
     data: houseData,
     error: houseError,
-    isFetching: houseLoading,
-  } = useGetHouseQuery({
-    filterHouseName,
+    isLoading: houseLoading,
+  }] = useLazyGetHouseQuery();
+
+  const limit = 10;
+  const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    setCurrentPage(1);
+    getHouse({
+      filterHouseName,
+      filterCity,
+      filterStatus: 'Active',
+      filterCheckInDate,
+      filterCheckOutDate,
+      sortBy: sortInput.sortBy,
+      sort: sortInput.sort,
+      limit,
+      page: 1,
+    });
+  }, [filterHouseName,
     filterCity,
-    filterStatus: 'Active',
     filterCheckInDate,
     filterCheckOutDate,
-    sortBy: sortInput.sortBy,
-    sort: sortInput.sort,
-  });
+    sortInput.sortBy,
+    sortInput.sort]);
 
   const skeletonLoading = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
@@ -54,7 +71,7 @@ function Home() {
             name={item.house_name}
             location={item.house_city_name}
             price={item.house_price}
-            linkTo={`/house/${item.house_id}`}
+            linkTo={`/house/${item.house_id}?check_in=${filterCheckInDate}&check_out=${filterCheckOutDate}`}
           />
         );
       }
@@ -67,7 +84,7 @@ function Home() {
           name={item.house_name}
           location={item.house_city_name}
           price={item.house_price}
-          linkTo={`/house/${item.house_id}`}
+          linkTo={`/house/${item.house_id}?check_in=${filterCheckInDate}&check_out=${filterCheckOutDate}`}
         />
       );
     })
@@ -75,6 +92,21 @@ function Home() {
 
   const handleChangeSortInput = (e) => {
     setSortInput({ ...sortInput, [e.target.name]: e.target.value });
+  };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    getHouse({
+      filterHouseName,
+      filterCity,
+      filterStatus: 'Active',
+      filterCheckInDate,
+      filterCheckOutDate,
+      sortBy: sortInput.sortBy,
+      sort: sortInput.sort,
+      limit,
+      page,
+    });
   };
 
   return (
@@ -116,6 +148,16 @@ function Home() {
           renderHouses()
         )}
       </CardContainer>
+
+      {houseData?.data.pagination && (
+        <PaginationContainer>
+          <Pagination
+            currentPage={currentPage}
+            totalPages={houseData?.data.pagination.total_pages}
+            onPageChange={handlePageChange}
+          />
+        </PaginationContainer>
+      )}
     </MainContainer>
   );
 }

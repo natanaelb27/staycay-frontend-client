@@ -52,8 +52,10 @@ export const apiSlice = createApi({
         filterCheckOutDate,
         sortBy,
         sort,
+        limit,
+        page,
       }) => ({
-        url: `/house?searchName=${filterHouseName}&searchCity=${filterCity}&searchStatus=${filterStatus}&searchCheckInDate=${filterCheckInDate}&searchCheckOutDate=${filterCheckOutDate}&sortBy=${sortBy}&sort=${sort}`,
+        url: `/house?searchName=${filterHouseName}&searchCity=${filterCity}&searchStatus=${filterStatus}&searchCheckInDate=${filterCheckInDate}&searchCheckOutDate=${filterCheckOutDate}&sortBy=${sortBy}&sort=${sort}&limit=${limit}&page=${page}`,
         method: 'GET',
       }),
       providesTags: ['Houses'],
@@ -221,8 +223,11 @@ export const apiSlice = createApi({
       invalidatesTags: ['Users', 'Games'],
     }),
     getHostHouse: builder.query({
-      query: () => ({
-        url: '/host/house',
+      query: ({
+        limit,
+        page,
+      }) => ({
+        url: `/host/house?limit=${limit}&page=${page}`,
         method: 'GET',
         headers: {
           authorization: `Bearer ${JSON.parse(localStorage.getItem('user'))?.token ? JSON.parse(localStorage.getItem('user'))?.token : ''}`,
@@ -350,7 +355,7 @@ export const apiSlice = createApi({
 export const {
   useRegisterMutation,
   useLoginMutation,
-  useGetHouseQuery,
+  useLazyGetHouseQuery,
   useGetCityQuery,
   useGetHouseByIDQuery,
   useGetUnscopedHouseByIDQuery,
@@ -366,7 +371,7 @@ export const {
   usePickupMutation,
   useGetPickupByReservationQuery,
   useTopUpMutation,
-  useGetHostHouseQuery,
+  useLazyGetHostHouseQuery,
   useDeleteHouseMutation,
   useAddHouseMutation,
   useAddHousePhotoMutation,

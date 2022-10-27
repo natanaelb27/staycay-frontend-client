@@ -1,26 +1,38 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SkeletonCard from '../Skeleton/SkeletonCard';
 import Card from '../Card';
 import Button from '../common/Button';
-import { useGetHostHouseQuery } from '../../store/slices/apiSlice';
+import { useLazyGetHostHouseQuery } from '../../store/slices/apiSlice';
 import {
   Container,
   HeaderContainer,
   Title,
   AddNewHouseButtonContainer,
   CardContainer,
+  PaginationContainer,
 } from './style';
+import Pagination from '../Pagination';
 
 function HostHouseSection() {
   const navigate = useNavigate();
-  const {
+  const [getHostHouse, {
     data: houseData,
     error: houseError,
-    isFetching: houseLoading,
-  } = useGetHostHouseQuery();
+    isLoading: houseLoading,
+  }] = useLazyGetHostHouseQuery();
 
   const skeletonLoading = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+  const limit = 3;
+  const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    getHostHouse({
+      limit,
+      page: 1,
+    });
+  }, []);
 
   const renderLoading = () => (
     skeletonLoading?.map((item) => (<SkeletonCard key={item} />))
@@ -64,6 +76,14 @@ function HostHouseSection() {
     navigate('/hosting/add-house');
   };
 
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    getHostHouse({
+      limit,
+      page,
+    });
+  };
+
   return (
     <Container>
       <HeaderContainer>
@@ -81,6 +101,15 @@ function HostHouseSection() {
           renderHouses()
         )}
       </CardContainer>
+      {houseData?.data.pagination && (
+        <PaginationContainer>
+          <Pagination
+            currentPage={currentPage}
+            totalPages={houseData?.data.pagination.total_pages}
+            onPageChange={handlePageChange}
+          />
+        </PaginationContainer>
+      )}
     </Container>
 
   );

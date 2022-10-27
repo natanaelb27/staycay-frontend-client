@@ -2,22 +2,23 @@ import styled from 'styled-components';
 
 export const FooterContainer = styled.div`
     display: grid;
-    margin-top: 2rem;
     position: relative;
     bottom: 0;
-    background-color: var(--staycay-red);
+    background-color: #f7f7f7;
     padding: 1.25rem;
     padding-left: 10%;
     padding-right: 10%;
     justify-content: center;
     gap: 3rem;
+    border-top: 1px solid #ccc;
+
     @media (max-width: 768px) {
         gap: 1rem;
     }
 `;
 
 export const FooterTitle = styled.h1`
-    color: white;
+    color: black;
     text-align: center;
 `;
 
@@ -38,7 +39,7 @@ export const ContentContainer = styled.div`
 
     @media (max-width: 768px) {
         padding-bottom: 2rem;
-        border-bottom: 1px solid white;
+        border-bottom: 1px solid #ccc;
     }
 `;
 
@@ -51,14 +52,14 @@ export const SpanTitle = styled.span`
     display: block;
     font-size: 1.1rem;
     font-weight: 700; 
-    color: white;
+    color: black;
 `;
 
 export const SpanDetail = styled.span`
     display: block;
     font-size: 1rem;
     font-weight: 300; 
-    color: white;
+    color: black;
 `;
 
 export const CopyrightContent = styled.div`

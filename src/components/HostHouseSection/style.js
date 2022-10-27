@@ -45,23 +45,17 @@ export const Title = styled.h1`
 export const CardContainer = styled.div`
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
-    /* grid-template-columns: repeat(4, minmax(200px, 1fr)); */
     grid-gap: 2rem;
     row-gap: 5rem;
     margin-top: 3rem;
 
-/* 
-    @media (max-width: 1280px) {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-
+    @media (max-width: 350px) {
+        grid-template-columns: 1fr;
     }
+`;
 
-    @media (max-width: 1024px) {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-
-    }
-
-    @media (max-width: 640px) {
-        grid-template-columns: repeat(1, minmax(0, 1fr));
-    } */
+export const PaginationContainer = styled.div`
+    display: grid;
+    justify-content: center;
+    padding: 2%;
 `;

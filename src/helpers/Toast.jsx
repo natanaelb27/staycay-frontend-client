@@ -24,8 +24,8 @@ export const showErrorToast = (message) => {
   // }));
 };
 
-export const showWarningToast = (message) => {
-  toast.warning(message, {
+export const showToast = (message) => {
+  toast(message, {
     position: toast.POSITION.TOP_CENTER,
   });
 };
