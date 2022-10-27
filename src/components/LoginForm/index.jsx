@@ -92,7 +92,6 @@ function LoginForm() {
           </Title>
         </TitleContainer>
         <MainInputContainer>
-
           <InputContainer>
             <Label labelFor="email">Email</Label>
             <Input

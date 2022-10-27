@@ -310,6 +310,7 @@ export const SearchFooterContainer = styled.div`
     display: grid;
     grid-template-columns: 0.5fr 0.5fr;
 `;
+
 export const MobileNavbar = styled.div`
     display: none;
 
