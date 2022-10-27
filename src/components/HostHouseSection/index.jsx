@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SkeletonCard from '../Skeleton/SkeletonCard';
 import Card from '../Card';
@@ -10,7 +10,6 @@ import {
   Title,
   AddNewHouseButtonContainer,
   CardContainer,
-  PaginationContainer,
 } from './style';
 import Pagination from '../Pagination';
 import noImageAvailable from '../../assets/no-image-available.jpg';
@@ -20,7 +19,7 @@ function HostHouseSection() {
   const [getHostHouse, {
     data: houseData,
     error: houseError,
-    isLoading: houseLoading,
+    isFetching: houseLoading,
   }] = useLazyGetHostHouseQuery();
 
   const skeletonLoading = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -76,16 +75,22 @@ function HostHouseSection() {
     navigate('/hosting/add-house');
   };
 
+  const houseRef = useRef(null);
+
+  const executeScroll = () => houseRef.current.scrollIntoView();
+
   const handlePageChange = (page) => {
     setCurrentPage(page);
     getHostHouse({
       limit,
       page,
     });
+
+    executeScroll();
   };
 
   return (
-    <Container>
+    <Container ref={houseRef}>
       <HeaderContainer>
         <Title>Manage Your Houses</Title>
         <AddNewHouseButtonContainer>
@@ -102,13 +107,11 @@ function HostHouseSection() {
         )}
       </CardContainer>
       {houseData?.data.pagination && (
-        <PaginationContainer>
-          <Pagination
-            currentPage={currentPage}
-            totalPages={houseData?.data.pagination.total_pages}
-            onPageChange={handlePageChange}
-          />
-        </PaginationContainer>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={houseData?.data.pagination.total_pages}
+        onPageChange={handlePageChange}
+      />
       )}
     </Container>
 

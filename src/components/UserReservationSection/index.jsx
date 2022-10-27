@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Container,
@@ -8,7 +8,6 @@ import {
   MinSelectionContainer,
   SpanSelection,
   ReservationContainer,
-  PaginationContainer,
 } from './style';
 import { useLazyGetReservationByUserQuery } from '../../store/slices/apiSlice';
 import ReservationDetailsCard from '../ReservationDetailsCard';
@@ -54,9 +53,14 @@ function UserReservationSection() {
     ))
   );
 
+  const reservationRef = useRef(null);
+
+  const executeScroll = () => reservationRef.current.scrollIntoView();
+
   const handlePageChange = (page) => {
     setCurrentPage(page);
     getReservation({ filterBy, limit, page });
+    executeScroll();
   };
 
   const handleSelectChange = (e) => {
@@ -87,7 +91,7 @@ function UserReservationSection() {
 
   return (
     !reservationLoading && !reservationError && (
-      <Container>
+      <Container ref={reservationRef}>
         <Title>Your Reservations</Title>
         <MaxSelectionContainer>
           {renderMaxSelections()}
@@ -107,13 +111,11 @@ function UserReservationSection() {
           {renderReservations()}
         </ReservationContainer>
         {reservationData?.data.pagination && (
-          <PaginationContainer>
-            <Pagination
-              currentPage={currentPage}
-              totalPages={reservationData?.data.pagination.total_pages}
-              onPageChange={handlePageChange}
-            />
-          </PaginationContainer>
+        <Pagination
+          currentPage={currentPage}
+          totalPages={reservationData?.data.pagination.total_pages}
+          onPageChange={handlePageChange}
+        />
         )}
       </Container>
     )

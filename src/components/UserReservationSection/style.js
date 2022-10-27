@@ -85,9 +85,3 @@ export const ReservationContainer = styled.div`
     justify-content: center;
 
 `;
-
-export const PaginationContainer = styled.div`
-    display: grid;
-    justify-content: center;
-    padding: 2%;
-`;

@@ -5,7 +5,6 @@ import { useLazyGetHouseQuery } from '../../store/slices/apiSlice';
 import {
   CardContainer,
   SortContainer,
-  PaginationContainer,
 } from './style';
 import Select from '../../components/common/Select';
 import Label from '../../components/common/Label';
@@ -28,7 +27,7 @@ function Home() {
     isLoading: houseLoading,
   }] = useLazyGetHouseQuery();
 
-  const limit = 10;
+  const limit = 3;
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
@@ -107,6 +106,10 @@ function Home() {
       limit,
       page,
     });
+    window.scrollTo({
+      top: 0,
+      behavior: 'auto',
+    });
   };
 
   return (
@@ -150,13 +153,11 @@ function Home() {
       </CardContainer>
 
       {houseData?.data.pagination && (
-        <PaginationContainer>
-          <Pagination
-            currentPage={currentPage}
-            totalPages={houseData?.data.pagination.total_pages}
-            onPageChange={handlePageChange}
-          />
-        </PaginationContainer>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={houseData?.data.pagination.total_pages}
+        onPageChange={handlePageChange}
+      />
       )}
     </MainContainer>
   );

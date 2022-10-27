@@ -77,9 +77,3 @@ export const ReservationContainer = styled.div`
 //         grid-template-columns: 1fr;
 //     }
 // `;
-
-export const PaginationContainer = styled.div`
-    display: grid;
-    justify-content: center;
-    padding: 2%;
-`;

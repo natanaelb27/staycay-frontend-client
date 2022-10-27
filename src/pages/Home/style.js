@@ -19,9 +19,3 @@ export const SortContainer = styled.div`
     gap: 1rem;
 
 `;
-
-export const PaginationContainer = styled.div`
-    display: grid;
-    justify-content: center;
-    padding: 2%;
-`;
