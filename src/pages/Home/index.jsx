@@ -27,7 +27,7 @@ function Home() {
     isLoading: houseLoading,
   }] = useLazyGetHouseQuery();
 
-  const limit = 3;
+  const limit = 10;
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
