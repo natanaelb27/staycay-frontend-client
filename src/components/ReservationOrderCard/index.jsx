@@ -14,6 +14,7 @@ import {
   PriceContainer,
 } from './style';
 import { numberWithCommas } from '../../helpers';
+import noImageAvailable from '../../assets/no-image-available.jpg';
 
 function ReservationOrderCard({
   houseData, checkInDate, checkOutDate, days,
@@ -22,7 +23,12 @@ function ReservationOrderCard({
     <Container>
       <HouseDetailContainer>
         <HouseImageContainer>
-          <HouseImage imgSrc={`url(${houseData?.house_photo[0].photo})`} />
+          <HouseImage imgSrc={
+            houseData?.house_photo.length >= 1
+              ? `url(${houseData?.house_photo[0].photo})`
+              : `url(${noImageAvailable})`
+            }
+          />
         </HouseImageContainer>
         <HouseDetailContentContainer>
           <HouseDetailContent>

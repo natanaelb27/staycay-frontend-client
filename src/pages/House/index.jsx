@@ -13,6 +13,7 @@ import {
   HouseContentDetailsContainer,
   Line,
 } from './style';
+import noImageAvailable from '../../assets/no-image-available.jpg';
 
 function House() {
   const navigate = useNavigate();
@@ -51,7 +52,13 @@ function House() {
         {!houseLoading && !houseError && (
           houseData?.data.house_photo.length >= 1 ? (
             <Carousel housePhoto={houseData?.data.house_photo} />
-          ) : null
+          ) : (
+            <Carousel housePhoto={[{
+              photo_id: 0,
+              photo: noImageAvailable,
+            }]}
+            />
+          )
         )}
       </HouseImageContainer>
       <HouseContentContainer>

@@ -13,6 +13,7 @@ import {
 import { useGetUnscopedHouseByIDQuery, useGetPickupByReservationQuery } from '../../store/slices/apiSlice';
 import Button from '../common/Button';
 import PickupModal from '../PickupModal';
+import noImageAvailable from '../../assets/no-image-available.jpg';
 
 function ReservationDetailsCard({ handleClick, reservationData }) {
   const { data: houseData } = useGetUnscopedHouseByIDQuery(parseInt(reservationData?.house_id, 10));
@@ -35,7 +36,12 @@ function ReservationDetailsCard({ handleClick, reservationData }) {
       <DivContainer onClick={handleClick}>
         <SpanTitle>{reservationData?.reservation_code}</SpanTitle>
         <Container>
-          <HouseImage imgSrc={`url(${houseData?.data.house_photo[0].photo})`} />
+          <HouseImage imgSrc={
+            houseData?.data.house_photo.length >= 1
+              ? `url(${houseData?.data.house_photo[0].photo})`
+              : `url(${noImageAvailable})`
+            }
+          />
           <ContentContainer>
             <ContentDetailContainer>
               <SpanTitle>House Name:</SpanTitle>

@@ -7,7 +7,8 @@ export const MainContainer = styled.div`
     place-items: center; 
     padding-left: 15%;
     padding-right: 15%; 
-    margin-top: 2%;
+    margin-top: 1%;
+    margin-bottom: 1%;
 
     @media (max-width: 500px) {
         padding: 0;
