@@ -8,7 +8,7 @@ export const MainContainer = styled.div`
     padding-right: 15%; 
 
     @media (max-width: 500px) {
-        padding: 0;
+        padding: 0.5rem;
     }
 `;
 
@@ -25,7 +25,7 @@ export const BecomeHostContainer = styled.div`
     padding-right: 15%;
 
     @media (max-width: 500px) {
-        padding: 0;
+        padding: 0.5rem;
     }
 `;
 

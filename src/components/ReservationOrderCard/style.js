@@ -10,34 +10,14 @@ export const Container = styled.div`
     display: grid;
     grid-template-columns: 100%;
     gap: 1rem;
-
-    @media (max-width: 1300px) {
-        grid-template-rows: 60% 40%;
-    }
-`;
-
-export const HouseDetailContainer = styled.div`
-    display: flex;
-    align-content: center;
-    height: 100%;
-    gap: 2rem;
-
-    @media (max-width: 1300px) {
-        height: fit-content;
-        display: block;
-    }
-
+    box-sizing: border-box;
 `;
 
 export const HouseImageContainer = styled.div`
     display: grid;
     height: 100%;
     align-items: center;
-
-    @media (max-width: 1300px) {
-        justify-content: center;
-        height: fit-content;
-    }
+    justify-content: center;
 `;
 
 export const HouseImage = styled.div`
@@ -50,10 +30,10 @@ export const HouseImage = styled.div`
 `;
 
 export const ContentContainer = styled.div`
-    display: grid;
+    display: flex;
+    flex-direction: column;
     width: 100%;
-    grid-template-rows: 1fr 1fr;
-    gap: 0.2rem;
+    gap: 0.5rem;
     
 `;
 
@@ -66,24 +46,6 @@ export const HouseDetailContent = styled.div`
     @media (max-width: 1300px) {
         margin-top: 1rem;        
     }
-`;
-
-export const HouseDetailContentContainer = styled.div`
-    display: grid;
-    align-items: center;
-`;
-
-export const TripMainContainer = styled.div`
-    display: grid;
-    gap: 1rem;
-`;
-
-export const TripDetailContainer = styled.div`
-    display: grid;
-    gap: 0.2rem;
-    height: fit-content;
-    /* display: flex;
-    flex-direction: column; */
 `;
 
 export const SpanTitle = styled.span`
@@ -108,6 +70,10 @@ export const SpanDetail = styled.span`
 export const PriceContainer = styled.div`
     display: flex;
     justify-content: space-between;
+
+    @media (max-width: 420px) {
+        flex-direction: column;
+    }
     /* grid-template-columns: 50% 50%; */
     
 `;

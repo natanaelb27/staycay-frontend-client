@@ -70,23 +70,25 @@ function Card({
         ))}
       </Slider>
       <HouseLink to={linkTo} target="_blank">
-        <HouseInfo>
-          <BoldSpan>{name}</BoldSpan>
-          <LocationSpan>{location}</LocationSpan>
-          <div>
-            <BoldSpan>
-              Rp
-              {' '}
-              {numberWithCommas(price)}
-              {' '}
-              IDR
-            </BoldSpan>
-            <span>
-              {' '}
-              night
-            </span>
-          </div>
-        </HouseInfo>
+        <div>
+          <HouseInfo>
+            <BoldSpan>{name}</BoldSpan>
+            <LocationSpan>{location}</LocationSpan>
+            <div>
+              <BoldSpan>
+                Rp
+                {' '}
+                {numberWithCommas(price)}
+                {' '}
+                IDR
+              </BoldSpan>
+              <span>
+                {' '}
+                night
+              </span>
+            </div>
+          </HouseInfo>
+        </div>
       </HouseLink>
     </HouseContainer>
   );

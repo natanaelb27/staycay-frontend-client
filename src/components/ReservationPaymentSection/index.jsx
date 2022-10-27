@@ -79,7 +79,6 @@ function ReservationPaymentSection({
       }
       {!userLoading && !userError && (
       <Container>
-        <ToastContainer />
         <Title>Confirm and pay</Title>
         <ContentContainer>
           <ContentTitle>Your Balance</ContentTitle>
@@ -125,6 +124,7 @@ function ReservationPaymentSection({
           onClose={() => setShowModal(false)}
           handleSubmit={handleTopup}
         />
+        <ToastContainer />
       </Container>
       )}
     </>

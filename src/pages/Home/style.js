@@ -6,6 +6,10 @@ export const CardContainer = styled.div`
     grid-gap: 2rem;
     row-gap: 5rem;
     margin-top: 1rem;
+
+    @media (max-width: 350px) {
+        grid-template-columns: 1fr;
+    }
 `;
 
 export const SortContainer = styled.div`

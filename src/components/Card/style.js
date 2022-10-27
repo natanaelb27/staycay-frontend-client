@@ -29,6 +29,13 @@ export const Slider = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+
+    /* @media (max-width: 400px) {
+        width: 18rem;
+    }
+    @media (max-width: 370px) {
+        width: 17rem;
+    } */
 `;
 
 export const LeftArrow = styled(FaChevronLeft)`
@@ -75,6 +82,13 @@ export const Image = styled.div`
     height: 20rem;
     border-radius: 20px;
     border: 0.1px solid gray;
+
+    /* @media (max-width: 400px) {
+        width: 18rem;
+    }
+    @media (max-width: 370px) {
+        width: 17rem;
+    } */
 `;
 
 // export const Image = styled.img`

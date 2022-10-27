@@ -11,7 +11,7 @@ export const MainContainer = styled.div`
     padding-right: 30%;
 
     @media (max-width: 500px) {
-        padding: 0;
+        padding: 0.5rem;
     }
 `;
 

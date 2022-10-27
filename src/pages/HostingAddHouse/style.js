@@ -12,7 +12,7 @@ export const MainContainer = styled.div`
     margin-bottom: 1%;
 
     @media (max-width: 500px) {
-        padding: 0;
+        padding: 0.5rem;
     }
 `;
 

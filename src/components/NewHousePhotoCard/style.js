@@ -13,6 +13,9 @@ export const MainContainer = styled.div`
 
 export const Image = styled.div`
     /* background-size: cover; */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     background-size: 100% 100%;
     background-image: ${(props) => (props.imgSrc ? props.imgSrc : null)};
 

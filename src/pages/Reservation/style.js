@@ -9,6 +9,10 @@ export const MainContainer = styled.div`
     padding-right: 15%; 
     margin-top: 1%;
     margin-bottom: 1%;
+
+    @media (max-width: 500px) {
+        padding: 0.5rem;
+    }
 `;
 
 export const TitleContainer = styled.div`
@@ -34,6 +38,7 @@ export const Title = styled.h1`
 
 export const ReservationContentContainer = styled.div`
     max-width: 100%;
+    height: fit-content;
     display: grid;
     grid-template-columns: 40% 60%;
     justify-items: center;
@@ -41,7 +46,7 @@ export const ReservationContentContainer = styled.div`
     gap: 8rem;
 
     @media (max-width: 1000px){
-        /* display: block; */
         grid-template-columns: 100%;
+        gap: 2rem;
     }
 `;
