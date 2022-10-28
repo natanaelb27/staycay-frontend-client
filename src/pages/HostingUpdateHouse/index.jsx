@@ -40,6 +40,7 @@ import TextArea from '../../components/common/TextArea';
 import Select from '../../components/common/Select';
 import Label from '../../components/common/Label';
 import ErrorMessage from '../../components/common/ErrorMessage';
+import { showErrorToast } from '../../helpers/Toast';
 
 function HostingUpdateHouse() {
   const navigate = useNavigate();
@@ -274,8 +275,20 @@ function HostingUpdateHouse() {
   };
 
   const onSubmitTerminateModal = () => {
-    deleteHouse(params.houseID);
-    navigate('/hosting');
+    deleteHouse(params.houseID)
+      .unwrap()
+      .then(() => {
+        navigate('/hosting');
+      })
+      .catch((error) => {
+        if (!error.data) {
+          showErrorToast('Server is currently down, please try again later!');
+        }
+        showErrorToast(error.data.message);
+      })
+      .finally(() => {
+        setShowTerminateModal(false);
+      });
   };
 
   if (!houseLoading && houseError && houseError.data.code === 400) {
