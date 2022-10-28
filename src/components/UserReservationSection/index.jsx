@@ -75,7 +75,7 @@ function UserReservationSection() {
       <SpanSelection id="today" className={filterBy === 'today' ? 'active' : undefined} onClick={handleClick}>Today</SpanSelection>
       <SpanSelection id="upcoming" className={filterBy === 'upcoming' ? 'active' : undefined} onClick={handleClick}>Upcoming</SpanSelection>
       <SpanSelection id="ongoing" className={filterBy === 'ongoing' ? 'active' : undefined} onClick={handleClick}>Ongoing</SpanSelection>
-      <SpanSelection id="past" className={filterBy === 'past' ? 'active' : undefined} onClick={handleClick}>Past</SpanSelection>
+      <SpanSelection id="completed" className={filterBy === 'completed' ? 'active' : undefined} onClick={handleClick}>Completed</SpanSelection>
     </>
   );
 
@@ -85,7 +85,7 @@ function UserReservationSection() {
       <option value="today">Today</option>
       <option value="upcoming">Upcoming</option>
       <option value="ongoing">Ongoing</option>
-      <option value="past">Past</option>
+      <option value="completed">Completed</option>
     </>
   );
 

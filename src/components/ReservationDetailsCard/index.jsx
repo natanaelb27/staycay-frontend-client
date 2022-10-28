@@ -10,13 +10,16 @@ import {
   SpanTitle,
   SpanDetail,
 } from './style';
-import { useGetUnscopedHouseByIDQuery, useGetPickupByReservationQuery } from '../../store/slices/apiSlice';
+import { useGetHouseByIDQuery, useGetPickupByReservationQuery } from '../../store/slices/apiSlice';
 import Button from '../common/Button';
 import PickupModal from '../PickupModal';
 import noImageAvailable from '../../assets/no-image-available.jpg';
 
 function ReservationDetailsCard({ handleClick, reservationData }) {
-  const { data: houseData } = useGetUnscopedHouseByIDQuery(parseInt(reservationData?.house_id, 10));
+  const { data: houseData } = useGetHouseByIDQuery({
+    houseID: parseInt(reservationData?.house_id, 10),
+    unscoped: 'true',
+  });
   const { data: pickupData } = useGetPickupByReservationQuery(
     parseInt(reservationData?.reservation_id, 10),
   );

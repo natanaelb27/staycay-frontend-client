@@ -48,7 +48,9 @@ function HostingUpdateHouse() {
     data: houseData,
     error: houseError,
     isFetching: houseLoading,
-  } = useGetHouseByIDQuery(params.houseID);
+  } = useGetHouseByIDQuery({
+    houseID: params.houseID,
+  });
 
   const {
     data: houseStatusData,

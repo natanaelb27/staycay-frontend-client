@@ -5,13 +5,6 @@ export const apiSlice = createApi({
   baseQuery: fetchBaseQuery({
     mode: 'cors',
     baseUrl: process.env.REACT_APP_API_URL,
-    // prepareHeaders: (headers, { getState }) => {
-    //   const { token } = getState().auth;
-    //   if (token) {
-    //     headers.set('authorization', `Bearer ${token}`);
-    //   }
-    //   return headers;
-    // },
   }),
   tagTypes: [
     'Houses',
@@ -68,19 +61,22 @@ export const apiSlice = createApi({
       providesTags: ['Cities'],
     }),
     getHouseByID: builder.query({
-      query: (houseID) => ({
-        url: `/house/${parseInt(houseID, 10)}`,
+      query: ({
+        houseID,
+        unscoped = 'false',
+      }) => ({
+        url: `/house/${parseInt(houseID, 10)}?unscoped=${unscoped}`,
         method: 'GET',
       }),
       providesTags: ['Houses'],
     }),
-    getUnscopedHouseByID: builder.query({
-      query: (houseID) => ({
-        url: `/house/unscoped/${parseInt(houseID, 10)}`,
-        method: 'GET',
-      }),
-      providesTags: ['Houses'],
-    }),
+    // getUnscopedHouseByID: builder.query({
+    //   query: (houseID) => ({
+    //     url: `/house/unscoped/${parseInt(houseID, 10)}`,
+    //     method: 'GET',
+    //   }),
+    //   providesTags: ['Houses'],
+    // }),
     getHouseReservationsByHouseID: builder.query({
       query: (houseID) => ({
         url: `/house/reservation/${houseID}`,
@@ -358,7 +354,7 @@ export const {
   useLazyGetHouseQuery,
   useGetCityQuery,
   useGetHouseByIDQuery,
-  useGetUnscopedHouseByIDQuery,
+  // useGetUnscopedHouseByIDQuery,
   useGetHouseReservationsByHouseIDQuery,
   useGetUserProfileQuery,
   useGetUserByIDQuery,

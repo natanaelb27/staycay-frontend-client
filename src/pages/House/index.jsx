@@ -23,7 +23,9 @@ function House() {
     data: houseData,
     error: houseError,
     isLoading: houseLoading,
-  } = useGetHouseByIDQuery(params.houseID);
+  } = useGetHouseByIDQuery({
+    houseID: params.houseID,
+  });
 
   useEffect(() => {
     if (!houseLoading && houseError && houseError.data.code === 400) {

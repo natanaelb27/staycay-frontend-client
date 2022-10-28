@@ -24,7 +24,9 @@ function Reservation() {
     data: houseData,
     error: houseError,
     isLoading: houseLoading,
-  } = useGetHouseByIDQuery(params.houseID);
+  } = useGetHouseByIDQuery({
+    houseID: params.houseID,
+  });
 
   const {
     data: houseReservationData,

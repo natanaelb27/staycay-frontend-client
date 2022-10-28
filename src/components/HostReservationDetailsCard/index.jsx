@@ -10,11 +10,14 @@ import {
   SpanTitle,
   SpanDetail,
 } from './style';
-import { useGetUnscopedHouseByIDQuery } from '../../store/slices/apiSlice';
+import { useGetHouseByIDQuery } from '../../store/slices/apiSlice';
 import noImageAvailable from '../../assets/no-image-available.jpg';
 
 function ReservationDetailsCard({ handleClick, reservationData }) {
-  const { data: houseData } = useGetUnscopedHouseByIDQuery(parseInt(reservationData?.house_id, 10));
+  const { data: houseData } = useGetHouseByIDQuery({
+    houseID: parseInt(reservationData?.house_id, 10),
+    unscoped: 'true',
+  });
 
   return (
     <MainContainer>

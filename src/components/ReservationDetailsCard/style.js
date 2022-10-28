@@ -25,6 +25,7 @@ export const Container = styled.div`
     display: grid;
     grid-template-columns: 1fr 2fr;
     align-items: center;
+    justify-items: center;
 
     @media (max-width: 1400px) {
         grid-template-columns: 1fr;
