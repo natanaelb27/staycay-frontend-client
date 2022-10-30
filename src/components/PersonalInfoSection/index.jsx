@@ -20,6 +20,10 @@ import { useGetUserProfileQuery, useUpdateUserProfileMutation, useGetCityQuery }
 import Button from '../common/Button';
 import Select from '../common/Select';
 import ErrorMessage from '../common/ErrorMessage';
+import SkeletonText from '../Skeleton/SkeletonText';
+import SkeletonLine from '../Skeleton/SkeletonLine';
+import { verifyValidPassword } from '../../helpers';
+import { showErrorToast, showSuccessToast } from '../../helpers/Toast';
 
 function PersonalInfoSection() {
   const {
@@ -58,10 +62,10 @@ function PersonalInfoSection() {
   const handleClickEditName = () => {
     setInputUpdateProfile({
       name: userData?.data.name,
-      oldPassword: '',
-      newPassword: '',
-      address: userData?.data.address,
-      cityID: userData?.data.city_id,
+      oldPassword: inputUpdateProfile.oldPassword,
+      newPassword: inputUpdateProfile.newPassword,
+      address: inputUpdateProfile.address,
+      cityID: inputUpdateProfile.city_id,
     });
     setIsEditName(!isEditName);
     setErrorInput({
@@ -72,11 +76,11 @@ function PersonalInfoSection() {
 
   const handleClickEditPassword = () => {
     setInputUpdateProfile({
-      name: userData?.data.name,
+      name: inputUpdateProfile.name,
       oldPassword: '',
       newPassword: '',
-      address: userData?.data.address,
-      cityID: userData?.data.city_id,
+      address: inputUpdateProfile.address,
+      cityID: inputUpdateProfile.city_id,
     });
     setIsEditPassword(!isEditPassword);
     setErrorInput({
@@ -88,9 +92,9 @@ function PersonalInfoSection() {
 
   const handleClickEditAddress = () => {
     setInputUpdateProfile({
-      name: userData?.data.name,
-      oldPassword: '',
-      newPassword: '',
+      name: inputUpdateProfile.name,
+      oldPassword: inputUpdateProfile.oldPassword,
+      newPassword: inputUpdateProfile.newPassword,
       address: userData?.data.address,
       cityID: userData?.data.city_id,
     });
@@ -132,7 +136,18 @@ function PersonalInfoSection() {
         {
           name: inputUpdateProfile.name,
         },
-      );
+      ).unwrap()
+        .then(() => {
+          setIsEditName(!isEditName);
+          showSuccessToast('Name updated successfully!');
+        })
+        .catch((error) => {
+          if (!error.data) {
+            showErrorToast('Server is currently down, please try again later!');
+          }
+          showErrorToast(error.data.message);
+        });
+
       setIsEditName(!isEditName);
     }
   };
@@ -155,6 +170,10 @@ function PersonalInfoSection() {
       newError.errorOldPassword = 'Old password is required!';
     }
 
+    if (!verifyValidPassword(inputUpdateProfile.newPassword)) {
+      newError.errorNewPassword = 'Password requirements: minimum 8 characters, 1 uppercase character, 1 lowercase character, 1 number, and no special characters';
+    }
+
     if (!inputUpdateProfile.newPassword) {
       newError.errorNewPassword = 'New password is required!';
     }
@@ -171,8 +190,17 @@ function PersonalInfoSection() {
           oldPassword: inputUpdateProfile.oldPassword,
           newPassword: inputUpdateProfile.newPassword,
         },
-      );
-      setIsEditPassword(!isEditPassword);
+      ).unwrap()
+        .then(() => {
+          setIsEditPassword(!isEditPassword);
+          showSuccessToast('Password updated successfully!');
+        })
+        .catch((error) => {
+          if (!error.data) {
+            showErrorToast('Server is currently down, please try again later!');
+          }
+          showErrorToast(error.data.message);
+        });
     }
   };
 
@@ -210,8 +238,17 @@ function PersonalInfoSection() {
           address: inputUpdateProfile.address,
           cityID: inputUpdateProfile.cityID,
         },
-      );
-      setIsEditAddress(!isEditAddress);
+      ).unwrap()
+        .then(() => {
+          setIsEditAddress(!isEditAddress);
+          showSuccessToast('Address updated successfully!');
+        })
+        .catch((error) => {
+          if (!error.data) {
+            showErrorToast('Server is currently down, please try again later!');
+          }
+          showErrorToast(error.data.message);
+        });
     }
   };
 
@@ -225,23 +262,26 @@ function PersonalInfoSection() {
       <ContentDetailContainer>
         <PersonalInfoContainer>
           <SpanTitle>Name</SpanTitle>
-          {!isEditName
-            ? (<SpanDetail>{userData?.data.name}</SpanDetail>)
-            : (
-              <EditContainer>
-                <Input
-                  inputValue={inputUpdateProfile.name}
-                  inputName="name"
-                  inputPlaceholder="Full Name"
-                  handleChange={handleInputChange}
-                />
-                {errorInput.errorName
-                  ? <ErrorMessage>{errorInput.errorName}</ErrorMessage> : null}
-                <SaveButtonContainer>
-                  <Button handleClick={handleSaveChangeName}>Save</Button>
-                </SaveButtonContainer>
-              </EditContainer>
-            )}
+          {userLoading && (<SkeletonLine />)}
+          {!userLoading && !userError && (
+            !isEditName
+              ? (<SpanDetail>{userData?.data.name}</SpanDetail>)
+              : (
+                <EditContainer>
+                  <Input
+                    inputValue={inputUpdateProfile.name}
+                    inputName="name"
+                    inputPlaceholder="Full Name"
+                    handleChange={handleInputChange}
+                  />
+                  {errorInput.errorName
+                    ? <ErrorMessage>{errorInput.errorName}</ErrorMessage> : null}
+                  <SaveButtonContainer>
+                    <Button handleClick={handleSaveChangeName}>Save</Button>
+                  </SaveButtonContainer>
+                </EditContainer>
+              )
+          )}
         </PersonalInfoContainer>
         <EditButtonContainer>
           <EditButton type="button" onClick={handleClickEditName}>{!isEditName ? 'Edit' : 'Cancel'}</EditButton>
@@ -250,40 +290,43 @@ function PersonalInfoSection() {
       <ContentDetailContainer>
         <PersonalInfoContainer>
           <SpanTitle>{!isEditPassword ? 'Password' : 'Old Password'}</SpanTitle>
-          {!isEditPassword
-            ? (<SpanDetail>********</SpanDetail>)
-            : (
-              <EditContainer>
-                <EditTwoInputsContainer>
-                  <WithErrorContainer>
-                    <Input
-                      inputType="password"
-                      inputValue={inputUpdateProfile.oldPassword}
-                      inputName="oldPassword"
-                      inputPlaceholder="Old Password"
-                      handleChange={handleInputChange}
-                    />
-                    {errorInput.errorOldPassword
-                      ? <ErrorMessage>{errorInput.errorOldPassword}</ErrorMessage> : null}
-                  </WithErrorContainer>
-                  <SecondContainer>
-                    <SpanTitle>New Password</SpanTitle>
-                    <Input
-                      inputType="password"
-                      inputValue={inputUpdateProfile.newPassword}
-                      inputName="newPassword"
-                      inputPlaceholder="New Password"
-                      handleChange={handleInputChange}
-                    />
-                    {errorInput.errorNewPassword
-                      ? <ErrorMessage>{errorInput.errorNewPassword}</ErrorMessage> : null}
-                  </SecondContainer>
-                </EditTwoInputsContainer>
-                <SaveButtonContainer>
-                  <Button handleClick={handleSaveChangePassword}>Save</Button>
-                </SaveButtonContainer>
-              </EditContainer>
-            )}
+          {userLoading && (<SkeletonLine />)}
+          {!userLoading && !userError && (
+            !isEditPassword
+              ? (<SpanDetail>********</SpanDetail>)
+              : (
+                <EditContainer>
+                  <EditTwoInputsContainer>
+                    <WithErrorContainer>
+                      <Input
+                        inputType="password"
+                        inputValue={inputUpdateProfile.oldPassword}
+                        inputName="oldPassword"
+                        inputPlaceholder="Old Password"
+                        handleChange={handleInputChange}
+                      />
+                      {errorInput.errorOldPassword
+                        ? <ErrorMessage>{errorInput.errorOldPassword}</ErrorMessage> : null}
+                    </WithErrorContainer>
+                    <SecondContainer>
+                      <SpanTitle>New Password</SpanTitle>
+                      <Input
+                        inputType="password"
+                        inputValue={inputUpdateProfile.newPassword}
+                        inputName="newPassword"
+                        inputPlaceholder="New Password"
+                        handleChange={handleInputChange}
+                      />
+                      {errorInput.errorNewPassword
+                        ? <ErrorMessage>{errorInput.errorNewPassword}</ErrorMessage> : null}
+                    </SecondContainer>
+                  </EditTwoInputsContainer>
+                  <SaveButtonContainer>
+                    <Button handleClick={handleSaveChangePassword}>Save</Button>
+                  </SaveButtonContainer>
+                </EditContainer>
+              )
+          )}
         </PersonalInfoContainer>
         <EditButtonContainer>
           <EditButton type="button" onClick={handleClickEditPassword}>{!isEditPassword ? 'Edit' : 'Cancel'}</EditButton>
@@ -292,50 +335,57 @@ function PersonalInfoSection() {
       <ContentDetailContainer>
         <PersonalInfoContainer>
           <SpanTitle>Email</SpanTitle>
+          {userLoading && (<SkeletonLine />)}
+          {!userLoading && !userError && (
           <SpanDetail>{userData?.data.email}</SpanDetail>
+          )}
         </PersonalInfoContainer>
         <div />
       </ContentDetailContainer>
       <ContentDetailContainer>
         <PersonalInfoContainer>
           <SpanTitle>Address</SpanTitle>
-          {!isEditAddress
-            ? (
-              <SpanDetail>
-                {' '}
-                {userData?.data.address}
-                ,
-                {' '}
-                {userData?.data.city_name}
-              </SpanDetail>
-            )
-            : (
-              <EditContainer>
-                <EditTwoInputsContainer>
-                  <WithErrorContainer>
-                    <Input
-                      inputValue={inputUpdateProfile.address}
-                      inputName="address"
-                      inputPlaceholder="Address"
-                      handleChange={handleInputChange}
-                    />
-                    {errorInput.errorAddress
-                      ? <ErrorMessage>{errorInput.errorAddress}</ErrorMessage> : null}
-                  </WithErrorContainer>
-                  <SecondContainer>
-                    <SpanTitle>City</SpanTitle>
-                    <Select selectName="cityID" selectID="cityID" handleChange={handleInputChange} selectValue={inputUpdateProfile.cityID}>
-                      {!cityLoading && !cityError && (renderCitiesDropdown())}
-                    </Select>
-                    {errorInput.errorCity
-                      ? <ErrorMessage>{errorInput.errorCity}</ErrorMessage> : null}
-                  </SecondContainer>
-                </EditTwoInputsContainer>
-                <SaveButtonContainer>
-                  <Button handleClick={handleSaveChangeAddress}>Save</Button>
-                </SaveButtonContainer>
-              </EditContainer>
-            )}
+          {userLoading && (<SkeletonLine />)}
+          {!userLoading && !userError && (
+            !isEditAddress
+              ? (
+                <SpanDetail>
+                  {' '}
+                  {userData?.data.address.length > 100
+                    ? `${userData?.data.address.substring(0, 100)}...` : userData?.data.address}
+                  ,
+                  {' '}
+                  {userData?.data.city_name}
+                </SpanDetail>
+              )
+              : (
+                <EditContainer>
+                  <EditTwoInputsContainer>
+                    <WithErrorContainer>
+                      <Input
+                        inputValue={inputUpdateProfile.address}
+                        inputName="address"
+                        inputPlaceholder="Address"
+                        handleChange={handleInputChange}
+                      />
+                      {errorInput.errorAddress
+                        ? <ErrorMessage>{errorInput.errorAddress}</ErrorMessage> : null}
+                    </WithErrorContainer>
+                    <SecondContainer>
+                      <SpanTitle>City</SpanTitle>
+                      <Select selectName="cityID" selectID="cityID" handleChange={handleInputChange} selectValue={inputUpdateProfile.cityID}>
+                        {!cityLoading && !cityError && (renderCitiesDropdown())}
+                      </Select>
+                      {errorInput.errorCity
+                        ? <ErrorMessage>{errorInput.errorCity}</ErrorMessage> : null}
+                    </SecondContainer>
+                  </EditTwoInputsContainer>
+                  <SaveButtonContainer>
+                    <Button handleClick={handleSaveChangeAddress}>Save</Button>
+                  </SaveButtonContainer>
+                </EditContainer>
+              )
+          )}
         </PersonalInfoContainer>
         <EditButtonContainer>
           <EditButton type="button" onClick={handleClickEditAddress}>{!isEditAddress ? 'Edit' : 'Cancel'}</EditButton>

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-// import { useDispatch } from 'react-redux';
 import Button from '../common/Button';
 import Label from '../common/Label';
 import TextArea from '../common/TextArea';
@@ -16,7 +15,6 @@ import {
   ContentContainer,
 } from './style';
 import { useGetCityQuery, useGetUserProfileQuery, usePickupMutation } from '../../store/slices/apiSlice';
-// import { setToast } from '../../store/slices/toastSlice';
 
 function PickupModal({
   reservationID, isShow, onClose,
@@ -24,7 +22,6 @@ function PickupModal({
   const { data: userData } = useGetUserProfileQuery();
   const { data: cityData } = useGetCityQuery();
   const [pickup] = usePickupMutation();
-  // const dispatch = useDispatch();
 
   const [input, setInput] = useState({
     pickupAddress: userData?.data.address,

@@ -33,6 +33,7 @@ import {
 } from './style';
 import { useGetCityQuery, useAddHouseMutation } from '../../store/slices/apiSlice';
 import NewHousePhotoCard from '../../components/NewHousePhotoCard';
+import { showErrorToast, showSuccessToast } from '../../helpers/Toast';
 
 function HostingAddHouse() {
   const navigate = useNavigate();
@@ -151,6 +152,12 @@ function HostingAddHouse() {
           .unwrap()
           .then(() => {
             navigate('/hosting');
+            showSuccessToast('House Created Successfully');
+          }).catch((error) => {
+            if (!error.data) {
+              showErrorToast('Server is currently down, please try again later!');
+            }
+            showErrorToast(error.data.message);
           });
       });
     }

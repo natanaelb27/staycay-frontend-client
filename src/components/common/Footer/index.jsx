@@ -27,7 +27,7 @@ function Footer() {
               <SpanDetail>
                 Staycay
               </SpanDetail>
-              <SpanDetail>Pacific Century Place Tower</SpanDetail>
+              <SpanDetail>Sopo Del Tower</SpanDetail>
               <SpanDetail>Jakarta, Indonesia</SpanDetail>
             </div>
             <div>

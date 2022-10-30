@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
-import { ToastContainer } from 'react-toastify';
 import {
   MainContainer,
   GameContainer,
@@ -43,7 +42,6 @@ function Game() {
 
   return (
     <MainContainer>
-      <ToastContainer />
       <GameContainer>
         <Title>Coin Toss Game</Title>
         <TitleContent>Heads or Tails</TitleContent>
@@ -76,7 +74,7 @@ function Game() {
           )
           : (
             <SpanTitle>
-              You got no more chance, top up 500k in order to get more chance
+              Top up Rp 500.000,00 in order to get more chance
             </SpanTitle>
           )}
         <SpanTitle>

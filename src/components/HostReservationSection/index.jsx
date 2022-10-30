@@ -8,12 +8,14 @@ import {
   MinSelectionContainer,
   SpanSelection,
   ReservationContainer,
+  NoDataContainer,
 } from './style';
 import { useLazyGetReservationByHostQuery } from '../../store/slices/apiSlice';
 import HostReservationDetailsCard from '../HostReservationDetailsCard';
 import Pagination from '../Pagination';
 import Select from '../common/Select';
 import Label from '../common/Label';
+import NoDataCard from '../NoDataCard';
 
 function HostReservationSection() {
   const navigate = useNavigate();
@@ -104,9 +106,13 @@ function HostReservationSection() {
           </Select>
         </Label>
       </MinSelectionContainer>
-      <ReservationContainer>
-        {renderReservations()}
-      </ReservationContainer>
+      { reservationData?.data.reservation.length <= 0
+        ? <NoDataContainer><NoDataCard /></NoDataContainer>
+        : (
+          <ReservationContainer>
+            {renderReservations()}
+          </ReservationContainer>
+        )}
       {reservationData?.data.pagination && (
         <Pagination
           currentPage={currentPage}

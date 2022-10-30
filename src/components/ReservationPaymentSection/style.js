@@ -17,6 +17,12 @@ export const Title = styled.h2`
     font-weight: 700; 
     letter-spacing: 0.025em; 
     width: 50%;
+
+    @media (max-width: 1000px) {
+        width: 100%;
+        line-height: 2rem; 
+        text-align: center;
+    }
 `;
 
 export const ContentContainer = styled.div`

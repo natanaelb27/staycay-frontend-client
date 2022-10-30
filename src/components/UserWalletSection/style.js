@@ -11,6 +11,11 @@ export const Title = styled.h1`
     line-height: 1rem; 
     font-weight: 700; 
     letter-spacing: 0.025em; 
+
+    @media (max-width: 500px) {
+        text-align: center;
+    }
+
 `;
 
 export const ContentContainer = styled.div`

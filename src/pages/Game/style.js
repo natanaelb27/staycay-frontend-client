@@ -9,6 +9,7 @@ export const MainContainer = styled.div`
     padding-bottom: 3%;
     padding-left: 30%;
     padding-right: 30%;
+    margin-top: 2rem;
 
     @media (max-width: 500px) {
         padding: 0.5rem;

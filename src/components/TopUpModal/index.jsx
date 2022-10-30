@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import {
   faCoins,
 } from '@fortawesome/free-solid-svg-icons';
-import { ToastContainer } from 'react-toastify';
 import Button from '../common/Button';
 import Input from '../common/Input';
 import ErrorMessage from '../common/ErrorMessage';
@@ -22,7 +21,7 @@ import {
   AmountSpan,
   InputContainer,
 } from './style';
-// import { showErrorToast, showSuccessToast } from '../../helpers/Toast';
+import { showErrorToast, showSuccessToast } from '../../helpers/Toast';
 import { useTopUpMutation } from '../../store/slices/apiSlice';
 
 function TopUpModal({
@@ -77,13 +76,13 @@ function TopUpModal({
       })
         .unwrap()
         .then(() => {
-          // showSuccessToast('Top Up Success!');
+          showSuccessToast('Top Up Success!');
         })
         .catch((error) => {
           if (!error.data) {
-            // showErrorToast('Server is currently down, please try again later!');
+            showErrorToast('Server is currently down, please try again later!');
           }
-          // showErrorToast(error.data.message);
+          showErrorToast(error.data.message);
         })
         .finally(() => {
           handleClose();
@@ -93,7 +92,6 @@ function TopUpModal({
 
   return (
     <ModalContainer onClick={handleClose} className={`${isShow ? 'show' : ''}`}>
-      <ToastContainer />
       <ModalContent onClick={(e) => e.stopPropagation()} className={`${isShow ? 'show' : ''}`}>
         <ModalHeader>
           <ModalTitle>

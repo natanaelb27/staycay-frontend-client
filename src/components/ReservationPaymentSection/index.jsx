@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
 import {
   Container,
   Title,
@@ -18,7 +17,7 @@ import {
   numberWithCommas,
 } from '../../helpers';
 import { useGetUserProfileQuery, useAddReservationMutation } from '../../store/slices/apiSlice';
-import { showErrorToast } from '../../helpers/Toast';
+import { showErrorToast, showSuccessToast } from '../../helpers/Toast';
 import SkeletonTextBig from '../Skeleton/SkeletonTextBig';
 
 function ReservationPaymentSection({
@@ -61,6 +60,7 @@ function ReservationPaymentSection({
       .unwrap()
       .then(() => {
         navigate('/', { replace: true });
+        showSuccessToast('Reservation Created Successfully!');
       })
       .catch((error) => {
         if (!error.data) {
@@ -124,7 +124,6 @@ function ReservationPaymentSection({
           onClose={() => setShowModal(false)}
           handleSubmit={handleTopup}
         />
-        <ToastContainer />
       </Container>
       )}
     </>

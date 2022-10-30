@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { MainContainer, Card, SkeletonCard } from '../../components';
+import { Card, SkeletonCard } from '../../components';
 import { useLazyGetHouseQuery } from '../../store/slices/apiSlice';
 import {
+  MainContainer,
   CardContainer,
   SortContainer,
 } from './style';

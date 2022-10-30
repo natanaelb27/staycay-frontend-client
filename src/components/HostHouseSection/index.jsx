@@ -9,17 +9,19 @@ import {
   HeaderContainer,
   Title,
   AddNewHouseButtonContainer,
+  NoDataContainer,
   CardContainer,
 } from './style';
 import Pagination from '../Pagination';
 import noImageAvailable from '../../assets/no-image-available.jpg';
+import NoDataCard from '../NoDataCard';
 
 function HostHouseSection() {
   const navigate = useNavigate();
   const [getHostHouse, {
     data: houseData,
     error: houseError,
-    isFetching: houseLoading,
+    isLoading: houseLoading,
   }] = useLazyGetHostHouseQuery();
 
   const skeletonLoading = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -69,6 +71,7 @@ function HostHouseSection() {
         />
       );
     })
+
   );
 
   const handleAddNewHouseClick = () => {
@@ -99,13 +102,22 @@ function HostHouseSection() {
           </Button>
         </AddNewHouseButtonContainer>
       </HeaderContainer>
-      <CardContainer>
-        {houseLoading && (renderLoading())}
-        {!houseLoading && houseError && <p>{houseError}</p>}
-        {!houseLoading && !houseError && (
-          renderHouses()
+
+      {houseData?.data.house.length <= 0
+        ? (
+          <NoDataContainer>
+            <NoDataCard />
+          </NoDataContainer>
+        )
+        : (
+          <CardContainer>
+            {houseLoading && (renderLoading())}
+            {!houseLoading && houseError && <p>{houseError}</p>}
+            {!houseLoading && !houseError && (
+              renderHouses()
+            )}
+          </CardContainer>
         )}
-      </CardContainer>
       {houseData?.data.pagination && (
       <Pagination
         currentPage={currentPage}

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
 import { showErrorToast } from '../../helpers/Toast';
 import Label from '../common/Label';
 import Input from '../common/Input';
@@ -17,6 +16,7 @@ import {
   MainInputContainer,
   InputContainer,
 } from './style';
+import { verifyValidPassword } from '../../helpers';
 
 function RegisterForm() {
   const navigate = useNavigate();
@@ -66,14 +66,16 @@ function RegisterForm() {
       errorCity: '',
     };
 
-    console.log('input.name');
-
     if (!input.name.trim()) {
       newError.errorName = 'Name is required!';
     }
 
     if (!input.email.trim()) {
       newError.errorEmail = 'Email is required!';
+    }
+
+    if (!verifyValidPassword(input.password)) {
+      newError.errorPassword = 'Password requirements: minimum 8 characters, 1 uppercase character, 1 lowercase character, 1 number, and no special characters';
     }
 
     if (!input.password) {
@@ -123,7 +125,6 @@ function RegisterForm() {
 
   return (
     <MainContainer>
-      <ToastContainer />
       <Form onSubmit={handleSubmit}>
         <TitleContainer>
           <Title>Register</Title>

@@ -31,9 +31,9 @@ export const Slider = styled.div`
     align-items: center;
 
     /* @media (max-width: 400px) {
-        width: 18rem;
-    }
-    @media (max-width: 370px) {
+        width: 100%;
+    } */
+    /* @media (max-width: 370px) {
         width: 17rem;
     } */
 `;

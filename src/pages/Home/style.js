@@ -1,5 +1,17 @@
 import styled from 'styled-components';
 
+export const MainContainer = styled.div`
+    display: grid;
+    height: fit-content;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem; 
+
+    @media (max-width: 420px){
+        padding-left: 0;
+        padding-right: 0;
+    }
+`;
+
 export const CardContainer = styled.div`
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
@@ -18,4 +30,8 @@ export const SortContainer = styled.div`
     margin-top: 1rem;
     gap: 1rem;
 
+    @media (max-width: 420px){
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
 `;

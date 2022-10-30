@@ -8,12 +8,14 @@ import {
   MinSelectionContainer,
   SpanSelection,
   ReservationContainer,
+  NoDataContainer,
 } from './style';
 import { useLazyGetReservationByUserQuery } from '../../store/slices/apiSlice';
 import ReservationDetailsCard from '../ReservationDetailsCard';
 import Pagination from '../Pagination';
 import Select from '../common/Select';
 import Label from '../common/Label';
+import NoDataCard from '../NoDataCard';
 
 function UserReservationSection() {
   const navigate = useNavigate();
@@ -51,6 +53,7 @@ function UserReservationSection() {
         reservationData={item}
       />
     ))
+
   );
 
   const reservationRef = useRef(null);
@@ -107,9 +110,15 @@ function UserReservationSection() {
             </Select>
           </Label>
         </MinSelectionContainer>
-        <ReservationContainer>
-          {renderReservations()}
-        </ReservationContainer>
+        {
+        reservationData?.data.reservation.length <= 0
+          ? <NoDataContainer><NoDataCard /></NoDataContainer>
+          : (
+            <ReservationContainer>
+              {renderReservations()}
+            </ReservationContainer>
+          )
+}
         {reservationData?.data.pagination && (
         <Pagination
           currentPage={currentPage}

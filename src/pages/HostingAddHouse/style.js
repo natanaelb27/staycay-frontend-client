@@ -62,15 +62,15 @@ export const LabelImage = styled.label`
     align-items: center;
     border: 1px dotted black;
     border-radius: 1rem;
-    width: 10rem;
-    height: 10rem;
     cursor: pointer;
+    
     font-size: large;
     font-size: 0.9rem;
     font-weight: bold;
     text-decoration: underline;
     text-align: center;
-    padding: 3rem;
+    width: 100%;
+    height: 5rem;
 
     @media (max-width: 260px){
         width: 100%;

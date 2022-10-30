@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { ToastContainer } from 'react-toastify';
 import {
   useGetCityQuery,
   useGetHouseByIDQuery,
@@ -32,7 +31,6 @@ import {
   SkeletonImage, SkeletonLine, SkeletonText,
 } from '../../components';
 import Button from '../../components/common/Button';
-import { numberWithCommas } from '../../helpers';
 import DangerModal from '../../components/common/DangerModal';
 import NewHousePhotoCard from '../../components/NewHousePhotoCard';
 import Input from '../../components/common/Input';
@@ -40,7 +38,7 @@ import TextArea from '../../components/common/TextArea';
 import Select from '../../components/common/Select';
 import Label from '../../components/common/Label';
 import ErrorMessage from '../../components/common/ErrorMessage';
-import { showErrorToast } from '../../helpers/Toast';
+import { showErrorToast, showSuccessToast } from '../../helpers/Toast';
 
 function HostingUpdateHouse() {
   const navigate = useNavigate();
@@ -140,7 +138,7 @@ function HostingUpdateHouse() {
       addHousePhoto({
         houseID: params.houseID,
         photo: housePhoto,
-      }).finally(() => {
+      }).then(() => {
         setSelectedImagesView([]);
         setSelectedImages([]);
       });
@@ -202,7 +200,15 @@ function HostingUpdateHouse() {
     updateHouse({
       houseID: params.houseID,
       houseStatusID: newHouseStatusID,
-    });
+    }).unwrap()
+      .then(() => {
+        showSuccessToast('House Status Updated Successfully!');
+      }).catch((error) => {
+        if (!error.data) {
+          showErrorToast('Server is currently down, please try again later!');
+        }
+        showErrorToast(error.data.message);
+      });
   };
 
   const isObjectNotEmpty = (obj) => Object.values(obj).every((value) => {
@@ -262,7 +268,15 @@ function HostingUpdateHouse() {
         description: input.description,
         cityID: input.city,
         maxGuest: input.maxGuest,
-      });
+      }).unwrap()
+        .then(() => {
+          showSuccessToast('House Updated Successfully!');
+        }).catch((error) => {
+          if (!error.data) {
+            showErrorToast('Server is currently down, please try again later!');
+          }
+          showErrorToast(error.data.message);
+        });
     }
   };
 
@@ -279,6 +293,7 @@ function HostingUpdateHouse() {
       .unwrap()
       .then(() => {
         navigate('/hosting');
+        showSuccessToast('House Deleted Successfully!');
       })
       .catch((error) => {
         if (!error.data) {
@@ -297,7 +312,6 @@ function HostingUpdateHouse() {
 
   return (
     <MainContainer>
-      <ToastContainer />
       <ContentContainer>
         {houseLoading && <SkeletonLine classes="w-30p" />}
         {!houseLoading && !houseError && (

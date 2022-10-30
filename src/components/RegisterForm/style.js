@@ -5,16 +5,13 @@ export const MainContainer = styled.div`
     display: grid;
     align-content: center; 
     place-items: center; 
-    margin-top: 1%;
-    margin-bottom: 1%;
+    margin-top: 2rem;
 `;
 
 export const TitleContainer = styled.div`
     width: 100%;
     background-color: var(--staycay-red);
     font-weight: bold;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
     border-radius: 0.25rem;
     margin-bottom: 2rem;
     border-color: transparent;
@@ -51,5 +48,5 @@ export const MainInputContainer = styled.div`
 
 export const InputContainer = styled.div`
     margin-bottom: 1.5rem; 
-    width: 95%;
+    width: 100%;
 `;

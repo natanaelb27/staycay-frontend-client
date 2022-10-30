@@ -23,6 +23,7 @@
         "react/prop-types": "off",
         "global-require": "off",
         "no-nested-ternary": "off",
-        "import/no-dynamic-require": "off"
+        "import/no-dynamic-require": "off",
+        "no-useless-escape": "off"
     }
 }

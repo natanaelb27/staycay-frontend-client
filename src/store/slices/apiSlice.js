@@ -112,7 +112,7 @@ export const apiSlice = createApi({
           old_password: oldPassword,
           password: newPassword,
           address,
-          city_id: cityID,
+          city_id: parseInt(cityID, 10),
         },
         headers: {
           authorization: `Bearer ${JSON.parse(localStorage.getItem('user'))?.token ? JSON.parse(localStorage.getItem('user'))?.token : ''}`,

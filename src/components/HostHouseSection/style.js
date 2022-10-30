@@ -42,6 +42,13 @@ export const Title = styled.h1`
     }
 `;
 
+export const NoDataContainer = styled.div`
+    display: grid;
+    margin-top: 1.5rem;
+    justify-items: center;
+    align-items: center;
+`;
+
 export const CardContainer = styled.div`
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));

@@ -18,3 +18,30 @@ export const dateToDateStringArray = (dateArray) => {
   dateArray.map((item) => newDateArray.push(item.toDateString()));
   return newDateArray;
 };
+
+export const verifyValidPassword = (password) => {
+  const hasMinLen = password.length >= 8;
+  const format = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+  const hasSymbol = format.test(password);
+
+  let hasUpper = false;
+  let hasLower = false;
+  let hasNumber = false;
+
+  for (let i = 0; i < password.length; i += 1) {
+    const c = password.at(i);
+    if (c >= '0' && c <= '9') {
+      hasNumber = true;
+    } else {
+      if (c === c.toUpperCase()) {
+        hasUpper = true;
+      }
+
+      if (c === c.toLowerCase()) {
+        hasLower = true;
+      }
+    }
+  }
+
+  return hasNumber && hasMinLen && hasUpper && hasLower && !hasSymbol;
+};

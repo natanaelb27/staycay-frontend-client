@@ -11,6 +11,14 @@ export const Title = styled.h1`
     line-height: 1rem; 
     font-weight: 700; 
     letter-spacing: 0.025em; 
+
+    @media (max-width: 950px) {
+        line-height: 2rem; 
+    }
+
+    @media (max-width: 700px) {
+        text-align: center;
+    }
 `;
 
 export const MaxSelectionContainer = styled.div`
@@ -53,6 +61,13 @@ export const SpanDetail = styled.span`
     font-size: 0.95rem;
     letter-spacing: 0.025em; 
     color: #3C4048;
+`;
+
+export const NoDataContainer = styled.div`
+    display: grid;
+    margin-top: 1rem    ;
+    justify-items: center;
+    align-items: center;
 `;
 
 export const ReservationContainer = styled.div`
