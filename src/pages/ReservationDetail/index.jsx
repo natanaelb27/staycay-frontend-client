@@ -107,7 +107,7 @@ function ReservationDetail() {
           </ContentContainer>
           <QRContainer>
             <QRCode
-              value="http://localhost:3000/reservation-detail/12"
+              value={`${process.env.REACT_APP_URL}/reservation-detail/${params.reservationID}`}
             />
             <SpanDetail>Show this to the host </SpanDetail>
           </QRContainer>

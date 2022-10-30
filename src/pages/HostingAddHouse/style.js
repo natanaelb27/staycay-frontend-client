@@ -94,7 +94,6 @@ export const ImagesContainer = styled.div`
     width: 100%;
     height: 21rem;
     margin-top: 2%;
-    margin-bottom: 2%;
 `;
 
 export const HousePhotoContainer = styled.div`
@@ -196,6 +195,7 @@ export const Icon = styled(FontAwesomeIcon)`
 export const ButtonContainer = styled.div`
     display: grid;
     justify-items: center;
+    margin-top: 2%;
 `;
 
 export const ButtonContentContainer = styled.div`

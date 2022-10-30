@@ -38,8 +38,6 @@ import {
   MobileMenuLink,
   MobileIcon,
   MobileSpan,
-  // Input,
-  // Label,
 } from './style';
 import Select from '../Select';
 import Label from '../Label';
