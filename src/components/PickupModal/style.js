@@ -10,6 +10,7 @@ export const ModalContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 10;
 
     opacity: 0;
     transition: all 0.3s ease-in-out;
