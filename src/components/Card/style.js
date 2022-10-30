@@ -29,13 +29,6 @@ export const Slider = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-
-    /* @media (max-width: 400px) {
-        width: 100%;
-    } */
-    /* @media (max-width: 370px) {
-        width: 17rem;
-    } */
 `;
 
 export const LeftArrow = styled(FaChevronLeft)`
@@ -48,8 +41,6 @@ export const LeftArrow = styled(FaChevronLeft)`
     cursor: pointer;
     padding: 3%;
     border-radius: 20px;
-    /* background-color: white;
-    color: #000; */
     background-color: #000;
     color: white;
     user-select: none;
@@ -65,8 +56,6 @@ export const RightArrow = styled(FaChevronRight)`
     cursor: pointer;
     padding: 3%;
     border-radius: 20px;
-    /* background-color: white;
-    color: #000; */
     background-color: #000;
     color: white;
     user-select: none;
@@ -83,27 +72,10 @@ export const Image = styled.div`
     border-radius: 20px;
     border: 0.1px solid gray;
 
-    /* @media (max-width: 400px) {
-        width: 18rem;
-    }
-    @media (max-width: 370px) {
-        width: 17rem;
-    } */
 `;
-
-// export const Image = styled.img`
-//     background-size: cover;
-//     background-image: ${(props) => (props.imgSrc ? props.imgSrc : null)};
-
-//     width: 20rem;
-//     height: 20rem;
-//     border-radius: 20px;
-//     border: 0.1px solid gray;
-// `;
 
 export const Slide = styled.div`
     opacity: 0;
-    /* transform: translateX(-100%); */
     transition-duration: 1s ease;
 
     &.active {
@@ -122,11 +94,3 @@ export const BoldSpan = styled.span`
     font-weight: bold;
 
 `;
-
-// export const Wrapper = styled.div`
-//     height: 20rem;
-//     width: 20rem;
-//     border-radius: 20px;
-//     background-size: cover;
-//     background-image: ${(props) => (props.img ? `url(${props.img})` : null)};
-// `;

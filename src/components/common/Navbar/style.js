@@ -75,23 +75,6 @@ export const DropdownIcon = styled.div`
     }
 `;
 
-// export const IconFilter = styled.button`
-//     display: inline-flex;
-//     gap: 0.5rem;
-//     padding: 0.75rem;
-//     margin-left: 0.75rem;
-//     background-color: white;
-//     font-size: 0.875rem;
-//     line-height: 1.25rem;
-//     align-items: center;
-//     border-radius: 1.25rem;
-//     cursor: pointer;
-
-//     &:hover {
-//         background-color: #F3F4F6;
-//     }
-// `;
-
 export const NavMenu = styled.div`
     display: ${(props) => (props.open ? 'block' : 'none')};
     width: 100%;
@@ -147,22 +130,6 @@ export const MainSearchContainer = styled.div`
     display: grid;
 `;
 
-// export const Icon = styled(FontAwesomeIcon)`
-//     display: none;
-//     padding: 0.5rem;
-//     background-color: var(--staycay-red);
-//     color: #ffffff;
-//     height: 1rem;
-//     border-radius: 9999px;
-//     cursor: pointer;
-
-//     @media (min-width: 768px) {
-//         display: inline-flex;
-//         margin-left: 0.5rem;
-//         margin-right: 0.5rem;
-//     }
-// `;
-
 export const Icon = styled(FontAwesomeIcon)`
     padding: 0.5rem; 
     background-color: var(--staycay-red);
@@ -204,19 +171,8 @@ export const InputSpan = styled.span`
     text-transform: uppercase; 
 `;
 
-// export const InputSearch = styled.input`
-//     padding-left: 1.25rem;
-//     background-color: transparent;
-//     flex-grow: 1;
-//     border: 1px solid var(--staycay-red);
-//     padding: 0.5rem;
-//     outline: none;
-// `;
-
 export const MainContentSearchContainer = styled.div`
     grid-template-columns: repeat(1, minmax(0, 1fr));
-    /* padding-left: 30%;
-    padding-right: 30%; */
 
     @media (min-width: 768px) { 
         display: grid;
@@ -224,7 +180,6 @@ export const MainContentSearchContainer = styled.div`
         justify-items: center;
         grid-column-gap: 0%;
 
-        /* grid-template-columns: repeat(5, minmax(0, 1fr)); */
     
     }
 `;
@@ -235,7 +190,6 @@ export const ContentSearchContainer = styled.div`
     display: grid;
     align-items: center;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    /* box-shadow: 1px 0px 5px 0 rgba(0,0,0,0.5); */
 
     @media (min-width: 768px) { 
         height: 3.5rem;
@@ -244,7 +198,6 @@ export const ContentSearchContainer = styled.div`
         grid-template-columns: repeat(1, minmax(0, 1fr));
         justify-items: center;
         padding: 10%; 
-        /* border-radius: 9999px;  */
     }
 `;
 
@@ -318,10 +271,6 @@ export const MobileNavbar = styled.div`
         display: flex;
         justify-content: space-evenly;
         align-items: center;
-        /* display: grid;
-        grid-auto-flow: column;
-        justify-items: center;
-        align-content: center; */
         padding: 0.2rem;
         background-color: #ffffff; 
         border-top: 1px solid black;

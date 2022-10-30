@@ -193,10 +193,6 @@ function HostingUpdateHouse() {
       newHouseStatusID = findHouseStatusIDByName('active');
     }
 
-    // if (houseStatusData?.data.house_status === 'deactivated by admin') {
-    //   newHouseStatusID = findHouseStatusIDByName('active');
-    // }
-
     updateHouse({
       houseID: params.houseID,
       houseStatusID: newHouseStatusID,

@@ -2,8 +2,6 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const MainContainer = styled.div`
-    /* width: 18rem;
-    height: 18rem; */
     margin: 0px;
     position: relative;
     display: flex;
@@ -12,7 +10,6 @@ export const MainContainer = styled.div`
 `;
 
 export const Image = styled.div`
-    /* background-size: cover; */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -34,14 +31,12 @@ export const DeleteImageContainer = styled.div`
     opacity: ${(props) => (props.ishover === 'true' ? '100%' : '0%')};
     transition: opacity 0.4s ease-in-out;
     position: absolute;
-    /* left: 50%; */
     font-size: 0.75rem;
     color: #000;
     z-index: 10;
     cursor: pointer;
     padding: 3%;
     border-radius: 20px;
-    /* background-color: white; */
     user-select: none;
     
     @media (min-width: 768px) { 

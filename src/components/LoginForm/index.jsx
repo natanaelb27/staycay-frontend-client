@@ -29,13 +29,6 @@ function LoginForm() {
 
   const [login] = useLoginMutation();
 
-  // useEffect(() => {
-  //   const user = localStorage.getItem('user');
-  //   if (user) {
-  //     navigate('/', { replace: true });
-  //   }
-  // }, []);
-
   const handleInputChange = (event) => {
     setInput({ ...input, [event.target.name]: event.target.value });
   };

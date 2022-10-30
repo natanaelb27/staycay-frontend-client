@@ -15,15 +15,10 @@ export const ModalContainer = styled.div`
     opacity: 0;
     transition: all 0.3s ease-in-out;
     pointer-events: none;
-
-    /* transform: translateY(-100%);
-    transition: all 0.3s ease-in-out; */
-
     &.show {
         opacity: 1;
         pointer-events: visible;
 
-        /* transform: translateY(0); */
     }
 `;
 
@@ -35,9 +30,6 @@ export const ModalContent = styled.div`
     transition: all 0.3s ease-in-out;
 
     &.show {
-        /* opacity: 1;
-        pointer-events: visible; */
-
         transform: translateY(0);
     }
 `;
@@ -88,8 +80,6 @@ export const AmountButtonContainer = styled.div`
     width: 100%;
     display: grid;
     grid-template-columns: repeat(6, minmax(0, 1fr));
-    /* display: flex;
-    flex-direction: column; */
     align-content: center;
     gap: 1rem;
 `;

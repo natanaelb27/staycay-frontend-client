@@ -97,43 +97,6 @@ export const ImagesContainer = styled.div`
     margin-bottom: 2%;
 `;
 
-// export const ImagesContainer = styled.div`
-//     /* display: flex;
-//     flex-wrap: wrap;
-//     align-items: center;
-//     justify-content: center;
-//     margin-top: 1rem;
-//     gap: 1rem;
-
-//     @media (max-width: 340px) {
-//         flex-wrap: nowrap;
-//         display: grid;
-//     } */
-
-//     /* @media (max-width: 1400px) {
-//         grid-template-columns: 1fr 1fr;
-//     }
-
-//     @media (max-width: 950px) {
-//         grid-template-columns: 1fr;
-//     } */
-
-//     display: grid;
-//     /* grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr)); */
-//     grid-template-columns: 1fr 1fr 1fr;
-//     margin-top: 1rem;
-//     gap: 1rem;
-
-//     @media (max-width: 1400px) {
-//         grid-template-columns: 1fr 1fr;
-//     }
-
-//     @media (max-width: 950px) {
-//         grid-template-columns: 1fr;
-//     }
-
-// `;
-
 export const HousePhotoContainer = styled.div`
     display: grid;
     align-items: center;
@@ -170,17 +133,12 @@ export const DeleteImageContainer = styled.div`
     justify-items: center;
     margin-top: 1rem;
 
-    /* opacity: ${(props) => (props.ishover === 'true' ? '100%' : '0%')};
-    transition: opacity 0.2s ease-in-out;
-    position: absolute; */
-    /* left: 50%; */
     font-size: 0.75rem;
     color: #000;
     z-index: 10;
     cursor: pointer;
     padding: 3%;
     border-radius: 20px;
-    /* background-color: white; */
     user-select: none;
     
     @media (min-width: 768px) { 

@@ -49,11 +49,6 @@ export const HouseDetailContent = styled.div`
 `;
 
 export const SpanTitle = styled.span`
-    /* color: #222222;
-    font-weight: bold;
-    font-size: 1.25rem;
-    height: fit-content; */
-
     display: block;
     font-size: 0.95rem;
     font-weight: 700; 
@@ -74,6 +69,5 @@ export const PriceContainer = styled.div`
     @media (max-width: 420px) {
         flex-direction: column;
     }
-    /* grid-template-columns: 50% 50%; */
     
 `;

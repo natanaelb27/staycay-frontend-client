@@ -15,6 +15,7 @@ import {
   ContentContainer,
 } from './style';
 import { useGetCityQuery, useGetUserProfileQuery, usePickupMutation } from '../../store/slices/apiSlice';
+import { showSuccessToast, showErrorToast } from '../../helpers/Toast';
 
 function PickupModal({
   reservationID, isShow, onClose,
@@ -78,16 +79,15 @@ function PickupModal({
         cityID: input.cityID,
       })
         .unwrap()
-        // .then(() => {
-        //   dispatch(setToast({
-        //     toastSuccess: 'Pickup order created successfully!',
-        //   }));
-        // })
-        // .catch((error) => {
-        //   dispatch(setToast({
-        //     toastError: error.data.message,
-        //   }));
-        // })
+        .then(() => {
+          showSuccessToast('Pickup Requested Successfully!');
+        })
+        .catch((error) => {
+          if (!error.data) {
+            showErrorToast('Server is currently down, please try again later!');
+          }
+          showErrorToast(error.data.message);
+        })
         .finally(() => {
           onClose();
         });

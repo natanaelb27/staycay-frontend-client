@@ -6,8 +6,6 @@ export const TextAreas = styled.textarea`
     padding-left: 0.5rem;
     padding-right: 0.5rem;
     height: 5rem;
-    /* color: #000000; 
-    line-height: 1.25;  */
     width: 100%; 
     border: 1px solid #374151;
     border-radius: 0.25rem; 

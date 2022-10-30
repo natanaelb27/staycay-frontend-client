@@ -94,7 +94,6 @@ export const ImagesContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    /* grid-template-columns: 1fr 1fr 1fr; */
     overflow: auto;
     overflow-y: scroll;
     gap: 1rem;

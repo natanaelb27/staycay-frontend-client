@@ -49,7 +49,6 @@ function UpdateHousePhotoCard({ housePhotoData }) {
 
   return (
     <MainContainer onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
-      {/* <img src={housePhotoData?.photo} alt="" /> */}
       <DeleteImageContainer ishover={isHovering.toString()}>
         <DeleteImageContentContainer onClick={onClickDeletePhoto}>
           <InputSpan>Delete</InputSpan>

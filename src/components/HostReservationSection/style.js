@@ -75,20 +75,7 @@ export const ReservationContainer = styled.div`
     flex-wrap: wrap;
     gap: 1rem;
     justify-content: center;
-    /* grid-template-columns: 1fr 1fr; */
 
     @media (max-width: 1100px) {
-        /* grid-template-columns: 1fr; */
     }
 `;
-
-// export const ReservationContainer = styled.div`
-//     display: grid;
-//     gap: 1rem;
-//     justify-content: center;
-//     grid-template-columns: 1fr 1fr;
-
-//     @media (max-width: 1100px) {
-//         grid-template-columns: 1fr;
-//     }
-// `;

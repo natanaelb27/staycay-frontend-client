@@ -7,8 +7,6 @@ export const ReservationContainer = styled.div`
     box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px;
     display: grid;
     grid-template-columns: 100%;
-    /* display: flex;
-    flex-direction: column; */
     gap: 2rem;
 `;
 
@@ -39,8 +37,6 @@ export const PriceContainer = styled.div`
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(45%, 1fr));
     gap: 3%;
-    /* grid-template-columns: 50% 40%; */
-    /* grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr)); */
 `;
 
 export const PriceSpan = styled.span`

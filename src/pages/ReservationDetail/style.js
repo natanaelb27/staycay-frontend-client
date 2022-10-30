@@ -44,7 +44,6 @@ export const Container = styled.div`
     gap: 1rem;
     border:  1px solid black;
     border-radius: 2rem;
-    /* box-shadow: 1px 1px 1px 0 rgba(0,0,0,0.5); */
 
 `;
 

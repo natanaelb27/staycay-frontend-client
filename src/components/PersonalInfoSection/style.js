@@ -60,7 +60,6 @@ export const SpanDetail = styled.span`
 
 export const EditContainer = styled.div`
     display: grid;
-    /* grid-template-rows: 1fr 0.5fr; */
 `;
 
 export const EditTwoInputsContainer = styled.div`
