@@ -48,17 +48,14 @@ export const BecomeHostButton = styled.button`
     cursor: pointer;
     border-color: transparent;
     font-size: 3vw;
-    /* font-size: 2rem; */
 
     &:hover {
         background-color: #3C4048;
     }
 
     @media (max-width: 700px) {
-        /* font-size: 1rem; */
     }
     @media (max-width: 450px) {
-        /* font-size: 1rem; */
         padding-top: 1rem;
         padding-bottom: 1rem;
         padding-left: 2rem;

@@ -59,11 +59,6 @@ export const ContentContainer = styled.div`
         justify-content: center;
     }
 
-/* 
-    @media (max-width: 300px) {
-        display: grid;
-        justify-content: center;
-    } */
 `;
 
 export const QRContainer = styled.div`
