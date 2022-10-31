@@ -16,6 +16,7 @@ import {
 } from './style';
 import { useGetCityQuery, useGetUserProfileQuery, usePickupMutation } from '../../store/slices/apiSlice';
 import { showSuccessToast, showErrorToast } from '../../helpers/Toast';
+import InfoMessage from '../common/InfoMessage';
 
 function PickupModal({
   reservationID, isShow, onClose,
@@ -118,7 +119,7 @@ function PickupModal({
 
             </ContentContainer>
             <ContentContainer>
-              <Label labelFor="city">City</Label>
+              <Label labelFor="city">Pickup City</Label>
               <Select
                 selectName="cityID"
                 selectValue={input.cityID}
@@ -128,6 +129,10 @@ function PickupModal({
                 {renderCitiesDropdown()}
               </Select>
             </ContentContainer>
+            <div>
+              <InfoMessage>Pickup on same city costs Rp 100.000,00</InfoMessage>
+              <InfoMessage>Pickup on different city costs Rp 300.000,00</InfoMessage>
+            </div>
           </Container>
         </ModalBody>
         <ModalFooter>

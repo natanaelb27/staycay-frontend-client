@@ -21,6 +21,8 @@ export const BecomeHostContainer = styled.div`
     max-width: 100%;
     display: grid;
     place-items: center; 
+    justify-items: center;
+    align-items: center;
     padding-left: 15%;
     padding-right: 15%;
 
@@ -30,19 +32,8 @@ export const BecomeHostContainer = styled.div`
 `;
 
 export const BecomeHostTitle = styled.h1`
-    font-size: 10rem;
+    font-size: 9vw;
     text-align: center;
-
-    @media (max-width: 1150px) {
-        font-size: 8rem;
-    }
-
-    @media (max-width: 700px) {
-        font-size: 5rem;
-    }
-    @media (max-width: 450px) {
-        font-size: 2.5rem;
-    }
 `;
 
 export const BecomeHostButton = styled.button`
@@ -56,17 +47,18 @@ export const BecomeHostButton = styled.button`
     border-radius: 0.25rem;
     cursor: pointer;
     border-color: transparent;
-    font-size: 2rem;
+    font-size: 3vw;
+    /* font-size: 2rem; */
 
     &:hover {
         background-color: #3C4048;
     }
 
     @media (max-width: 700px) {
-        font-size: 1rem;
+        /* font-size: 1rem; */
     }
     @media (max-width: 450px) {
-        font-size: 1rem;
+        /* font-size: 1rem; */
         padding-top: 1rem;
         padding-bottom: 1rem;
         padding-left: 2rem;

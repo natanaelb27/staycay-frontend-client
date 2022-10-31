@@ -18,4 +18,9 @@ export const Selects = styled.select`
         outline: 0; 
     }
 
+    @media (max-width: 768px) {
+        option {
+            padding: 0px;
+        }
+    }
 `;

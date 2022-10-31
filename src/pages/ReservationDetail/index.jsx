@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import QRCode from 'qrcode.react';
@@ -24,13 +23,13 @@ function ReservationDetail() {
   const {
     data: reservationData,
     error: reservationError,
-    loading: reservationLoading,
+    isFetching: reservationLoading,
   } = useGetReservationByIDQuery(params.reservationID);
 
   const {
     data: houseData,
     error: houseError,
-    loading: houseLoading,
+    isFetching: houseLoading,
   } = useGetHouseByIDQuery(
     {
       houseID: parseInt(reservationData?.data.reservation.house_id, 10),
@@ -42,7 +41,7 @@ function ReservationDetail() {
   const {
     data: userData,
     error: userError,
-    loading: userLoading,
+    isFetching: userLoading,
   } = useGetUserByIDQuery(
     parseInt(reservationData?.data.reservation.user_id, 10),
     { skip: reservationData?.data.reservation.user_id === undefined },
@@ -51,7 +50,7 @@ function ReservationDetail() {
   const {
     data: hostData,
     error: hostError,
-    loading: hostLoading,
+    isFetching: hostLoading,
   } = useGetUserByIDQuery(
     parseInt(houseData?.data.host_id, 10),
     { skip: houseData?.data.host_id === undefined },
@@ -61,7 +60,10 @@ function ReservationDetail() {
     navigate('/forbidden');
   }
 
-  if (reservationError?.data.code === 500 || houseError?.data.code === 500) {
+  if (reservationError?.data.code === 500
+    || houseError?.data.code === 500
+    || userError?.data.code === 500
+    || hostError?.data.code === 500) {
     navigate('/server-error');
   }
 
@@ -75,45 +77,71 @@ function ReservationDetail() {
         <BackIcon onClick={handleClickBack} />
         <Title>Your Reservation</Title>
       </TitleContainer>
-      {(houseLoading || reservationLoading || userLoading || hostLoading) && (<p>LOADING</p>)}
-      {(!houseLoading || !reservationLoading || !userLoading || !hostLoading) && (
-        <Container>
-          <ContentContainer>
-            <SpanTitle>Reservation Code:</SpanTitle>
-            <SpanDetail>{reservationData?.data.reservation.reservation_code}</SpanDetail>
-          </ContentContainer>
-          <ContentContainer>
-            <SpanTitle>House Name:</SpanTitle>
-            <SpanDetail>{houseData?.data.house_name}</SpanDetail>
-          </ContentContainer>
-          <ContentContainer>
-            <SpanTitle>House City:</SpanTitle>
-            <SpanDetail>{houseData?.data.house_city_name}</SpanDetail>
-          </ContentContainer>
-          <ContentContainer>
-            <SpanTitle>Host Name:</SpanTitle>
-            <SpanDetail>{hostData?.data.name}</SpanDetail>
-          </ContentContainer>
-          <ContentContainer>
-            <SpanTitle>Check In Date:</SpanTitle>
-            <SpanDetail>{moment(reservationData?.data.reservation.check_in_date).format('D MMMM YYYY')}</SpanDetail>
-          </ContentContainer>
-          <ContentContainer>
-            <SpanTitle>Check Out Date:</SpanTitle>
-            <SpanDetail>{moment(reservationData?.data.reservation.check_out_date).format('D MMMM YYYY')}</SpanDetail>
-          </ContentContainer>
-          <ContentContainer>
-            <SpanTitle>Guest Name:</SpanTitle>
-            <SpanDetail>{userData?.data.name}</SpanDetail>
-          </ContentContainer>
-          <QRContainer>
-            <QRCode
-              value={`${process.env.REACT_APP_URL}/reservation-detail/${params.reservationID}`}
-            />
-            <SpanDetail>Show this to the host </SpanDetail>
-          </QRContainer>
-        </Container>
-      )}
+      <Container>
+        <ContentContainer>
+          <SpanTitle>Reservation Code:</SpanTitle>
+          {!houseLoading && !reservationLoading && !userLoading && !hostLoading ? (
+            <SpanDetail>
+              {reservationData?.data.reservation.reservation_code}
+            </SpanDetail>
+          ) : <SkeletonLine /> }
+
+        </ContentContainer>
+        <ContentContainer>
+          <SpanTitle>House Name:</SpanTitle>
+          {!houseLoading && !reservationLoading && !userLoading && !hostLoading ? (
+            <SpanDetail>
+              {houseData?.data.house_name}
+            </SpanDetail>
+          ) : <SkeletonLine /> }
+        </ContentContainer>
+        <ContentContainer>
+          <SpanTitle>House City:</SpanTitle>
+          {!houseLoading && !reservationLoading && !userLoading && !hostLoading ? (
+            <SpanDetail>
+              {houseData?.data.house_city_name}
+            </SpanDetail>
+          ) : <SkeletonLine /> }
+        </ContentContainer>
+        <ContentContainer>
+          <SpanTitle>Host Name:</SpanTitle>
+          {!houseLoading && !reservationLoading && !userLoading && !hostLoading ? (
+            <SpanDetail>
+              {hostData?.data.name}
+            </SpanDetail>
+          ) : <SkeletonLine /> }
+        </ContentContainer>
+        <ContentContainer>
+          <SpanTitle>Check In Date:</SpanTitle>
+          {!houseLoading && !reservationLoading && !userLoading && !hostLoading ? (
+            <SpanDetail>
+              {moment(reservationData?.data.reservation.check_in_date).format('D MMMM YYYY')}
+            </SpanDetail>
+          ) : <SkeletonLine /> }
+        </ContentContainer>
+        <ContentContainer>
+          <SpanTitle>Check Out Date:</SpanTitle>
+          {!houseLoading && !reservationLoading && !userLoading && !hostLoading ? (
+            <SpanDetail>
+              {moment(reservationData?.data.reservation.check_out_date).format('D MMMM YYYY')}
+            </SpanDetail>
+          ) : <SkeletonLine /> }
+        </ContentContainer>
+        <ContentContainer>
+          <SpanTitle>Guest Name:</SpanTitle>
+          {!houseLoading && !reservationLoading && !userLoading && !hostLoading ? (
+            <SpanDetail>
+              {userData?.data.name}
+            </SpanDetail>
+          ) : <SkeletonLine /> }
+        </ContentContainer>
+        <QRContainer>
+          <QRCode
+            value={`${process.env.REACT_APP_URL}/reservation-detail/${params.reservationID}`}
+          />
+          <SpanDetail>Show this to the host </SpanDetail>
+        </QRContainer>
+      </Container>
     </MainContainer>
 
   );

@@ -105,7 +105,7 @@ export const ImagesContainer = styled.div`
 export const OuterImageContainer = styled.div`
     display: grid;
     justify-items: center;
-    width: 100%;
+    width: 90%;
 `;
 
 export const SpanTitle = styled.span`

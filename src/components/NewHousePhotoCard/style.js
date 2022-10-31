@@ -20,6 +20,7 @@ export const Image = styled.div`
     height: 20rem;
     border: 0.1px solid gray;
     border-radius: 20px;
+
 `;
 
 export const DeleteImageContainer = styled.div`

@@ -54,10 +54,16 @@ export const ContentContainer = styled.div`
     justify-items: center;
     gap: 1rem;
 
-    @media (max-width: 300px) {
+    @media (max-width: 591px) {
         display: grid;
         justify-content: center;
     }
+
+/* 
+    @media (max-width: 300px) {
+        display: grid;
+        justify-content: center;
+    } */
 `;
 
 export const QRContainer = styled.div`
@@ -80,4 +86,5 @@ export const SpanDetail = styled.span`
     font-size: 0.95rem;
     letter-spacing: 0.025em; 
     color: #3C4048;
+    text-align: center;
 `;
