@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React from 'react';
 import {
   MainContainer,
@@ -7,6 +6,7 @@ import {
   TitleContent,
   ButtonContainer,
   ButtonSelection,
+  LoadingContainer,
   SpanTitle,
 } from './style';
 import {
@@ -16,6 +16,7 @@ import {
 import { showToast } from '../../helpers/Toast';
 import { numberWithCommas } from '../../helpers';
 import coin from '../../assets/coin.gif';
+import { SkeletonLine } from '../../components';
 
 function Game() {
   const {
@@ -49,41 +50,56 @@ function Game() {
         <ButtonContainer>
           <ButtonSelection
             onClick={() => handleGuessCoin('heads')}
-            disabled={gameData?.data.chance <= 0}
+            disabled={gameData?.data.chance <= 0 || gameLoading}
           >
             Heads
-
           </ButtonSelection>
           <ButtonSelection
             onClick={() => handleGuessCoin('tails')}
-            disabled={gameData?.data.chance <= 0}
+            disabled={gameData?.data.chance <= 0 || gameLoading}
           >
             Tails
-
           </ButtonSelection>
         </ButtonContainer>
-        { gameData?.data.chance > 0
-          ? (
-            <SpanTitle>
-              You got
-              {' '}
-              {gameData?.data.chance}
-              {' '}
-              chance left
-            </SpanTitle>
+        {
+          gameLoading ? (
+            <LoadingContainer>
+              <SkeletonLine />
+            </LoadingContainer>
+          ) : !gameLoading && !gameError && (
+            gameData?.data.chance > 0
+              ? (
+                <SpanTitle>
+                  You got
+                  {' '}
+                  {gameData?.data.chance}
+                  {' '}
+                  chance left
+                </SpanTitle>
+              )
+              : (
+                <SpanTitle>
+                  Top up Rp 500.000,00 in order to get more chance
+                </SpanTitle>
+              )
           )
-          : (
-            <SpanTitle>
-              Top up Rp 500.000,00 in order to get more chance
-            </SpanTitle>
-          )}
-        <SpanTitle>
-          Play
-          {' '}
-          {10 - parseInt(gameData?.data.counter, 10)}
-          {' '}
-          more times to get 1 free chance!
-        </SpanTitle>
+        }
+        {
+          gameLoading ? (
+            <LoadingContainer>
+              <SkeletonLine />
+            </LoadingContainer>
+          )
+            : (
+              <SpanTitle>
+                Play
+                {' '}
+                {10 - parseInt(gameData?.data.counter, 10)}
+                {' '}
+                more times to get 1 free chance!
+              </SpanTitle>
+            )
+        }
       </GameContainer>
     </MainContainer>
   );

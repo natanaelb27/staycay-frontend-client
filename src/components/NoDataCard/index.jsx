@@ -3,7 +3,7 @@ import {
   MainContainer,
 } from './style';
 
-function ReservationDetailsCard() {
+function NoDataCard() {
   return (
     <MainContainer>
       <h1>No Data</h1>
@@ -11,4 +11,4 @@ function ReservationDetailsCard() {
   );
 }
 
-export default ReservationDetailsCard;
+export default NoDataCard;

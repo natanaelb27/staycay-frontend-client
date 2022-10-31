@@ -1,6 +1,4 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useGetHouseByIDQuery, useGetHouseReservationsByHouseIDQuery } from '../../store/slices/apiSlice';
 import { ReservationOrderCard, ReservationPaymentSection, SkeletonCardBig } from '../../components';

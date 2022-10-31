@@ -33,6 +33,13 @@ export const GameContainer = styled.div`
 
 `;
 
+export const LoadingContainer = styled.div`
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    margin-top: 0.5rem;
+`;
+
 export const Title = styled.h1`
     font-weight: 700; 
     letter-spacing: 0.025em; 

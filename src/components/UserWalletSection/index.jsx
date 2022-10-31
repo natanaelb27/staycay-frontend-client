@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import {
   Container,
@@ -11,6 +10,7 @@ import { useGetUserProfileQuery } from '../../store/slices/apiSlice';
 import Button from '../common/Button';
 import TopUpModal from '../TopUpModal';
 import { numberWithCommas } from '../../helpers';
+import SkeletonLine from '../Skeleton/SkeletonLine';
 
 function UserWalletSection() {
   const {
@@ -34,7 +34,18 @@ function UserWalletSection() {
       <Title>Your Wallet</Title>
       <ContentContainer>
         <SpanTitle>Current Balance</SpanTitle>
-        <SpanDetail>{`Rp ${numberWithCommas(parseInt(userData?.data.balance, 10))}`}</SpanDetail>
+        {
+          userLoading && (
+            <SkeletonLine />
+          )
+        }
+        {
+          !userLoading && !userError && (
+            <SpanDetail>
+              {`Rp ${numberWithCommas(parseInt(userData?.data.balance, 10))}`}
+            </SpanDetail>
+          )
+        }
         <Button handleClick={handleModal}>Top Up</Button>
       </ContentContainer>
       <TopUpModal

@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import {
   Container,
@@ -20,7 +19,6 @@ import { useGetUserProfileQuery, useUpdateUserProfileMutation, useGetCityQuery }
 import Button from '../common/Button';
 import Select from '../common/Select';
 import ErrorMessage from '../common/ErrorMessage';
-import SkeletonText from '../Skeleton/SkeletonText';
 import SkeletonLine from '../Skeleton/SkeletonLine';
 import { verifyValidPassword } from '../../helpers';
 import { showErrorToast, showSuccessToast } from '../../helpers/Toast';

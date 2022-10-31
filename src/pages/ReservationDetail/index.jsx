@@ -1,8 +1,9 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import QRCode from 'qrcode.react';
 import moment from 'moment';
+import { SkeletonLine } from '../../components';
 import { useGetReservationByIDQuery, useGetHouseByIDQuery, useGetUserByIDQuery } from '../../store/slices/apiSlice';
 import {
   MainContainer,
@@ -74,8 +75,8 @@ function ReservationDetail() {
         <BackIcon onClick={handleClickBack} />
         <Title>Your Reservation</Title>
       </TitleContainer>
-      {(houseLoading && reservationLoading) && (<p>LOADING</p>)}
-      {(!houseLoading && !reservationError) && (
+      {(houseLoading || reservationLoading || userLoading || hostLoading) && (<p>LOADING</p>)}
+      {(!houseLoading || !reservationLoading || !userLoading || !hostLoading) && (
         <Container>
           <ContentContainer>
             <SpanTitle>Reservation Code:</SpanTitle>

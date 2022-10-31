@@ -1,11 +1,10 @@
-/* eslint-disable no-unused-vars */
 import React, { useRef, useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faBars, faUser, faSearch,
   faFilter, faTrashAlt, faUserAlt,
   faUserEdit, faHome, faGamepad,
-  faSignOutAlt, faSignInAlt, faHouseUser,
+  faSignOutAlt, faHouseUser,
 } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';

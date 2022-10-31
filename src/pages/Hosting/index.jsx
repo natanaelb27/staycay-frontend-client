@@ -12,6 +12,8 @@ import {
 function Hosting() {
   const {
     data: userData,
+    error: userError,
+    isLoading: userLoading,
   } = useGetUserProfileQuery();
 
   const [updateUserRoleToHost] = useUpdateUserRoleToHostMutation();
@@ -22,7 +24,7 @@ function Hosting() {
 
   return (
     <MainContainer>
-      {userData?.data.role === 'host' ? (
+      {!userLoading && !userError && userData?.data.role === 'host' ? (
         <Container>
           <HostHouseSection />
           <HostReservationSection />

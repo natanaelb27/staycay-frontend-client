@@ -24,7 +24,7 @@ function HostHouseSection() {
     isLoading: houseLoading,
   }] = useLazyGetHostHouseQuery();
 
-  const skeletonLoading = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  const skeletonLoading = [1, 2, 3];
 
   const limit = 3;
   const [currentPage, setCurrentPage] = useState(1);
@@ -103,7 +103,13 @@ function HostHouseSection() {
         </AddNewHouseButtonContainer>
       </HeaderContainer>
 
-      {houseData?.data.house.length <= 0
+      {houseLoading && (
+        <CardContainer>
+          {renderLoading()}
+        </CardContainer>
+      )}
+
+      {!houseLoading && houseData?.data.house.length <= 0
         ? (
           <NoDataContainer>
             <NoDataCard />

@@ -1,10 +1,6 @@
-/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import {
-  faTrashAlt,
-} from '@fortawesome/free-solid-svg-icons';
 import Label from '../../components/common/Label';
 import Input from '../../components/common/Input';
 import Select from '../../components/common/Select';
@@ -19,12 +15,6 @@ import {
   InputImage,
   HousePhotoContainer,
   ImagesContainer,
-  ImageContainer,
-  Image,
-  DeleteImageContainer,
-  DeleteImageContentContainer,
-  InputSpan,
-  Icon,
   ButtonContainer,
   ButtonContentContainer,
   TitleContainer,

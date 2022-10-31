@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -9,12 +8,14 @@ import {
   SpanSelection,
   ReservationContainer,
   NoDataContainer,
+  LoadingContainer,
 } from './style';
 import { useLazyGetReservationByUserQuery } from '../../store/slices/apiSlice';
 import ReservationDetailsCard from '../ReservationDetailsCard';
 import Pagination from '../Pagination';
 import Select from '../common/Select';
 import Label from '../common/Label';
+import Loading from '../common/Loading';
 import NoDataCard from '../NoDataCard';
 
 function UserReservationSection() {
@@ -93,9 +94,16 @@ function UserReservationSection() {
   );
 
   return (
-    !reservationLoading && !reservationError && (
-      <Container ref={reservationRef}>
-        <Title>Your Reservations</Title>
+    <Container ref={reservationRef}>
+      <Title>Your Reservations</Title>
+      {reservationLoading && (
+        <LoadingContainer>
+          <Loading />
+        </LoadingContainer>
+      )}
+
+      {!reservationLoading && !reservationError && (
+      <>
         <MaxSelectionContainer>
           {renderMaxSelections()}
         </MaxSelectionContainer>
@@ -112,7 +120,11 @@ function UserReservationSection() {
         </MinSelectionContainer>
         {
         reservationData?.data.reservation.length <= 0
-          ? <NoDataContainer><NoDataCard /></NoDataContainer>
+          ? (
+            <NoDataContainer>
+              <NoDataCard />
+            </NoDataContainer>
+          )
           : (
             <ReservationContainer>
               {renderReservations()}
@@ -126,8 +138,9 @@ function UserReservationSection() {
           onPageChange={handlePageChange}
         />
         )}
-      </Container>
-    )
+      </>
+      )}
+    </Container>
   );
 }
 

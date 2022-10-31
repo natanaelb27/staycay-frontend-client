@@ -63,6 +63,12 @@ export const SpanDetail = styled.span`
     color: #3C4048;
 `;
 
+export const LoadingContainer = styled.div`
+    display: grid;
+    justify-items: center;
+    align-items: center;
+`;
+
 export const NoDataContainer = styled.div`
     display: grid;
     margin-top: 1rem    ;

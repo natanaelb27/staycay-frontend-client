@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -9,18 +8,21 @@ import {
   SpanSelection,
   ReservationContainer,
   NoDataContainer,
+  LoadingContainer,
 } from './style';
 import { useLazyGetReservationByHostQuery } from '../../store/slices/apiSlice';
 import HostReservationDetailsCard from '../HostReservationDetailsCard';
 import Pagination from '../Pagination';
 import Select from '../common/Select';
 import Label from '../common/Label';
+import Loading from '../common/Loading';
 import NoDataCard from '../NoDataCard';
 
 function HostReservationSection() {
   const navigate = useNavigate();
   const [getReservation, {
     data: reservationData,
+    error: reservationError,
     isLoading: reservationLoading,
   }] = useLazyGetReservationByHostQuery();
 
@@ -92,34 +94,50 @@ function HostReservationSection() {
   return (
     <Container ref={reservationRef}>
       <Title>Your Reservations</Title>
-      <MaxSelectionContainer>
-        {renderMaxSelections()}
-      </MaxSelectionContainer>
-      <MinSelectionContainer>
-        <Label>
-          Filter By
-          <Select
-            value={filterBy}
-            handleChange={handleSelectChange}
-          >
-            {renderMinSelections()}
-          </Select>
-        </Label>
-      </MinSelectionContainer>
-      { reservationData?.data.reservation.length <= 0
-        ? <NoDataContainer><NoDataCard /></NoDataContainer>
-        : (
-          <ReservationContainer>
-            {renderReservations()}
-          </ReservationContainer>
-        )}
-      {reservationData?.data.pagination && (
-        <Pagination
-          currentPage={currentPage}
-          totalPages={reservationData?.data.pagination.total_pages}
-          onPageChange={handlePageChange}
-        />
+      {reservationLoading && (
+        <LoadingContainer>
+          <Loading />
+        </LoadingContainer>
       )}
+
+      {
+        !reservationLoading && !reservationError && (
+          <>
+            <MaxSelectionContainer>
+              {renderMaxSelections()}
+            </MaxSelectionContainer>
+            <MinSelectionContainer>
+              <Label>
+                Filter By
+                <Select
+                  value={filterBy}
+                  handleChange={handleSelectChange}
+                >
+                  {renderMinSelections()}
+                </Select>
+              </Label>
+            </MinSelectionContainer>
+            { !reservationLoading && reservationData?.data.reservation.length <= 0
+              ? (
+                <NoDataContainer>
+                  <NoDataCard />
+                </NoDataContainer>
+              )
+              : (
+                <ReservationContainer>
+                  {renderReservations()}
+                </ReservationContainer>
+              )}
+            {reservationData?.data.pagination && (
+            <Pagination
+              currentPage={currentPage}
+              totalPages={reservationData?.data.pagination.total_pages}
+              onPageChange={handlePageChange}
+            />
+            )}
+          </>
+        )
+      }
     </Container>
   );
 }

@@ -15,13 +15,12 @@ export const Title = styled.h1`
     @media (max-width: 500px) {
         text-align: center;
     }
-
 `;
 
 export const ContentContainer = styled.div`
     display: grid;
     padding: 1rem;
-    gap: 0.3rem;
+    gap: 0.5rem;
 `;
 
 export const SpanTitle = styled.span`

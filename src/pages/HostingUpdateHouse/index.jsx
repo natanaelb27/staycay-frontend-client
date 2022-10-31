@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -327,7 +326,7 @@ function HostingUpdateHouse() {
         )}
       </ContentContainer>
       <HouseImageContainer>
-        {houseLoading && <SkeletonImage classes="full" />}
+        {houseLoading && <SkeletonImage />}
         {!houseLoading && !houseError && (
           <OuterImageContainer>
             <SpanTitle>House Photo</SpanTitle>
