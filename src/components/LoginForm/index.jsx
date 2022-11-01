@@ -62,8 +62,12 @@ function LoginForm() {
       })
         .unwrap()
         .then((payload) => {
-          localStorage.setItem('user', JSON.stringify(payload.data));
-          navigate('/', { replace: true });
+          if (payload.data.role.toLowerCase() === 'user' || payload.data.role.toLowerCase() === 'host') {
+            localStorage.setItem('user', JSON.stringify(payload.data));
+            navigate('/', { replace: true });
+          } else {
+            showErrorToast('credential error');
+          }
         })
         .catch((error) => {
           if (!error.data) {
