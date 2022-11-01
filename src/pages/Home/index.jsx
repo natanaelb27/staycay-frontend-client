@@ -148,13 +148,11 @@ function Home() {
         </Label>
       </SortContainer>
 
-      {houseLoading && (
+      {houseLoading ? (
         <CardContainer>
           {renderLoading()}
         </CardContainer>
-      )}
-
-      {
+      ) : (
         !houseLoading && houseData?.data.house.length > 0
           ? (
             <CardContainer>
@@ -167,7 +165,7 @@ function Home() {
               <NoDataCard />
             </NoDataContainer>
           )
-      }
+      )}
 
       {!houseLoading && houseData?.data.pagination && (
       <Pagination
