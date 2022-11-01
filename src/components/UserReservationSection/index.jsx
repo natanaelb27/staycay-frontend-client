@@ -27,7 +27,7 @@ function UserReservationSection() {
   const [getReservation, {
     data: reservationData,
     error: reservationError,
-    isLoading: reservationLoading,
+    isFetching: reservationLoading,
   }] = useLazyGetReservationByUserQuery();
 
   const limit = 4;

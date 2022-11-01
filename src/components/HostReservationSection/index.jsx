@@ -23,7 +23,7 @@ function HostReservationSection() {
   const [getReservation, {
     data: reservationData,
     error: reservationError,
-    isLoading: reservationLoading,
+    isFetching: reservationLoading,
   }] = useLazyGetReservationByHostQuery();
 
   const limit = 4;

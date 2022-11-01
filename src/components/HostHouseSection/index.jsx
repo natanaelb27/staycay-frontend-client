@@ -21,7 +21,7 @@ function HostHouseSection() {
   const [getHostHouse, {
     data: houseData,
     error: houseError,
-    isLoading: houseLoading,
+    isFetching: houseLoading,
   }] = useLazyGetHostHouseQuery();
 
   const skeletonLoading = [1, 2, 3];
