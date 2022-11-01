@@ -27,7 +27,7 @@ function Home() {
   const [getHouse, {
     data: houseData,
     error: houseError,
-    isLoading: houseLoading,
+    isFetching: houseLoading,
   }] = useLazyGetHouseQuery();
 
   const limit = 10;
